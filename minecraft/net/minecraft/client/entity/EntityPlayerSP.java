@@ -51,6 +51,11 @@ import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.misc.EventChat;
+import xyz.Dot.event.events.world.EventMove;
+import xyz.Dot.event.events.world.EventPostUpdate;
+import xyz.Dot.event.events.world.EventPreUpdate;
 
 public class EntityPlayerSP extends AbstractClientPlayer
 {
@@ -188,6 +193,24 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdateWalkingPlayer()
     {
+
+        boolean var2;
+        EventPreUpdate e = new EventPreUpdate(this.rotationYaw, this.rotationPitch, this.posY, this.mc.thePlayer.onGround);
+        EventPostUpdate post = new EventPostUpdate(this.rotationYaw, this.rotationPitch);
+        EventBus.getInstance().call(e);
+        if (e.isCancelled()) {
+            EventBus.getInstance().call(post);
+            return;
+        }
+        double oldX = this.posX;
+        double oldZ = this.posZ;
+        float oldPitch = this.rotationPitch;
+        float oldYaw = this.rotationYaw;
+        boolean oldGround = this.onGround;
+        this.rotationPitch = e.getPitch();
+        this.rotationYaw = e.getYaw();
+        this.onGround = e.isOnground();
+
         boolean flag = this.isSprinting();
 
         if (flag != this.serverSprintState)
@@ -271,6 +294,20 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 this.lastReportedPitch = this.rotationPitch;
             }
         }
+
+        this.posX = oldX;
+        this.posZ = oldZ;
+        this.rotationYaw = oldYaw;
+        this.rotationPitch = oldPitch;
+        this.onGround = oldGround;
+        EventBus.getInstance().call(post);
+
+    }
+
+    @Override
+    public void moveEntity(double x, double y, double z) {
+        EventMove e = EventBus.getInstance().call(new EventMove(x, y, z));
+        super.moveEntity(e.getX(), e.getY(), e.getZ());
     }
 
     /**
@@ -295,7 +332,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message)
     {
-        this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
+        EventChat event = new EventChat(message);
+        EventBus.getInstance().call(event);
+        if(!event.isCancelled()) this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
     }
 
     /**
@@ -519,6 +558,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
         this.sprintingTicksLeft = sprinting ? 600 : 0;
     }
 
+    public boolean moving() {
+        return this.moveForward != 0.0f || this.moveStrafing != 0.0f;
+    }
     /**
      * Sets the current XP, total XP, and level number.
      */

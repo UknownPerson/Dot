@@ -11,6 +11,8 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.misc.EventChat;
 
 public class GuiNewChat extends Gui
 {
@@ -135,6 +137,8 @@ public class GuiNewChat extends Gui
     {
         this.setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false);
         logger.info("[CHAT] " + chatComponent.getUnformattedText());
+        EventChat ec = new EventChat(chatComponent.getUnformattedText());
+        EventBus.getInstance().call(ec);
     }
 
     private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly)

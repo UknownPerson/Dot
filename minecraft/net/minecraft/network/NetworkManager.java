@@ -48,6 +48,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.world.EventPacketRecieve;
 
 public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 {
@@ -148,6 +150,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception
     {
+
+        EventPacketRecieve packetRecieve = new EventPacketRecieve((Packet)p_channelRead0_2_);
+        EventBus.getInstance().call(packetRecieve);
+
         if (this.channel.isOpen())
         {
             try

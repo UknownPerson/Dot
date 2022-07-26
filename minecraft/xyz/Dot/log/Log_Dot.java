@@ -1,6 +1,4 @@
-package xyz.Dot.Log;
-
-import org.lwjgl.Sys;
+package xyz.Dot.log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

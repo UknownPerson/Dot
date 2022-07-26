@@ -185,6 +185,9 @@ import org.lwjgl.opengl.OpenGLException;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 import xyz.Dot.Client;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.misc.EventKey;
+import xyz.Dot.event.events.world.EventTick;
 
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
@@ -230,7 +233,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private RenderManager renderManager;
     private RenderItem renderItem;
     private ItemRenderer itemRenderer;
-    public EntityPlayerSP thePlayer;
+    public static EntityPlayerSP thePlayer;
     private Entity renderViewEntity;
     public Entity pointedEntity;
     public EffectRenderer effectRenderer;
@@ -238,7 +241,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private boolean isGamePaused;
 
     /** The font renderer used for displaying and measuring text */
-    public FontRenderer fontRendererObj;
+    public static FontRenderer fontRendererObj;
     public FontRenderer standardGalacticFontRenderer;
 
     /** The GuiScreen that's being displayed at the moment. */
@@ -1746,6 +1749,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void runTick() throws IOException
     {
+        if (this.thePlayer != null) {
+            EventBus.getInstance().call(new EventTick());
+        }
+
         if (this.rightClickDelayTimer > 0)
         {
             --this.rightClickDelayTimer;
@@ -1949,6 +1956,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     }
                     else
                     {
+                        EventBus.getInstance().call(new EventKey(k));
                         if (k == 1)
                         {
                             this.displayInGameMenu();

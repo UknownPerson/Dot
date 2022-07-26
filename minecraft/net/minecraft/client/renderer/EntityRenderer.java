@@ -96,6 +96,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.rendering.EventRender3D;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -1898,7 +1900,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         this.mc.mcProfiler.endStartSection("hand");
 
-        if (this.renderHand && !Shaders.isShadowPass)
+        boolean flag2 = ReflectorForge.renderFirstPersonHand(this.mc.renderGlobal, partialTicks, pass);
+        GL11.glPushMatrix();
+        EventBus.getInstance().call(new EventRender3D(partialTicks));
+        GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GL11.glPopMatrix();
+        if (!flag2 && this.renderHand && !Shaders.isShadowPass)
         {
             if (flag)
             {

@@ -8,6 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.misc.EventInventory;
 
 public class ContainerPlayer extends Container
 {
@@ -82,6 +84,13 @@ public class ContainerPlayer extends Container
      */
     public void onContainerClosed(EntityPlayer playerIn)
     {
+
+        EventInventory event = new EventInventory(playerIn);
+        EventBus.getInstance().call(event);
+        if (event.isCancelled()) {
+            return;
+        }
+
         super.onContainerClosed(playerIn);
 
         for (int i = 0; i < 4; ++i)

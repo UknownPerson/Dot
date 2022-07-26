@@ -32,6 +32,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.misc.EventCollideWithBlock;
+import xyz.Dot.utils.Helper;
 
 public class Block
 {
@@ -489,6 +492,11 @@ public class Block
     public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity)
     {
         AxisAlignedBB axisalignedbb = this.getCollisionBoundingBox(worldIn, pos, state);
+
+        if (collidingEntity == Helper.mc.thePlayer) {
+            EventCollideWithBlock e = EventBus.getInstance().call(new EventCollideWithBlock(this, pos, axisalignedbb));
+            axisalignedbb = e.getBoundingBox();
+        }
 
         if (axisalignedbb != null && mask.intersectsWith(axisalignedbb))
         {

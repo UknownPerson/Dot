@@ -5,6 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.util.MathHelper;
+import xyz.Dot.event.EventBus;
+import xyz.Dot.event.events.rendering.EventRenderCape;
 
 public class LayerCape implements LayerRenderer<AbstractClientPlayer>
 {
@@ -17,6 +19,8 @@ public class LayerCape implements LayerRenderer<AbstractClientPlayer>
 
     public void doRenderLayer(AbstractClientPlayer entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale)
     {
+        EventRenderCape event = new EventRenderCape(entitylivingbaseIn.getLocationCape(), entitylivingbaseIn);
+        EventBus.getInstance().call(event);
         if (entitylivingbaseIn.hasPlayerInfo() && !entitylivingbaseIn.isInvisible() && entitylivingbaseIn.isWearing(EnumPlayerModelParts.CAPE) && entitylivingbaseIn.getLocationCape() != null)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
