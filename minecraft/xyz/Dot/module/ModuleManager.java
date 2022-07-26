@@ -4,6 +4,7 @@ import xyz.Dot.module.Movement.Sprint;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
+import xyz.Dot.module.Render.HUD;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class ModuleManager {
         //player
 
         //render
+        this.addModule(new HUD());
 
         //world
     }

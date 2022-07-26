@@ -27,6 +27,13 @@ public class Module {
         this.toggle = false;
     }
 
+    public Module(String name, int keyBind, Category moduletype,boolean toggle) {
+        this.name = name;
+        this.keyBind = keyBind;
+        this.moduletype = moduletype;
+        this.toggle = toggle;
+    }
+
     public String getName() {
         return name;
     }
@@ -56,6 +63,11 @@ public class Module {
     }
 
     public void setToggle(boolean toggle) {
+        if(toggle){
+            EventBus.getInstance().register(new Object[]{this});
+        }else{
+            EventBus.getInstance().unregister(new Object[]{this});
+        }
         this.toggle = toggle;
     }
 

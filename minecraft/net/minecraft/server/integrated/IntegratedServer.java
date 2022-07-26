@@ -39,6 +39,7 @@ import net.optifine.ClearWater;
 import net.optifine.reflect.Reflector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xyz.Dot.Client;
 
 public class IntegratedServer extends MinecraftServer
 {
@@ -253,6 +254,7 @@ public class IntegratedServer extends MinecraftServer
         if (!flag && this.isGamePaused)
         {
             logger.info("Saving and pausing game...");
+            Client.instance.save();
             this.getConfigurationManager().saveAllPlayerData();
             this.saveAllWorlds(false);
         }

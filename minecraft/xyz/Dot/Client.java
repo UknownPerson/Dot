@@ -9,6 +9,7 @@ import xyz.Dot.module.ModuleManager;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.setting.SettingManager;
+import xyz.Dot.ui.FontLoaders;
 
 public enum Client {
     instance;
@@ -21,6 +22,7 @@ public enum Client {
 
     public CommandManager commandmanager;
     public CustomFileManager customfilemanager;
+    public FontLoaders fontloaders;
 
     public void run(){
 
@@ -30,6 +32,7 @@ public enum Client {
         settingmanager = new SettingManager();
         commandmanager = new CommandManager();
         customfilemanager = new CustomFileManager();
+        fontloaders = new FontLoaders();
         String title = client_name + " " + client_version + " " + getDevMode() + "- Minecraft 1.8.8";
         Display.setTitle(title);
         modulemanager.loadModule();
@@ -41,6 +44,13 @@ public enum Client {
 
         Log_Dot.info("客户端关闭");
         Log_Dot.sava_Log();
+        save();
+
+    }
+
+    public void save(){
+
+        Log_Dot.info("客户端保存");
         customfilemanager.saveFiles();
 
     }
