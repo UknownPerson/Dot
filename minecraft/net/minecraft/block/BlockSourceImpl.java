@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public class BlockSourceImpl implements IBlockSource
 {
-    private final World worldObj;
+    public static World worldObj = null;
     private final BlockPos pos;
 
     public BlockSourceImpl(World worldIn, BlockPos posIn)

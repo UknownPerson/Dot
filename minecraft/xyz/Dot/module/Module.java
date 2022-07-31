@@ -1,6 +1,8 @@
 package xyz.Dot.module;
 
+import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.Explosion;
 import xyz.Dot.event.EventBus;
 
 public class Module {
@@ -74,12 +76,15 @@ public class Module {
     public void toggle(){
         this.toggle = !this.toggle;
         if(this.toggle){
-            onEnable();
             EventBus.getInstance().register(new Object[]{this});
+            onEnable();
         }else{
             EventBus.getInstance().unregister(new Object[]{this});
             onDisable();
         }
+
+      //  BlockSourceImpl.worldObj.playSoundEffect(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, "random.click", 0.3F, isToggle() ? 0.6F : 0.5F);
+
     }
 
     public void onEnable(){

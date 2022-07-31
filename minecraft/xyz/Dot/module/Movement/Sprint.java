@@ -8,7 +8,7 @@ import xyz.Dot.event.events.world.EventPreUpdate;
 import xyz.Dot.setting.Setting;
 
 public class Sprint extends Module {
-    Setting omni = new Setting(this, "omni" , true);
+    Setting omni = new Setting(this, "omni" , false);
     public Sprint(){
         super("Sprint", Keyboard.KEY_P, Category.MOVEMENT);
     }

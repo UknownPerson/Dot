@@ -1,5 +1,8 @@
 package xyz.Dot.module;
 
+import xyz.Dot.module.Combat.Aura;
+import xyz.Dot.module.Movement.GuiMove;
+import xyz.Dot.module.Movement.Speed;
 import xyz.Dot.module.Movement.Sprint;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
@@ -17,23 +20,16 @@ public class ModuleManager {
     }
 
     public void loadModule(){
-        //combat
+        this.addModule(new GuiMove());
 
-        //movement
-        this.addModule(new Sprint());
-        this.addModule(new Sprint());
-        this.addModule(new Sprint());
-        this.addModule(new Sprint());
-        this.addModule(new Sprint());
-        this.addModule(new Sprint());
         this.addModule(new Sprint());
 
-        //player
+        this.addModule(new Speed());
 
-        //render
+        this.addModule(new Aura());
+
         this.addModule(new HUD());
 
-        //world
     }
 
     private void addModule(Module m){
