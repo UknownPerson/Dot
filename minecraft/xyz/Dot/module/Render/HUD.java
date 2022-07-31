@@ -54,22 +54,23 @@ public class HUD extends Module {
         float y = 15;
         int num = 0;
         for (Module m : ModuleManager.getModules()) {
-            num += 2;
             if (!m.isToggle() && m.getAnimY() == 0) {
                 continue;
             }
 
-            Color rainbow = new Color(Color.HSBtoRGB((float) ((double) this.mc.thePlayer.ticksExisted / 50.0 + Math.sin((double) (rainbowTick + (y - 4) / 12) / 50.0 * 1.6)) % 1.0f, 0.5f, 1.0f));
+            num += 3;
+            if (rainbowTick1++ > 50000) {
+                rainbowTick1 = 0;
+            }
 
-                if (rainbowTick1++ > 5000) {
-                    rainbowTick1 = 0;
-                }
-            rainbowTick = rainbowTick1 / 100;
+            rainbowTick = rainbowTick1 / 1000;
             rainbowTick += num;
 
             if(rainbowTick > 50){
                 rainbowTick -= 50;
             }
+
+            Color rainbow = new Color(Color.HSBtoRGB((float) ((double) this.mc.thePlayer.ticksExisted / 50.0 + Math.sin((double) (rainbowTick + (y - 4) / 12) / 50.0 * 1.6)) % 1.0f, 0.5f, 1.0f));
 
             float yaddto;
             float endx = RenderUtils.width() - 10;
