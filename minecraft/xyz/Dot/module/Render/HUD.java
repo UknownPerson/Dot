@@ -11,6 +11,7 @@ import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
+import xyz.Dot.utils.Helper;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.TimerUtil;
 
@@ -25,6 +26,11 @@ public class HUD extends Module {
     private TimerUtil timer = new TimerUtil();
     int rainbowTick = 0;
     int rainbowTick1 = 0;
+
+    @EventHandler
+    private void onUpdatePost(EventPostUpdate e) {
+        rainbowTick1++;
+    }
 
     @EventHandler
     public void renderHud(EventRender2D event) {
@@ -58,15 +64,10 @@ public class HUD extends Module {
                 continue;
             }
 
-            num += 3;
-            if (rainbowTick1++ > 50000) {
-                rainbowTick1 = 0;
-            }
+            num += 1;
+            rainbowTick = rainbowTick1 + num;
 
-            rainbowTick = rainbowTick1 / 1000;
-            rainbowTick += num;
-
-            if(rainbowTick > 50){
+            while(rainbowTick > 50){
                 rainbowTick -= 50;
             }
 

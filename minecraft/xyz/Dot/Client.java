@@ -33,7 +33,7 @@ public enum Client {
         commandmanager = new CommandManager();
         customfilemanager = new CustomFileManager();
         fontloaders = new FontLoaders();
-        String title = client_name + " " + client_version + " " + getDevMode() + "- Minecraft 1.8.8";
+        String title = client_name + " " + client_version + " " + getDevMode() + "- Minecraft 1.8.9";
         Display.setTitle(title);
         modulemanager.loadModule();
         commandmanager.run();
