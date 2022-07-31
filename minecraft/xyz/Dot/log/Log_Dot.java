@@ -12,19 +12,19 @@ public class Log_Dot {
 
     public static void info(String text){
 
-        custom("信息", text);
+        custom("Info", text);
 
     }
 
     public static void warn(String text){
 
-        custom("警告", text);
+        custom("Warn", text);
 
     }
 
     public static void error(String text){
 
-        custom("错误", text);
+        custom("Error", text);
 
     }
 

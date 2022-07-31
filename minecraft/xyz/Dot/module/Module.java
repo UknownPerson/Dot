@@ -10,14 +10,14 @@ public class Module {
 
     private boolean toggle;
     protected Minecraft mc = Minecraft.getMinecraft();
-    private float anim;
+    private float animy;
 
-    public float getAnimX() {
-        return this.anim;
+    public float getAnimY() {
+        return this.animy;
     }
 
-    public void setAnimX(float anim) {
-        this.anim = anim;
+    public void setAnimY(float animy) {
+        this.animy = animy;
     }
 
     public Module(String name, int keyBind, Category moduletype) {

@@ -98,4 +98,39 @@ public class RenderUtils {
     public static int height() {
         return new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight();
     }
+
+    public static void startSmooth() {
+        GL11.glEnable((int)2848);
+        GL11.glEnable((int)2881);
+        GL11.glEnable((int)2832);
+        GL11.glEnable((int)3042);
+        GL11.glBlendFunc((int)770, (int)771);
+        GL11.glHint((int)3154, (int)4354);
+        GL11.glHint((int)3155, (int)4354);
+        GL11.glHint((int)3153, (int)4354);
+    }
+
+    public static void endSmooth() {
+        GL11.glDisable((int)2848);
+        GL11.glDisable((int)2881);
+        GL11.glEnable((int)2832);
+    }
+
+    public static void doGlScissor(float x, float y, float x1, float y1) {
+        float width = x1 - x;
+        float height = y1 - y;
+        Minecraft mc = Minecraft.getMinecraft();
+        int scaleFactor = 1;
+        int k = (int) mc.gameSettings.guiScale;
+        if (k == 0) {
+            k = 1000;
+        }
+        while (scaleFactor < k && mc.displayWidth / (scaleFactor + 1) >= 320
+                && mc.displayHeight / (scaleFactor + 1) >= 240) {
+            ++scaleFactor;
+        }
+        GL11.glScissor((int) (x * scaleFactor), (int) (mc.displayHeight - (y + height) * scaleFactor),
+                (int) (width * scaleFactor), (int) (height * scaleFactor));
+    }
+
 }

@@ -26,7 +26,7 @@ public enum Client {
 
     public void run(){
 
-        Log_Dot.info("客户端启动");
+        Log_Dot.info("Client Start");
         eventmanger = new EventBus();
         modulemanager = new ModuleManager();
         settingmanager = new SettingManager();
@@ -42,7 +42,7 @@ public enum Client {
 
     public void stop(){
 
-        Log_Dot.info("客户端关闭");
+        Log_Dot.info("Client Close");
         Log_Dot.sava_Log();
         save();
 
@@ -50,7 +50,7 @@ public enum Client {
 
     public void save(){
 
-        Log_Dot.info("客户端保存");
+        Log_Dot.info("Client Save");
         customfilemanager.saveFiles();
 
     }

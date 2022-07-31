@@ -21,6 +21,12 @@ public class ModuleManager {
 
         //movement
         this.addModule(new Sprint());
+        this.addModule(new Sprint());
+        this.addModule(new Sprint());
+        this.addModule(new Sprint());
+        this.addModule(new Sprint());
+        this.addModule(new Sprint());
+        this.addModule(new Sprint());
 
         //player
 

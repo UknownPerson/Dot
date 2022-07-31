@@ -19,6 +19,5 @@ public class Sprint extends Module {
         if (mc.thePlayer.getFoodStats().getFoodLevel() > 6 && !mc.thePlayer.isSneaking() && (omni.isToggle() ? mc.thePlayer.moving() : this.mc.thePlayer.moveForward > 0.0f)) {
             this.mc.thePlayer.setSprinting(true);
         }
-
     }
 }
