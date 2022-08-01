@@ -8,6 +8,7 @@ import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.event.events.world.EventPostUpdate;
 import xyz.Dot.event.events.world.EventPreUpdate;
+import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
@@ -32,7 +33,7 @@ public class HUD extends Module {
     int rainbowTick1 = 0;
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     float movespeed;
-    long startTime = 0;
+    int startTime = 0;
     float range = 0;
     //float[] bps;
     float[] bps = new float[9999];
@@ -51,15 +52,15 @@ public class HUD extends Module {
     }
 
     @EventHandler
-    private void onUpdatePre(EventPreUpdate e) {
+    private void onTick(EventTick e) {
         rainbowTick1++;
 
         posx = mc.thePlayer.posX;
         posy = mc.thePlayer.posY;
         posz = mc.thePlayer.posZ;
-        long overTime = System.nanoTime();
-        float time = (float) ((overTime - startTime) / Math.pow(10, 9));
-        startTime = System.nanoTime();
+        int overTime = mc.thePlayer.ticksExisted;
+        float time = (overTime - startTime) / 20.0f;
+        startTime = mc.thePlayer.ticksExisted;
         //float move = threegenhao((float) (Math.pow(Math.abs(posx - lastpx), 3) + Math.pow(Math.abs(posy - lastpy), 3) + Math.pow(Math.abs(posz - lastpz), 3)));
         float move = (float) Math.sqrt((float) (Math.pow(Math.abs(posx - lastpx), 2) + Math.pow(Math.abs(posz - lastpz), 2)));
         movespeed = Math.round((move / time) * 100) / 100.0f;
@@ -84,7 +85,7 @@ public class HUD extends Module {
         if (mc.gameSettings.showDebugProfilerChart) {
             return;
         }
-
+        CFontRenderer font = FontLoaders.normalfont10;
         CFontRenderer font1 = FontLoaders.normalfont16;
         String CName = Client.instance.client_name;
 
@@ -112,17 +113,19 @@ public class HUD extends Module {
 
         int StartXspeed = 20;
         int StartYspeed = 96;
-        RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 56, new Color(0, 0, 0, 64).getRGB());
+        RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
         RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64, 128, 255, 200).getRGB());
         int numsm = nums - 1;
         float xnum = 0.5f;
         float[] avglist = new float[100];
         int avgnum = 0;
         for (int i = 0; i <= 95; i++) {
-
-            float mspeed = avgm(numsm, i);
-
-            while((mspeed / xnum) > 44){
+            int rank = numsm - i;
+            if (rank < 0) {
+                rank += 1024;
+            }
+            float mspeed = bps[rank];
+            while((mspeed / xnum) > 50){
                 xnum += 0.5f;
             }
 
@@ -130,10 +133,16 @@ public class HUD extends Module {
             avgnum++;
         }
 
-        for (int i = 0; i <= 95; i++) {
-            float mspeed = avgm(numsm, i);
+        String maxstring = String.valueOf((int)(xnum * 50));
+        font.drawString(maxstring, StartXspeed + 96 - font.getStringWidth(maxstring) - 2, StartYspeed + 16, new Color(0, 0, 0,128).getRGB());
 
-            RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (56 - (mspeed / xnum))), StartXspeed + 96 - i, StartYspeed + 56, new Color(255, 255, 255, 128).getRGB());
+        for (int i = 0; i <= 95; i++) {
+            int rank = numsm - i;
+            if (rank < 0) {
+                rank += 1024;
+            }
+            float mspeed = bps[rank];
+            RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (62 - (mspeed / xnum))), StartXspeed + 96 - i, StartYspeed + 62, new Color(255, 255, 255, 128).getRGB());
         }
 
         float avg = 0;
@@ -144,7 +153,6 @@ public class HUD extends Module {
 
         String mtext = "BPS.AVG: " + avg;
         font1.drawString(mtext, StartXspeed + 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());
-
         //font1.drawString(mtext, StartXspeed + 96 - font1.getStringWidth(mtext) - 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());
 
         float y = 15;
@@ -198,38 +206,5 @@ public class HUD extends Module {
             }
             y += yadd;
         }
-    }
-
-    private float avgm(int numsm, int i) {
-        int rank00 = numsm - i - 2;
-        int rank0 = numsm - i - 1;
-        int rank = numsm - i;
-        int rank1 = numsm - i + 1;
-        int rank11 = numsm - i + 2;
-        if (rank0 < 0) {
-            rank0 += 1024;
-        }
-        if (rank < 0) {
-            rank += 1024;
-        }
-        if (rank1 < 0) {
-            rank1 += 1024;
-        }
-
-        if (rank11 < 0) {
-            rank11 += 1024;
-        }
-        if (rank00 < 0) {
-            rank00 += 1024;
-        }
-        float mspeed;
-        if(i == 0){
-            mspeed = (bps[rank00] + 2 * bps[rank0] + 3 * bps[rank]) / 6;
-        }else if(i == 1){
-            mspeed = (bps[rank00] + 2 * bps[rank0] + 5 * bps[rank] + 2 * bps[rank1]) / 10;
-        }else{
-            mspeed = (bps[rank00] + 2 * bps[rank0] + 6 * bps[rank] + 2 * bps[rank1] + bps[rank11]) / 12;
-        }
-        return mspeed;
     }
 }

@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class FontLoaders {
     private static HashMap fonts = new HashMap();
+    public static CFontRenderer normalfont10 = new CFontRenderer(FontLoaders.getNormalFont(10), true, true);
     public static CFontRenderer normalfont16 = new CFontRenderer(FontLoaders.getNormalFont(16), true, true);
     public static CFontRenderer normalfont20 = new CFontRenderer(FontLoaders.getNormalFont(20), true, true);
     public static CFontRenderer normalfont36 = new CFontRenderer(FontLoaders.getNormalFont(36), true, true);
