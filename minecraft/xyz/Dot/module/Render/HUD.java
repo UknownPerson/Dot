@@ -52,7 +52,7 @@ public class HUD extends Module {
     }
 
     @EventHandler
-    private void onTick(EventTick e) {
+    private void onPreUpdate(EventPreUpdate e) {
         rainbowTick1++;
 
         posx = mc.thePlayer.posX;
