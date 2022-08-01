@@ -7,6 +7,7 @@ import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.event.events.world.EventPostUpdate;
+import xyz.Dot.event.events.world.EventPreUpdate;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
@@ -50,7 +51,7 @@ public class HUD extends Module {
     }
 
     @EventHandler
-    private void onUpdatePost(EventPostUpdate e) {
+    private void onUpdatePre(EventPreUpdate e) {
         rainbowTick1++;
 
         posx = mc.thePlayer.posX;
@@ -114,7 +115,7 @@ public class HUD extends Module {
         RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 56, new Color(0, 0, 0, 64).getRGB());
         RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64, 128, 255, 200).getRGB());
         int numsm = nums - 1;
-        int xnum = 1;
+        float xnum = 0.125f;
         float[] avglist = new float[100];
         int avgnum = 0;
         for (int i = 0; i <= 95; i++) {
@@ -125,7 +126,7 @@ public class HUD extends Module {
             float mspeed = bps[rank];
 
             while((mspeed / xnum) > 44){
-                xnum += 1;
+                xnum += 0.125f;
             }
 
             avglist[avgnum] = mspeed;
@@ -133,11 +134,37 @@ public class HUD extends Module {
         }
 
         for (int i = 0; i <= 95; i++) {
+            int rank00 = numsm - i - 2;
+            int rank0 = numsm - i - 1;
             int rank = numsm - i;
+            int rank1 = numsm - i + 1;
+            int rank11 = numsm - i + 2;
+            if (rank0 < 0) {
+                rank0 += 1024;
+            }
             if (rank < 0) {
                 rank += 1024;
             }
-            float mspeed = bps[rank];
+            if (rank1 < 0) {
+                rank1 += 1024;
+            }
+
+            if (rank11 < 0) {
+                rank11 += 1024;
+            }
+            if (rank00 < 0) {
+                rank00 += 1024;
+            }
+            float mspeed;
+            if(i == 0){
+                mspeed = (bps[rank00] + 2 * bps[rank0] + 3 * bps[rank]) / 6;
+            }else if(i == 1){
+                mspeed = (bps[rank00] + 2 * bps[rank0] + 5 * bps[rank] + 2 * bps[rank1]) / 10;
+            }else{
+                mspeed = (bps[rank00] + 2 * bps[rank0] + 6 * bps[rank] + 2 * bps[rank1] + bps[rank11]) / 12;
+            }
+
+
             RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (56 - (mspeed / xnum))), StartXspeed + 96 - i, StartYspeed + 56, new Color(255, 255, 255, 128).getRGB());
         }
 
