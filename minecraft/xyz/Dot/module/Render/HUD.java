@@ -115,18 +115,15 @@ public class HUD extends Module {
         RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 56, new Color(0, 0, 0, 64).getRGB());
         RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64, 128, 255, 200).getRGB());
         int numsm = nums - 1;
-        float xnum = 0.125f;
+        float xnum = 0.5f;
         float[] avglist = new float[100];
         int avgnum = 0;
         for (int i = 0; i <= 95; i++) {
-            int rank = numsm - i;
-            if (rank < 0) {
-                rank += 1024;
-            }
-            float mspeed = bps[rank];
+
+            float mspeed = avgm(numsm, i);
 
             while((mspeed / xnum) > 44){
-                xnum += 0.125f;
+                xnum += 0.5f;
             }
 
             avglist[avgnum] = mspeed;
@@ -134,36 +131,7 @@ public class HUD extends Module {
         }
 
         for (int i = 0; i <= 95; i++) {
-            int rank00 = numsm - i - 2;
-            int rank0 = numsm - i - 1;
-            int rank = numsm - i;
-            int rank1 = numsm - i + 1;
-            int rank11 = numsm - i + 2;
-            if (rank0 < 0) {
-                rank0 += 1024;
-            }
-            if (rank < 0) {
-                rank += 1024;
-            }
-            if (rank1 < 0) {
-                rank1 += 1024;
-            }
-
-            if (rank11 < 0) {
-                rank11 += 1024;
-            }
-            if (rank00 < 0) {
-                rank00 += 1024;
-            }
-            float mspeed;
-            if(i == 0){
-                mspeed = (bps[rank00] + 2 * bps[rank0] + 3 * bps[rank]) / 6;
-            }else if(i == 1){
-                mspeed = (bps[rank00] + 2 * bps[rank0] + 5 * bps[rank] + 2 * bps[rank1]) / 10;
-            }else{
-                mspeed = (bps[rank00] + 2 * bps[rank0] + 6 * bps[rank] + 2 * bps[rank1] + bps[rank11]) / 12;
-            }
-
+            float mspeed = avgm(numsm, i);
 
             RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (56 - (mspeed / xnum))), StartXspeed + 96 - i, StartYspeed + 56, new Color(255, 255, 255, 128).getRGB());
         }
@@ -230,5 +198,38 @@ public class HUD extends Module {
             }
             y += yadd;
         }
+    }
+
+    private float avgm(int numsm, int i) {
+        int rank00 = numsm - i - 2;
+        int rank0 = numsm - i - 1;
+        int rank = numsm - i;
+        int rank1 = numsm - i + 1;
+        int rank11 = numsm - i + 2;
+        if (rank0 < 0) {
+            rank0 += 1024;
+        }
+        if (rank < 0) {
+            rank += 1024;
+        }
+        if (rank1 < 0) {
+            rank1 += 1024;
+        }
+
+        if (rank11 < 0) {
+            rank11 += 1024;
+        }
+        if (rank00 < 0) {
+            rank00 += 1024;
+        }
+        float mspeed;
+        if(i == 0){
+            mspeed = (bps[rank00] + 2 * bps[rank0] + 3 * bps[rank]) / 6;
+        }else if(i == 1){
+            mspeed = (bps[rank00] + 2 * bps[rank0] + 5 * bps[rank] + 2 * bps[rank1]) / 10;
+        }else{
+            mspeed = (bps[rank00] + 2 * bps[rank0] + 6 * bps[rank] + 2 * bps[rank1] + bps[rank11]) / 12;
+        }
+        return mspeed;
     }
 }
