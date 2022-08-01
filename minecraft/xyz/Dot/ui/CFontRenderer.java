@@ -38,7 +38,7 @@ extends CFont {
     }
 
     public float drawString(String text, float x, float y, int color) {
-        RenderUtils.drawRect(0,0,0,0,-1);
+        //RenderUtils.drawRect(0,0,0,0,-1);
         return this.drawString(text, x, y, color, false);
     }
 

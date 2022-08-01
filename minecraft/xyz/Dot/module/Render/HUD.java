@@ -33,6 +33,9 @@ public class HUD extends Module {
     float movespeed;
     long startTime = 0;
     float range = 0;
+    float bps[];
+    float times[];
+    int nums = 0;
 
     public float threegenhao(float num){
         Scanner sc = new Scanner(String.valueOf(num));
@@ -49,22 +52,24 @@ public class HUD extends Module {
     @EventHandler
     private void onUpdatePost(EventPostUpdate e) {
         rainbowTick1++;
-        long overTime = System.nanoTime();
+
         posx = mc.thePlayer.posX;
         posy = mc.thePlayer.posY;
         posz = mc.thePlayer.posZ;
-
+        long overTime = System.nanoTime();
         float time = (float) ((overTime - startTime) / Math.pow(10, 9));
+        startTime = System.nanoTime();
         //float move = threegenhao((float) (Math.pow(Math.abs(posx - lastpx), 3) + Math.pow(Math.abs(posy - lastpy), 3) + Math.pow(Math.abs(posz - lastpz), 3)));
         float move = (float) Math.sqrt((float) (Math.pow(Math.abs(posx - lastpx), 2) + Math.pow(Math.abs(posz - lastpz), 2)));
         movespeed = Math.round((move / time) * 100) / 100.0f;
-
         range += move;
-
         lastpx = posx;
         lastpy = posy;
         lastpz = posz;
-        startTime = System.nanoTime();
+
+        bps[nums] = movespeed;
+        times[nums] = startTime;
+        nums++;
     }
 
     @EventHandler
@@ -74,23 +79,20 @@ public class HUD extends Module {
             return;
         }
 
-        CFontRenderer font = FontLoaders.normalfont36;
         CFontRenderer font1 = FontLoaders.normalfont16;
         String CName = Client.instance.client_name;
-        String CVer = Client.instance.client_version;
 
         ArrayList<Module> list = new ArrayList<Module>();
         for (Module m : ModuleManager.getModules()) {
             list.add(m);
         }
         list.sort((o1, o2) -> font1.getStringWidth(o2.getName()) - font1.getStringWidth(o1.getName()));
-
         int StartX = 20;
         int StartY = 25;
         RenderUtils.drawRect(StartX, StartY + 12, StartX + 64, StartY + 56, new Color(0,0,0,64).getRGB());
         RenderUtils.drawRect(StartX, StartY, StartX + 64, StartY + 12, new Color(64,128,255, 200).getRGB());
         RenderUtils.drawFilledCircle(StartX + 8, StartY + 6, 3, new Color(255,255,255));
-        font1.drawString(Client.instance.client_name, StartX + 14, StartY + 4,new Color(255,255,255).getRGB());
+        font1.drawString(CName, StartX + 14, StartY + 4,new Color(255,255,255).getRGB());
         StartY += 20;
         font1.drawString("FPS: " + mc.getDebugFPS(),StartX + 5, StartY, new Color(255,255,255).getRGB());
         StartY += 12;
@@ -102,6 +104,12 @@ public class HUD extends Module {
         StartY += 12;
         font1.drawString("BPS: " + movespeed,StartX + 5, StartY, new Color(255,255,255).getRGB());
 
+        int StartXspeed = 20;
+        int StartYspeed = 96;
+        RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 56, new Color(0,0,0,64).getRGB());
+        RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64,128,255, 200).getRGB());
+        font1.drawString("BPS", StartXspeed + 5, StartYspeed + 4,new Color(255,255,255).getRGB());
+        //RenderUtils.drawRect(StartXspeed, (int) (StartYspeed + (56 - 2 * movespeed)), StartXspeed + 96, StartYspeed + 56, new Color(255,255,255,128).getRGB());
 
         float y = 15;
         int num = 0;
