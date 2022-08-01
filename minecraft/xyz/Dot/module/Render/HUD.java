@@ -29,21 +29,21 @@ public class HUD extends Module {
     private TimerUtil timer = new TimerUtil();
     int rainbowTick = 0;
     int rainbowTick1 = 0;
-    double posx,posy,posz,lastpx = 0,lastpy = 0,lastpz = 0;
+    double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     float movespeed;
     long startTime = 0;
     float range = 0;
-    float bps[];
-    float times[];
+    //float[] bps;
+    float[] bps = new float[9999];
     int nums = 0;
 
-    public float threegenhao(float num){
+    public float threegenhao(float num) {
         Scanner sc = new Scanner(String.valueOf(num));
         double a = sc.nextDouble();
-        double l = -10000,r = 10000;
-        while(r - l > 1e-8) {
+        double l = -10000, r = 10000;
+        while (r - l > 1e-8) {
             double mid = (l + r) / 2;
-            if(mid*mid*mid >= a) r = mid;
+            if (mid * mid * mid >= a) r = mid;
             else l = mid;
         }
         return (float) r;
@@ -67,9 +67,14 @@ public class HUD extends Module {
         lastpy = posy;
         lastpz = posz;
 
+        if(movespeed > 114514){
+            movespeed = 0;
+        }
         bps[nums] = movespeed;
-        times[nums] = startTime;
-        nums++;
+        // times[nums] = startTime;
+        if (nums++ > 1024) {
+            nums -= 1024;
+        }
     }
 
     @EventHandler
@@ -89,27 +94,63 @@ public class HUD extends Module {
         list.sort((o1, o2) -> font1.getStringWidth(o2.getName()) - font1.getStringWidth(o1.getName()));
         int StartX = 20;
         int StartY = 25;
-        RenderUtils.drawRect(StartX, StartY + 12, StartX + 64, StartY + 56, new Color(0,0,0,64).getRGB());
-        RenderUtils.drawRect(StartX, StartY, StartX + 64, StartY + 12, new Color(64,128,255, 200).getRGB());
-        RenderUtils.drawFilledCircle(StartX + 8, StartY + 6, 3, new Color(255,255,255));
-        font1.drawString(CName, StartX + 14, StartY + 4,new Color(255,255,255).getRGB());
+        RenderUtils.drawRect(StartX, StartY + 12, StartX + 64, StartY + 56, new Color(0, 0, 0, 64).getRGB());
+        RenderUtils.drawRect(StartX, StartY, StartX + 64, StartY + 12, new Color(64, 128, 255, 200).getRGB());
+        RenderUtils.drawFilledCircle(StartX + 8, StartY + 6, 3, new Color(255, 255, 255));
+        font1.drawString(CName, StartX + 14, StartY + 4, new Color(255, 255, 255).getRGB());
         StartY += 20;
-        font1.drawString("FPS: " + mc.getDebugFPS(),StartX + 5, StartY, new Color(255,255,255).getRGB());
+        font1.drawString("FPS: " + mc.getDebugFPS(), StartX + 5, StartY, new Color(255, 255, 255).getRGB());
         StartY += 12;
         String ping = String.valueOf(mc.getNetHandler().getPlayerInfo(Minecraft.thePlayer.getUniqueID()).getResponseTime());
-        if(ping.equals("0")){
+        if (ping.equals("0")) {
             ping = "Failed";
         }
-        font1.drawString("PING: " + ping,StartX + 5, StartY, new Color(255,255,255).getRGB());
+        font1.drawString("PING: " + ping, StartX + 5, StartY, new Color(255, 255, 255).getRGB());
         StartY += 12;
-        font1.drawString("BPS: " + movespeed,StartX + 5, StartY, new Color(255,255,255).getRGB());
+        font1.drawString("BPS: " + movespeed, StartX + 5, StartY, new Color(255, 255, 255).getRGB());
 
         int StartXspeed = 20;
         int StartYspeed = 96;
-        RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 56, new Color(0,0,0,64).getRGB());
-        RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64,128,255, 200).getRGB());
-        font1.drawString("BPS", StartXspeed + 5, StartYspeed + 4,new Color(255,255,255).getRGB());
-        //RenderUtils.drawRect(StartXspeed, (int) (StartYspeed + (56 - 2 * movespeed)), StartXspeed + 96, StartYspeed + 56, new Color(255,255,255,128).getRGB());
+        RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 56, new Color(0, 0, 0, 64).getRGB());
+        RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64, 128, 255, 200).getRGB());
+        int numsm = nums - 1;
+        int xnum = 1;
+        float[] avglist = new float[100];
+        int avgnum = 0;
+        for (int i = 0; i <= 95; i++) {
+            int rank = numsm - i;
+            if (rank < 0) {
+                rank += 1024;
+            }
+            float mspeed = bps[rank];
+
+            while((mspeed / xnum) > 44){
+                xnum += 1;
+            }
+
+            avglist[avgnum] = mspeed;
+            avgnum++;
+        }
+
+        for (int i = 0; i <= 95; i++) {
+            int rank = numsm - i;
+            if (rank < 0) {
+                rank += 1024;
+            }
+            float mspeed = bps[rank];
+            RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (56 - (mspeed / xnum))), StartXspeed + 96 - i, StartYspeed + 56, new Color(255, 255, 255, 128).getRGB());
+        }
+
+        float avg = 0;
+        for(float x : avglist){
+            avg += x;
+        }
+        avg = Math.round((avg / 96) * 100) / 100.0f;;
+
+        String mtext = "BPS.AVG: " + avg;
+        font1.drawString(mtext, StartXspeed + 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());
+
+        //font1.drawString(mtext, StartXspeed + 96 - font1.getStringWidth(mtext) - 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());
 
         float y = 15;
         int num = 0;
@@ -121,7 +162,7 @@ public class HUD extends Module {
             num += 1;
             rainbowTick = rainbowTick1 + num;
 
-            while(rainbowTick > 50){
+            while (rainbowTick > 50) {
                 rainbowTick -= 50;
             }
 
@@ -132,14 +173,14 @@ public class HUD extends Module {
             float x = endx - font1.getStringWidth(m.getName());
             float beterspeedinfps = 120.0f / mc.getDebugFPS();
 
-            if(m.isToggle()){
+            if (m.isToggle()) {
                 yaddto = 12;
-            }else{
+            } else {
                 yaddto = 0;
             }
 
             float speedy = 1.0f * beterspeedinfps;
-            if(String.valueOf(m.getAnimY()) == "NaN"){
+            if (String.valueOf(m.getAnimY()) == "NaN") {
                 m.setAnimY(yaddto);
             }
             if (m.getAnimY() < yaddto) {
@@ -155,10 +196,10 @@ public class HUD extends Module {
             float yadd = m.getAnimY();
             RenderUtils.drawRect((int) x - 2, (int) y, (int) (endx + 2), (int) (y + yadd), new Color(0, 0, 0, 64).getRGB());
             RenderUtils.drawRect((int) (endx + 2), (int) y, (int) (endx + 2 + 1), (int) (y + yadd), rainbow.getRGB());
-            if(yadd > font1.getStringHeight(m.getName())) {
+            if (yadd > font1.getStringHeight(m.getName())) {
                 int alpha = (int) ((yadd - font1.getStringHeight(m.getName())) / 6 * 255);
                 //font1.drawString(m.getName(), x,y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(255, 255, 255, alpha).getRGB());
-                font1.drawString(m.getName(), x,y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(rainbow.getRed(), rainbow.getGreen(), rainbow.getBlue(), alpha).getRGB());
+                font1.drawString(m.getName(), x, y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(rainbow.getRed(), rainbow.getGreen(), rainbow.getBlue(), alpha).getRGB());
             }
             y += yadd;
         }
