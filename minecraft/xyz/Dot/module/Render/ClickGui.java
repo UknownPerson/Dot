@@ -21,6 +21,5 @@ public class ClickGui extends Module {
     public void onEnable() {
         super.onEnable();
         this.mc.displayGuiScreen(new ClickUI());
-        this.setToggle(false);
     }
 }

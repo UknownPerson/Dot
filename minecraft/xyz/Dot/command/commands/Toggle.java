@@ -9,6 +9,8 @@ import xyz.Dot.command.Command;
 import xyz.Dot.module.Module;
 import xyz.Dot.utils.Helper;
 
+import java.util.concurrent.TimeUnit;
+
 public class Toggle
 extends Command {
     public Toggle() {

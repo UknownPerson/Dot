@@ -1,8 +1,10 @@
 package xyz.Dot.ui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
@@ -21,15 +23,17 @@ public class ClickUI extends GuiScreen {
     int width, height; // ClickGui大小
     float x, y = RenderUtils.height(); // ClickGui位置
     int xend, yend; // ClickGui位置终
-    boolean keydown = false; // 是否按下左键
-    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6world curtype) (7 module)
+    boolean keydown = false,keydown1 = false; // 是否按下左键、右键
+    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6world curtype) (7 moduletoggle) (8 module setting)
     int keydownX, keydownY; // 按下左键时的X Y
     float beterspeedinfps; // 动画帧率修补量
     boolean animyaninend = false; //进入动画Y轴是否结束
     float alpha = 5; //背景初始亮度
     public static boolean toclose = false; //关闭动画所需参数 还有bug暂时没做好先留个接口
     float[] typeanimto = new float[8]; // 类别动画目标位置
-    Module togglemodule;
+    Module togglemodule; // 开关module暂存
+    Module settingmodule; // 参数module暂存
+    boolean settingopen = false;
 
     @Override
     public void initGui() {
@@ -39,12 +43,18 @@ public class ClickUI extends GuiScreen {
     @Override
     public void onGuiClosed() {
         //toclose = true;
+        Client.instance.modulemanager.getModuleByName("ClickGui").setToggle(false);
+
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
-        beterspeedinfps = 120.0f / mc.getDebugFPS();
+        if(!Client.instance.modulemanager.getModuleByName("ClickGui").isToggle()){
+            this.mc.displayGuiScreen(null);
+        }
+
+        beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
 
         windowX = RenderUtils.width();
         windowY = RenderUtils.height();
@@ -116,15 +126,18 @@ public class ClickUI extends GuiScreen {
             }
 
             if (isHovered(rx - 4, ry, rx + font1.getStringWidth(c.name()) + 4, ry + blueheight, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
-                if(c == Category.Combat){
+                if(c != ClickGui.curType){
+                    settingopen = false;
+                }
+                if (c == Category.Combat) {
                     check = 2;
-                }else if(c == Category.Movement){
+                } else if (c == Category.Movement) {
                     check = 3;
-                }else if(c == Category.Player){
+                } else if (c == Category.Player) {
                     check = 4;
-                }else if(c == Category.Render){
+                } else if (c == Category.Render) {
                     check = 5;
-                }else if(c == Category.World){
+                } else if (c == Category.World) {
                     check = 6;
                 }
                 keydown = true;
@@ -136,11 +149,11 @@ public class ClickUI extends GuiScreen {
         }
 
         float[] speed = new float[8];
-        if(ClickGui.typeanimx[0] > typeanimto[0] &&
-                ClickGui.typeanimx[1] > typeanimto[1]){
+        if (ClickGui.typeanimx[0] > typeanimto[0] &&
+                ClickGui.typeanimx[1] > typeanimto[1]) {
             speed[0] = 8;
             speed[1] = 12;
-        }else{
+        } else {
             speed[0] = 12;
             speed[1] = 8;
         }
@@ -149,21 +162,26 @@ public class ClickUI extends GuiScreen {
         RenderUtils.drawRect((int) (ClickGui.typeanimx[0] + x), (int) ry, (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), new Color(255, 255, 255, 128).getRGB());
 
         rx = x + 5;
-        float rxend = xend - 5;
+        float rxend;
+        if(!settingopen){
+            rxend = xend - 5;
+        }else{
+            rxend = xend - 20;
+        }
         ry += 16;
         for (Module m : ModuleManager.getModules()) {
             if (m.getModuletype() == ClickGui.curType) {
-                if(m.isToggle()){
-                    RenderUtils.drawRoundRect((int) rx, (int) ry, (int) rxend, (int) (ry + 16),1,new Color(255,255,255));
-                }else{
-                    RenderUtils.drawRoundRect((int) rx, (int) ry, (int) rxend, (int) (ry + 16),1,new Color(255,255,255,128));
+                if (m.isToggle()) {
+                    RenderUtils.drawRoundRect((int) rx, (int) ry, (int) rxend, (int) (ry + 16), 1, new Color(255, 255, 255));
+                } else {
+                    RenderUtils.drawRoundRect((int) rx, (int) ry, (int) rxend, (int) (ry + 16), 1, new Color(175, 175, 175));
                 }
                 float fontytemp = ry + (20 - font.getStringHeight(m.getName())) / 2 - 1;
                 float fontxtemp = rx + 5;
-                if(m.isToggle()){
-                    font.drawString(m.getName(),fontxtemp,fontytemp,new Color(0,0,0).getRGB());
-                }else{
-                    font.drawString(m.getName(),fontxtemp,fontytemp,new Color(0,0,0,128).getRGB());
+                if (m.isToggle()) {
+                    font.drawString(m.getName(), fontxtemp, fontytemp, new Color(0, 0, 0).getRGB());
+                } else {
+                    font.drawString(m.getName(), fontxtemp, fontytemp, new Color(0, 0, 0, 128).getRGB());
                 }
 
                 if (isHovered((int) rx, (int) ry, (int) rxend, (int) (ry + 16), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
@@ -172,6 +190,23 @@ public class ClickUI extends GuiScreen {
                     keydownX = (int) (mouseX - x);
                     keydownY = (int) (mouseY - y);
                     togglemodule = m;
+                }
+                if (isHovered((int) rx, (int) ry, (int) rxend, (int) (ry + 16), mouseX, mouseY) && Mouse.isButtonDown(1) && !keydown1) {
+                    check = 8;
+                    keydown1 = true;
+                    keydownX = (int) (mouseX - x);
+                    keydownY = (int) (mouseY - y);
+                    if (!settingopen) {
+                        settingmodule = m;
+                        settingopen = true;
+                    } else {
+                        if (settingmodule == m) {
+                            settingopen = false;
+                        } else {
+                            settingmodule = m;
+                        }
+                    }
+                    Helper.sendMessage(m.getName());
                 }
 
                 ry += 20;
@@ -183,6 +218,7 @@ public class ClickUI extends GuiScreen {
         if (toclose && alpha == alphato && animyto == animgety) {
             toclose = false;
         }
+
     }
 
     public float toanim(float now, float end, float multiplier, float min) {
@@ -232,9 +268,10 @@ public class ClickUI extends GuiScreen {
             }
         }
 
-        if (!Mouse.isButtonDown(0)) {
+        if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) {
             check = 0;
             keydown = false;
+            keydown1 = false;
             keydownX = (int) (mouseX - x);
             keydownY = (int) (mouseY - y);
         }
@@ -257,20 +294,24 @@ public class ClickUI extends GuiScreen {
             ClickGui.y = mouseY - keydownY;
         }
 
-        if (check == 2){
+        if (check == 2) {
             ClickGui.curType = Category.Combat;
-        }else if (check == 3){
+        } else if (check == 3) {
             ClickGui.curType = Category.Movement;
-        }else if (check == 4){
+        } else if (check == 4) {
             ClickGui.curType = Category.Player;
-        }else if (check == 5){
+        } else if (check == 5) {
             ClickGui.curType = Category.Render;
-        }else if (check == 6){
+        } else if (check == 6) {
             ClickGui.curType = Category.World;
         }
 
-        if (check == 7){
+        if (check == 7) {
             togglemodule.toggle();
+            check = 0;
+        }
+
+        if (check == 8) {
             check = 0;
         }
 
