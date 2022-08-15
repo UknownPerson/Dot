@@ -116,5 +116,4 @@ public class RenderUtils {
         GL11.glScissor((int) (x * scaleFactor), (int) (mc.displayHeight - (y + height) * scaleFactor),
                 (int) (width * scaleFactor), (int) (height * scaleFactor));
     }
-
 }

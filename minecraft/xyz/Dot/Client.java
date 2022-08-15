@@ -42,9 +42,9 @@ public enum Client {
 
     public void stop(){
 
-        Log_Dot.info("Client Close");
-        Log_Dot.sava_Log();
         save();
+        Log_Dot.sava_Log();
+        Log_Dot.info("Client Close");
 
     }
 

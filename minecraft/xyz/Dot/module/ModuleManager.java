@@ -7,6 +7,7 @@ import xyz.Dot.module.Movement.Sprint;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
+import xyz.Dot.module.Render.ClickGui;
 import xyz.Dot.module.Render.HUD;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class ModuleManager {
     }
 
     public void loadModule(){
+        this.addModule(new ClickGui());
+
         this.addModule(new GuiMove());
 
         this.addModule(new Sprint());

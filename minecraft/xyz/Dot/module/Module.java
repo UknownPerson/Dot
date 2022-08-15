@@ -4,6 +4,10 @@ import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.Explosion;
 import xyz.Dot.event.EventBus;
+import xyz.Dot.event.EventHandler;
+import xyz.Dot.event.events.rendering.EventRender2D;
+import xyz.Dot.module.Render.ClickGui;
+import xyz.Dot.ui.ClickUI;
 
 public class Module {
     private String name;
@@ -37,7 +41,7 @@ public class Module {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {

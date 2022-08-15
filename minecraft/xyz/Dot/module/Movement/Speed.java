@@ -7,7 +7,7 @@ import xyz.Dot.module.Module;
 public class Speed extends Module {
 
     public Speed(){
-        super("Speed", Keyboard.KEY_NONE, Category.MOVEMENT);
+        super("Speed", Keyboard.KEY_NONE, Category.Movement);
     }
 
 }

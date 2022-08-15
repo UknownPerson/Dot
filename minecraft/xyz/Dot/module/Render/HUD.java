@@ -25,19 +25,18 @@ import java.util.Scanner;
 public class HUD extends Module {
 
     public HUD() {
-        super("HUD", Keyboard.KEY_NONE, Category.RENDER);
+        super("HUD", Keyboard.KEY_NONE, Category.Render);
     }
 
     private TimerUtil timer = new TimerUtil();
-    int rainbowTick = 0;
-    int rainbowTick1 = 0;
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     float movespeed;
     int startTime = 0;
     float range = 0;
     //float[] bps;
-    float[] bps = new float[9999];
+    float[] bps = new float[128];
     int nums = 0;
+    float beterspeedinfps;
 
     public float threegenhao(float num) {
         Scanner sc = new Scanner(String.valueOf(num));
@@ -53,7 +52,6 @@ public class HUD extends Module {
 
     @EventHandler
     private void onPreUpdate(EventPreUpdate e) {
-        rainbowTick1++;
 
         posx = mc.thePlayer.posX;
         posy = mc.thePlayer.posY;
@@ -69,14 +67,33 @@ public class HUD extends Module {
         lastpy = posy;
         lastpz = posz;
 
-        if(movespeed > 114514){
+        if (movespeed < 0 || time == 0) {
             movespeed = 0;
         }
         bps[nums] = movespeed;
+
         // times[nums] = startTime;
-        if (nums++ > 1024) {
-            nums -= 1024;
+        if (++nums > 100) {
+            nums -= 100;
         }
+    }
+
+    public float toanim(float now, float end, float multiplier, float min) {
+        float speed = Math.max((Math.abs(now - end) / multiplier), min) * beterspeedinfps;
+        if (now < end) {
+            if (now + speed > end) {
+                now = end;
+            } else {
+                now += speed;
+            }
+        } else if (now > end) {
+            if (now - speed < end) {
+                now = end;
+            } else {
+                now -= speed;
+            }
+        }
+        return now;
     }
 
     @EventHandler
@@ -121,11 +138,11 @@ public class HUD extends Module {
         int avgnum = 0;
         for (int i = 0; i <= 95; i++) {
             int rank = numsm - i;
-            if (rank < 0) {
-                rank += 1024;
+            if (rank < 1) {
+                rank += 100;
             }
             float mspeed = bps[rank];
-            while((mspeed / xnum) > 50){
+            while ((mspeed / xnum) > 50) {
                 xnum += 0.5f;
             }
 
@@ -133,23 +150,25 @@ public class HUD extends Module {
             avgnum++;
         }
 
-        String maxstring = String.valueOf((int)(xnum * 50));
-        font.drawString(maxstring, StartXspeed + 96 - font.getStringWidth(maxstring) - 2, StartYspeed + 16, new Color(0, 0, 0,128).getRGB());
+        String maxstring = String.valueOf((int) (xnum * 50));
+        font.drawString(maxstring, StartXspeed + 96 - font.getStringWidth(maxstring) - 2, StartYspeed + 16, new Color(0, 0, 0, 128).getRGB());
 
         for (int i = 0; i <= 95; i++) {
             int rank = numsm - i;
-            if (rank < 0) {
-                rank += 1024;
+            if (rank < 1) {
+                rank += 100;
             }
             float mspeed = bps[rank];
+
             RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (62 - (mspeed / xnum))), StartXspeed + 96 - i, StartYspeed + 62, new Color(255, 255, 255, 128).getRGB());
         }
 
         float avg = 0;
-        for(float x : avglist){
+        for (float x : avglist) {
             avg += x;
         }
-        avg = Math.round((avg / 96) * 100) / 100.0f;;
+        avg = Math.round((avg / 96) * 100) / 100.0f;
+        ;
 
         String mtext = "BPS.AVG: " + avg;
         font1.drawString(mtext, StartXspeed + 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());
@@ -162,47 +181,34 @@ public class HUD extends Module {
                 continue;
             }
 
-            num += 1;
-            rainbowTick = rainbowTick1 + num;
-
-            while (rainbowTick > 50) {
-                rainbowTick -= 50;
-            }
-
-            Color rainbow = new Color(Color.HSBtoRGB((float) ((double) this.mc.thePlayer.ticksExisted / 500.0 + Math.sin((double) (rainbowTick + (y - 4) / 12) / 50.0 * 1.6)) % 1.0f, 0.5f, 1.0f));
-
             float yaddto;
             float endx = RenderUtils.width() - 10;
             float x = endx - font1.getStringWidth(m.getName());
-            float beterspeedinfps = 120.0f / mc.getDebugFPS();
+            beterspeedinfps = 120.0f / mc.getDebugFPS();
 
             if (m.isToggle()) {
-                yaddto = 12;
+                yaddto = 15;
             } else {
                 yaddto = 0;
             }
 
-            float speedy = 1.0f * beterspeedinfps;
-            if (String.valueOf(m.getAnimY()) == "NaN") {
-                m.setAnimY(yaddto);
-            }
-            if (m.getAnimY() < yaddto) {
-                m.setAnimY(m.getAnimY() + speedy);
-            }
-            if (m.getAnimY() > yaddto) {
-                m.setAnimY(m.getAnimY() - speedy);
-            }
-            if ((Math.abs(m.getAnimY() - yaddto)) <= speedy) {
-                m.setAnimY(yaddto);
-            }
+            float yadtemp = 15;
 
+            m.setAnimY(toanim(m.getAnimY(), yaddto, 10, 0.1f));
             float yadd = m.getAnimY();
-            RenderUtils.drawRect((int) x - 2, (int) y, (int) (endx + 2), (int) (y + yadd), new Color(0, 0, 0, 64).getRGB());
-            RenderUtils.drawRect((int) (endx + 2), (int) y, (int) (endx + 2 + 1), (int) (y + yadd), rainbow.getRGB());
+            RenderUtils.drawRect((int) x - 3, (int) y, (int) (endx + 3), (int) (y + yadd), new Color(0, 0, 0, 64).getRGB());
+            //RenderUtils.drawRect((int) (endx + 2), (int) y, (int) (endx + 2 + 1), (int) (y + yadd), rainbow.getRGB());
             if (yadd > font1.getStringHeight(m.getName())) {
-                int alpha = (int) ((yadd - font1.getStringHeight(m.getName())) / 6 * 255);
-                //font1.drawString(m.getName(), x,y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(255, 255, 255, alpha).getRGB());
-                font1.drawString(m.getName(), x, y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(rainbow.getRed(), rainbow.getGreen(), rainbow.getBlue(), alpha).getRGB());
+                int alpha = Math.round(((yadd - font1.getStringHeight(m.getName())) / (yadtemp - 6.0f)) * 255);
+
+                if (alpha < 5) {
+                    alpha = 5;
+                } else if (alpha > 255) {
+                    alpha = 255;
+                }
+
+                font1.drawString(m.getName(), x, y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(255, 255, 255, alpha).getRGB());
+                //font1.drawString(m.getName(), x, y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(rainbow.getRed(), rainbow.getGreen(), rainbow.getBlue(), alpha).getRGB());
             }
             y += yadd;
         }
