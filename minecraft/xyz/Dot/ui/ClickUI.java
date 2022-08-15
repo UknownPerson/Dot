@@ -22,13 +22,14 @@ public class ClickUI extends GuiScreen {
     float x, y = RenderUtils.height(); // ClickGui位置
     int xend, yend; // ClickGui位置终
     boolean keydown = false; // 是否按下左键
-    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6world curtype)
+    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6world curtype) (7 module)
     int keydownX, keydownY; // 按下左键时的X Y
     float beterspeedinfps; // 动画帧率修补量
     boolean animyaninend = false; //进入动画Y轴是否结束
     float alpha = 5; //背景初始亮度
     public static boolean toclose = false; //关闭动画所需参数 还有bug暂时没做好先留个接口
-    float[] typeanimto = new float[16];
+    float[] typeanimto = new float[8]; // 类别动画目标位置
+    Module togglemodule;
 
     @Override
     public void initGui() {
@@ -165,6 +166,14 @@ public class ClickUI extends GuiScreen {
                     font.drawString(m.getName(),fontxtemp,fontytemp,new Color(0,0,0,128).getRGB());
                 }
 
+                if (isHovered((int) rx, (int) ry, (int) rxend, (int) (ry + 16), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
+                    check = 7;
+                    keydown = true;
+                    keydownX = (int) (mouseX - x);
+                    keydownY = (int) (mouseY - y);
+                    togglemodule = m;
+                }
+
                 ry += 20;
             }
         }
@@ -258,6 +267,11 @@ public class ClickUI extends GuiScreen {
             ClickGui.curType = Category.Render;
         }else if (check == 6){
             ClickGui.curType = Category.World;
+        }
+
+        if (check == 7){
+            togglemodule.toggle();
+            check = 0;
         }
 
     }
