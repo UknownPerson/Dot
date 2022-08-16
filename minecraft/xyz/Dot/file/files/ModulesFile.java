@@ -94,7 +94,12 @@ public class ModulesFile extends CustomFile {
 
             JsonObject jsonObject = new JsonObject();
 
-            jsonObject.addProperty("toggled", module.isToggle());
+            if(module.getName().equals("ClickGui")){
+                jsonObject.addProperty("toggled", false);
+            }else{
+                jsonObject.addProperty("toggled", module.isToggle());
+            }
+
             jsonObject.addProperty("key", module.getKeyBind());
 
 

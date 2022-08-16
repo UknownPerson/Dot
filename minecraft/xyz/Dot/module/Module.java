@@ -18,6 +18,16 @@ public class Module {
     protected Minecraft mc = Minecraft.getMinecraft();
     private float animy;
 
+    public float getColoranim() {
+        return coloranim;
+    }
+
+    public void setColoranim(float coloranim) {
+        this.coloranim = coloranim;
+    }
+
+    float coloranim = 175;
+
     public float getAnimY() {
         return this.animy;
     }
