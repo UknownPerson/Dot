@@ -50,6 +50,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import xyz.Dot.module.ModuleManager;
 
 public abstract class EntityLivingBase extends Entity
 {
@@ -2018,7 +2019,9 @@ public abstract class EntityLivingBase extends Entity
             else if (this.onGround && this.jumpTicks == 0)
             {
                 this.jump();
-                this.jumpTicks = 10;
+                if(!ModuleManager.getModuleByName("NoJumpDelay").isToggle()) {
+                    this.jumpTicks = 10;
+                }
             }
         }
         else

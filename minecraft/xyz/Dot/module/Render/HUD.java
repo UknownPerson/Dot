@@ -66,7 +66,6 @@ public class HUD extends Module {
         lastpx = posx;
         lastpy = posy;
         lastpz = posz;
-
         if (movespeed < 0 || time == 0) {
             movespeed = 0;
         }

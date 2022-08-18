@@ -2,6 +2,7 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import xyz.Dot.Client;
@@ -32,9 +33,7 @@ public class ClickUI extends GuiScreen {
     public static boolean toclose = false; //关闭动画所需参数 还有bug暂时没做好先留个接口
     float[] typeanimto = new float[8]; // 类别动画目标位置
     Module togglemodule; // 开关module暂存
-    Module settingmodule; // 参数module暂存
-    boolean settingopen = false;
-    float xanimtemp;
+    float rxendanim = 0;
 
     @Override
     public void initGui() {
@@ -109,13 +108,6 @@ public class ClickUI extends GuiScreen {
 
         rx += font1.getStringWidth(thisnametext) + 32;
 
-        if (ClickGui.typeanimx[0] == 0) {
-            ClickGui.typeanimx[0] = -4;
-        }
-        if (ClickGui.typeanimx[1] == 0) {
-            ClickGui.typeanimx[1] = font1.getStringWidth(Category.Combat.name()) + 4;
-        }
-
         float fontrendery = y + (blueheight - font1.getStringHeight(ClickGui.curType.name())) / 2 + 1;
         for (Category c : Category.values()) {
             //RenderUtils.drawRect((int) rx, (int) ry, (int) (rx + 0.3f * width), (int) (ry + 0.0625f * height), new Color(255, 255, 255).getRGB());
@@ -126,9 +118,16 @@ public class ClickUI extends GuiScreen {
                 typeanimto[1] = rx + font1.getStringWidth(c.name()) + 4 - x;
             }
 
+            if (ClickGui.typeanimx[0] == 0.0) {
+                ClickGui.typeanimx[0] = typeanimto[0];
+            }
+            if (ClickGui.typeanimx[1] == 0.0f) {
+                ClickGui.typeanimx[1] = typeanimto[1];
+            }
+
             if (isHovered(rx - 4, ry, rx + font1.getStringWidth(c.name()) + 4, ry + blueheight, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                 if (c != ClickGui.curType) {
-                    settingopen = false;
+                    ClickGui.settingopen = false;
                 }
                 if (c == Category.Combat) {
                     check = 2;
@@ -163,13 +162,33 @@ public class ClickUI extends GuiScreen {
         RenderUtils.drawRect((int) (ClickGui.typeanimx[0] + x), (int) ry, (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), new Color(255, 255, 255, 128).getRGB());
 
         rx = x + 5;
-        float rxend;
-        if (!settingopen) {
-            rxend = xend - 5;
+        float rxendto;
+        if (!ClickGui.settingopen) {
+            rxendto =  - 5;
         } else {
-            rxend = xend - 20;
+            rxendto = (float) ( - 0.5 * width - 2.5f);
         }
+
+        if(rxendanim == 0){
+            rxendanim = rxendto;
+        }
+
+        rxendanim = toanim(rxendanim,rxendto,12,0.1f);
+
+        float userxendanim = rxendanim + xend;
+
         ry += 16;
+
+        if((xend - 5) > (int) (userxendanim + 5)){
+            int round;
+            if(((xend - 5) - (int) (userxendanim + 5)) > 1){
+                round = 1;
+            }else{
+                round = 0;
+            }
+            RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5,yend - 5,round,new Color(255,255,255));
+        }
+
         for (Module m : ModuleManager.getModules()) {
 
             float coloranimto;
@@ -190,35 +209,34 @@ public class ClickUI extends GuiScreen {
             Color fontcanim = new Color( 0,  0,  0, (int)fontcoloranim);
 
             if (m.getModuletype() == ClickGui.curType) {
-                RenderUtils.drawRoundRect((int) rx, (int) ry, (int) rxend, (int) (ry + 16), 1, canim);
+                RenderUtils.drawRoundRect((int) rx, (int) ry, (int) userxendanim, (int) (ry + 16), 1, canim);
 
                 float fontytemp = ry + (20 - font.getStringHeight(m.getName())) / 2 - 1;
                 float fontxtemp = rx + 5;
                 font.drawString(m.getName(), fontxtemp, fontytemp, fontcanim.getRGB());
 
-                if (isHovered((int) rx, (int) ry, (int) rxend, (int) (ry + 16), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
+                if (isHovered((int) rx, (int) ry, (int) userxendanim, (int) (ry + 16), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                     check = 7;
                     keydown = true;
                     keydownX = (int) (mouseX - x);
                     keydownY = (int) (mouseY - y);
                     togglemodule = m;
                 }
-                if (isHovered((int) rx, (int) ry, (int) rxend, (int) (ry + 16), mouseX, mouseY) && Mouse.isButtonDown(1) && !keydown1) {
+                if (isHovered((int) rx, (int) ry, (int) userxendanim, (int) (ry + 16), mouseX, mouseY) && Mouse.isButtonDown(1) && !keydown1) {
                     check = 8;
                     keydown1 = true;
                     keydownX = (int) (mouseX - x);
                     keydownY = (int) (mouseY - y);
-                    if (!settingopen) {
-                        settingmodule = m;
-                        settingopen = true;
+                    if (!ClickGui.settingopen) {
+                        ClickGui.settingmodule = m;
+                        ClickGui.settingopen = true;
                     } else {
-                        if (settingmodule == m) {
-                            settingopen = false;
+                        if (ClickGui.settingmodule == m) {
+                            ClickGui.settingopen = false;
                         } else {
-                            settingmodule = m;
+                            ClickGui.settingmodule = m;
                         }
                     }
-                    Helper.sendMessage(m.getName());
                 }
 
                 ry += 20;

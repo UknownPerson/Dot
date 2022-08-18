@@ -1,5 +1,6 @@
 package xyz.Dot;
 
+import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.core.appender.FileManager;
 import org.lwjgl.opengl.Display;
 import xyz.Dot.command.CommandManager;
@@ -7,6 +8,7 @@ import xyz.Dot.file.CustomFileManager;
 import xyz.Dot.log.Log_Dot;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.event.EventBus;
+import xyz.Dot.module.Render.FullBright;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.setting.SettingManager;
 import xyz.Dot.ui.FontLoaders;
@@ -16,6 +18,7 @@ public enum Client {
     public String client_name = "Dot";
     public String client_version = "0.1";
     public boolean inDevelopment = true;
+    protected Minecraft mc = Minecraft.getMinecraft();
     public EventBus eventmanger;
     public ModuleManager modulemanager;
     public SettingManager settingmanager;
@@ -43,6 +46,7 @@ public enum Client {
     public void stop(){
 
         save();
+        mc.gameSettings.saturation = FullBright.old;
         Log_Dot.sava_Log();
         Log_Dot.info("Client Close");
 

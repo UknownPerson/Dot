@@ -98,6 +98,7 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender3D;
+import xyz.Dot.module.ModuleManager;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -794,7 +795,9 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
                         if (d7 < d3)
                         {
-                            d3 = d7;
+                            if (d7 < d3&&!ModuleManager.getModuleByName("ViewClip").isToggle()) {
+                                d3 = d7;
+                            }
                         }
                     }
                 }

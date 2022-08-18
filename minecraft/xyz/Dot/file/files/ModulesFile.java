@@ -84,7 +84,6 @@ public class ModulesFile extends CustomFile {
     public void saveFile() throws IOException {
         makeDirecotry();
 
-
         for (Module module : Client.instance.modulemanager.getModules()) {
 
             makeModuleFile(module);

@@ -51,11 +51,13 @@ import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.misc.EventChat;
 import xyz.Dot.event.events.world.EventMove;
 import xyz.Dot.event.events.world.EventPostUpdate;
 import xyz.Dot.event.events.world.EventPreUpdate;
+import xyz.Dot.module.ModuleManager;
 
 public class EntityPlayerSP extends AbstractClientPlayer
 {
@@ -344,6 +346,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
     {
         super.swingItem();
         this.sendQueue.addToSendQueue(new C0APacketAnimation());
+    }
+
+    public void swingItem(boolean fabao)
+    {
+        super.swingItem();
+        if(fabao){
+            this.sendQueue.addToSendQueue(new C0APacketAnimation());
+        }
     }
 
     public void respawnPlayer()
@@ -852,7 +862,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             }
         }
 
-        if (!this.isSprinting() && this.movementInput.moveForward >= f && flag3 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && this.mc.gameSettings.keyBindInventory.isKeyDown())
+        if (!this.isSprinting() && this.movementInput.moveForward >= f && flag3 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness) && (this.mc.gameSettings.keyBindInventory.isKeyDown() || ModuleManager.getModuleByName("Sprint").isToggle()))
         {
             this.setSprinting(true);
         }

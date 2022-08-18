@@ -1,14 +1,11 @@
 package xyz.Dot.module;
 
-import xyz.Dot.module.Combat.Aura;
-import xyz.Dot.module.Movement.GuiMove;
-import xyz.Dot.module.Movement.Speed;
 import xyz.Dot.module.Movement.Sprint;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
-import xyz.Dot.module.Render.ClickGui;
-import xyz.Dot.module.Render.HUD;
+import xyz.Dot.module.Player.NoJumpDelay;
+import xyz.Dot.module.Render.*;
 
 import java.util.ArrayList;
 
@@ -21,18 +18,24 @@ public class ModuleManager {
     }
 
     public void loadModule(){
-        this.addModule(new ClickGui());
-
-        this.addModule(new GuiMove());
-
+        //movement
         this.addModule(new Sprint());
 
-        this.addModule(new Speed());
+        //player
+        this.addModule(new NoJumpDelay());
 
-        this.addModule(new Aura());
+        //render
+        this.addModule(new ClickGui());
+
+        this.addModule(new EveryThingBlock());
+
+        this.addModule(new FullBright());
 
         this.addModule(new HUD());
 
+        this.addModule(new OldBlockRender());
+
+        this.addModule(new ViewClip());
     }
 
     private void addModule(Module m){
