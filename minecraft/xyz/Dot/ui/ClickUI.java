@@ -2,16 +2,12 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 import xyz.Dot.Client;
-import xyz.Dot.event.EventHandler;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
-import xyz.Dot.module.Render.ClickGui;
-import xyz.Dot.utils.Helper;
+import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -25,7 +21,7 @@ public class ClickUI extends GuiScreen {
     float x, y = RenderUtils.height(); // ClickGui位置
     int xend, yend; // ClickGui位置终
     boolean keydown = false, keydown1 = false; // 是否按下左键、右键
-    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6world curtype) (7 moduletoggle) (8 module setting)
+    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6保留 curtype) (7 moduletoggle) (8 module setting)
     int keydownX, keydownY; // 按下左键时的X Y
     float beterspeedinfps; // 动画帧率修补量
     boolean animyaninend = false; //进入动画Y轴是否结束
@@ -34,6 +30,8 @@ public class ClickUI extends GuiScreen {
     float[] typeanimto = new float[8]; // 类别动画目标位置
     Module togglemodule; // 开关module暂存
     float rxendanim = 0;
+    float customx = RenderUtils.width();
+    boolean customend = false;
 
     @Override
     public void initGui() {
@@ -129,17 +127,16 @@ public class ClickUI extends GuiScreen {
                 if (c != ClickGui.curType) {
                     ClickGui.settingopen = false;
                 }
-                if (c == Category.Combat) {
+                if (c == Category.Render) {
                     check = 2;
-                } else if (c == Category.Movement) {
+                } else if (c == Category.Misc) {
                     check = 3;
-                } else if (c == Category.Player) {
+                } else if (c == Category.Cheat) {
                     check = 4;
-                } else if (c == Category.Render) {
+                } else if (c == Category.Client) {
                     check = 5;
-                } else if (c == Category.World) {
-                    check = 6;
                 }
+                //check = 6;
                 keydown = true;
                 keydownX = (int) (mouseX - x);
                 keydownY = (int) (mouseY - y);
@@ -164,41 +161,38 @@ public class ClickUI extends GuiScreen {
         rx = x + 5;
         float rxendto;
         if (!ClickGui.settingopen) {
-            rxendto =  - 5;
+            rxendto = -5;
         } else {
-            rxendto = (float) ( - 0.5 * width - 2.5f);
+            rxendto = (float) (-0.5 * width - 2.5f);
         }
 
-        if(rxendanim == 0){
+        if (rxendanim == 0) {
             rxendanim = rxendto;
         }
 
-        rxendanim = toanim(rxendanim,rxendto,12,0.1f);
+        rxendanim = toanim(rxendanim, rxendto, 12, 0.1f);
 
         float userxendanim = rxendanim + xend;
 
         ry += 16;
 
-        if((xend - 5) > (int) (userxendanim + 5)){
+        if ((xend - 5) > (int) (userxendanim + 5)) {
             int round;
-            if(((xend - 5) - (int) (userxendanim + 5)) > 1){
+            if (((xend - 5) - (int) (userxendanim + 5)) > 1) {
                 round = 1;
-            }else{
+            } else {
                 round = 0;
             }
-            RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5,yend - 5,round,new Color(255,255,255));
+            RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5, round, new Color(255, 255, 255));
         }
 
         for (Module m : ModuleManager.getModules()) {
 
             float coloranimto;
-            float fontcoloranimto;
             if (m.isToggle()) {
                 coloranimto = 255;
-                fontcoloranimto = 255;
             } else {
                 coloranimto = 175;
-                fontcoloranimto = 128;
             }
 
             m.setColoranim(toanim(m.getColoranim(), coloranimto, 16, 0.1f));
@@ -206,7 +200,7 @@ public class ClickUI extends GuiScreen {
             Color canim = new Color((int) coloranim, (int) coloranim, (int) coloranim);
 
             float fontcoloranim = m.getColoranim();
-            Color fontcanim = new Color( 0,  0,  0, (int)fontcoloranim);
+            Color fontcanim = new Color(0, 0, 0, (int) fontcoloranim);
 
             if (m.getModuletype() == ClickGui.curType) {
                 RenderUtils.drawRoundRect((int) rx, (int) ry, (int) userxendanim, (int) (ry + 16), 1, canim);
@@ -242,6 +236,30 @@ public class ClickUI extends GuiScreen {
                 ry += 20;
             }
         }
+
+        int customstartxto = windowX - 50;
+        int customstarty = windowY - 25;
+        int customwidth = 40;
+        int customheight = 15;
+        String customtext = "Custom";
+
+        customend = true;
+        if(customend){
+            customx = customstartxto;
+        }else{
+            customx = toanim(customx,customstartxto,8,1f);
+        }
+
+        if(customx == customstartxto){
+            customend = true;
+        }
+        int customstartx = (int) customx;
+
+        int fontstartx = (customwidth - font.getStringWidth(customtext)) / 2 + customstartx;
+        int fontstarty = (customheight - font.getStringHeight(customtext)) / 2 + customstarty + 1;
+
+        RenderUtils.drawRoundRect(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, 1, new Color(64, 128, 255));
+        font.drawString(customtext, fontstartx, fontstarty, new Color(255, 255, 255).getRGB());
 
         check(mouseX, mouseY);
 
@@ -325,16 +343,16 @@ public class ClickUI extends GuiScreen {
         }
 
         if (check == 2) {
-            ClickGui.curType = Category.Combat;
-        } else if (check == 3) {
-            ClickGui.curType = Category.Movement;
-        } else if (check == 4) {
-            ClickGui.curType = Category.Player;
-        } else if (check == 5) {
             ClickGui.curType = Category.Render;
-        } else if (check == 6) {
-            ClickGui.curType = Category.World;
-        }
+        } else if (check == 3) {
+            ClickGui.curType = Category.Misc;
+        } else if (check == 4) {
+            ClickGui.curType = Category.Cheat;
+        } else if (check == 5) {
+            ClickGui.curType = Category.Client;
+        } /*else if (check == 6) {
+
+        }*/
 
         if (check == 7) {
             togglemodule.toggle();

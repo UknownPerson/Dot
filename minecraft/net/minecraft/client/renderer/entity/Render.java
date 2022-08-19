@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.src.Config;
 import net.minecraft.util.AxisAlignedBB;
@@ -24,6 +25,11 @@ import net.minecraft.world.World;
 import net.optifine.entity.model.IEntityRenderer;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.module.ModuleManager;
+import xyz.Dot.ui.CFontRenderer;
+import xyz.Dot.ui.FontLoaders;
+
+import java.awt.*;
 
 public abstract class Render<T extends Entity> implements IEntityRenderer
 {
@@ -362,7 +368,6 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
     protected void renderLivingLabel(T entityIn, String str, double x, double y, double z, int maxDistance)
     {
         double d0 = entityIn.getDistanceSqToEntity(this.renderManager.livingPlayer);
-
         if (d0 <= (double)(maxDistance * maxDistance))
         {
             FontRenderer fontrenderer = this.getFontRendererFromRenderManager();
@@ -388,19 +393,51 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
                 i = -10;
             }
 
-            int j = fontrenderer.getStringWidth(str) / 2;
+            int j;
+            boolean nt = ModuleManager.getModuleByName("NameTag").isToggle() && Minecraft.getMinecraft().theWorld.playerEntities.contains(entityIn);
+            CFontRenderer font = FontLoaders.normalfont16;
+            if(nt){
+                str = str + " " + Math.round(((EntityLivingBase)entityIn).getHealth() * 10) / 10.0f;
+                j = font.getStringWidth(str) / 2;
+            }else{
+                j = fontrenderer.getStringWidth(str) / 2;
+            }
             GlStateManager.disableTexture2D();
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-            worldrenderer.pos((double)(-j - 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-            worldrenderer.pos((double)(-j - 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-            worldrenderer.pos((double)(j + 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-            worldrenderer.pos((double)(j + 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+            if(nt){
+                i -= 5;
+                worldrenderer.pos((double)(-j - 5), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double)(-j - 5), (double)(8 + i + 5), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double)(j + 5), (double)(8 + i + 5), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double)(j + 5), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+
+                float h =((EntityLivingBase)entityIn).getHealth();
+                float maxh = ((EntityLivingBase)entityIn).getMaxHealth();
+                float hx = ((j + 5) - (-j - 5)) * (h / maxh) + (-j - 5);
+                worldrenderer.pos((double)(-j - 5), (double)(-1 + i + 12), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+                worldrenderer.pos((double)(-j - 5), (double)(8 + i + 5), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+                worldrenderer.pos((double)(hx), (double)(8 + i + 5), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+                worldrenderer.pos((double)(hx), (double)(-1 + i + 12), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+            }else{
+                worldrenderer.pos((double)(-j - 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double)(-j - 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double)(j + 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double)(j + 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+            }
             tessellator.draw();
             GlStateManager.enableTexture2D();
-            fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, 553648127);
+            if(nt){
+                font.drawString(str, -font.getStringWidth(str) / 2, i + 3, new Color(255,255,255,64).getRGB());
+            }else{
+                fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, 553648127);
+            }
             GlStateManager.enableDepth();
             GlStateManager.depthMask(true);
-            fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, -1);
+            if(nt){
+                font.drawString(str, -font.getStringWidth(str) / 2, i + 3, -1);
+            }else {
+                fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, -1);
+            }
             GlStateManager.enableLighting();
             GlStateManager.disableBlend();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

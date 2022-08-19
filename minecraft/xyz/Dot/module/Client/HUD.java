@@ -1,4 +1,4 @@
-package xyz.Dot.module.Render;
+package xyz.Dot.module.Client;
 
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
@@ -25,7 +25,7 @@ import java.util.Scanner;
 public class HUD extends Module {
 
     public HUD() {
-        super("HUD", Keyboard.KEY_NONE, Category.Render);
+        super("HUD", Keyboard.KEY_NONE, Category.Client);
     }
 
     private TimerUtil timer = new TimerUtil();

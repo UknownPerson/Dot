@@ -1,10 +1,15 @@
 package xyz.Dot.module;
 
-import xyz.Dot.module.Movement.Sprint;
+import xyz.Dot.module.Render.NameTag;
+import xyz.Dot.module.Cheat.ViewClip;
+import xyz.Dot.module.Client.ClickGui;
+import xyz.Dot.module.Client.HUD;
+import xyz.Dot.module.Misc.KeyBoard;
+import xyz.Dot.module.Misc.Sprint;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
-import xyz.Dot.module.Player.NoJumpDelay;
+import xyz.Dot.module.Cheat.NoJumpDelay;
 import xyz.Dot.module.Render.*;
 
 import java.util.ArrayList;
@@ -18,24 +23,24 @@ public class ModuleManager {
     }
 
     public void loadModule(){
-        //movement
-        this.addModule(new Sprint());
-
-        //player
+        //Cheat
         this.addModule(new NoJumpDelay());
+        this.addModule(new ViewClip());
 
-        //render
+        //Client
         this.addModule(new ClickGui());
-
-        this.addModule(new EveryThingBlock());
-
-        this.addModule(new FullBright());
-
         this.addModule(new HUD());
 
-        this.addModule(new OldBlockRender());
+        //Misc
+        this.addModule(new KeyBoard());
+        this.addModule(new Sprint());
 
-        this.addModule(new ViewClip());
+        //Render
+        this.addModule(new EveryThingBlock());
+        this.addModule(new FullBright());
+        this.addModule(new NameTag());
+        this.addModule(new NoHurtCamera());
+        this.addModule(new OldBlockRender());
     }
 
     private void addModule(Module m){
@@ -53,6 +58,16 @@ public class ModuleManager {
 
     public static ArrayList<Module> getModules() {
         return modules;
+    }
+
+    public static ArrayList<Module> getToggleModules() {
+        ArrayList<Module> togglelist = new ArrayList<Module>();
+        for(Module m : getModules()){
+            if(m.isToggle()){
+                togglelist.add(m);
+            }
+        }
+        return togglelist;
     }
 
 

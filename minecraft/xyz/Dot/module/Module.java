@@ -1,13 +1,7 @@
 package xyz.Dot.module;
 
-import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.Explosion;
 import xyz.Dot.event.EventBus;
-import xyz.Dot.event.EventHandler;
-import xyz.Dot.event.events.rendering.EventRender2D;
-import xyz.Dot.module.Render.ClickGui;
-import xyz.Dot.ui.ClickUI;
 
 public class Module {
     private String name;
@@ -27,6 +21,16 @@ public class Module {
     }
 
     float coloranim = 175;
+
+    public float getPartialTicks() {
+        return partialTicks;
+    }
+
+    public void setPartialTicks(float partialTicks) {
+        this.partialTicks = partialTicks;
+    }
+
+    float partialTicks;
 
     public float getAnimY() {
         return this.animy;

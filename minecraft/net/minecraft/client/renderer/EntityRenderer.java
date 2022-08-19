@@ -96,6 +96,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender3D;
 import xyz.Dot.module.ModuleManager;
@@ -677,6 +678,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
     private void hurtCameraEffect(float partialTicks)
     {
+
+        if(ModuleManager.getModuleByName("NoHurtCamera").isToggle()){
+            return;
+        }
+
         if (this.mc.getRenderViewEntity() instanceof EntityLivingBase)
         {
             EntityLivingBase entitylivingbase = (EntityLivingBase)this.mc.getRenderViewEntity();
@@ -1888,6 +1894,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
         GlStateManager.enableCull();
         GlStateManager.disableBlend();
         GlStateManager.disableFog();
+
+        ModuleManager.getToggleModules().forEach(it -> it.setPartialTicks(partialTicks));
 
         if (entity.posY + (double)entity.getEyeHeight() >= 128.0D + (double)(this.mc.gameSettings.ofCloudsHeight * 128.0F))
         {

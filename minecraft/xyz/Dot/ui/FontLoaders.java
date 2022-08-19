@@ -21,6 +21,15 @@ public class FontLoaders {
 
     public static CFontRenderer comfortaafont16 = new CFontRenderer(FontLoaders.getComfortaaFont(16), true, true);
 
+/*    public FontLoaders(){
+        normalfont16un = getUniFont("verdana", 18.0F, false);
+    }
+
+    public static UnicodeFontRenderer normalfont16un;
+
+    static {
+        normalfont16un = getUniFont("normalfont16", 18.0F, false);
+    }*/
 
     private static Font getDefault(int size) {
         return new Font("default", 0, size);
@@ -33,7 +42,7 @@ public class FontLoaders {
             if (fonts.containsKey(s) && ((HashMap) fonts.get(s)).containsKey(size)) {
                 return (UnicodeFontRenderer) ((HashMap) fonts.get(s)).get(size);
             }
-            UnicodeFontRenderer = new UnicodeFontRenderer(Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("fonts/msyh.ttf")).getInputStream()).deriveFont(size), size, -1, -1, false);
+            UnicodeFontRenderer = new UnicodeFontRenderer(Font.createFont(0, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dot/font.ttf")).getInputStream()).deriveFont(size), size, -1, -1, false);
             UnicodeFontRenderer.setUnicodeFlag(true);
             UnicodeFontRenderer.setBidiFlag(Minecraft.getMinecraft().getLanguageManager().isCurrentLanguageBidirectional());
             HashMap hashMap = new HashMap();
