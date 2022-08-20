@@ -3,8 +3,6 @@ package net.minecraft.client.gui;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
-import java.util.Comparator;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -19,6 +17,10 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldSettings;
+import xyz.Dot.module.ModuleManager;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class GuiPlayerTabOverlay extends Gui
 {
@@ -122,22 +124,19 @@ public class GuiPlayerTabOverlay extends Gui
         List<String> list1 = null;
         List<String> list2 = null;
 
-        if (this.header != null)
-        {
+        boolean text = !ModuleManager.getModuleByName("BetterTabList").isToggle();
+        if (this.header != null && text) {
             list1 = this.mc.fontRendererObj.listFormattedStringToWidth(this.header.getFormattedText(), width - 50);
 
-            for (String s : list1)
-            {
+            for (String s : list1) {
                 l1 = Math.max(l1, this.mc.fontRendererObj.getStringWidth(s));
             }
         }
 
-        if (this.footer != null)
-        {
+        if (this.footer != null && text) {
             list2 = this.mc.fontRendererObj.listFormattedStringToWidth(this.footer.getFormattedText(), width - 50);
 
-            for (String s2 : list2)
-            {
+            for (String s2 : list2) {
                 l1 = Math.max(l1, this.mc.fontRendererObj.getStringWidth(s2));
             }
         }

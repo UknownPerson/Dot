@@ -5,9 +5,9 @@ import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
 import xyz.Dot.Client;
 import xyz.Dot.module.Category;
+import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
-import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -21,7 +21,7 @@ public class ClickUI extends GuiScreen {
     float x, y = RenderUtils.height(); // ClickGui位置
     int xend, yend; // ClickGui位置终
     boolean keydown = false, keydown1 = false; // 是否按下左键、右键
-    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6保留 curtype) (7 moduletoggle) (8 module setting)
+    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6保留 curtype) (7 moduletoggle) (8 module setting) (9 custom)
     int keydownX, keydownY; // 按下左键时的X Y
     float beterspeedinfps; // 动画帧率修补量
     boolean animyaninend = false; //进入动画Y轴是否结束
@@ -250,7 +250,7 @@ public class ClickUI extends GuiScreen {
             customx = toanim(customx,customstartxto,8,1f);
         }
 
-        if(customx == customstartxto){
+        if (customx == customstartxto) {
             customend = true;
         }
         int customstartx = (int) customx;
@@ -260,6 +260,12 @@ public class ClickUI extends GuiScreen {
 
         RenderUtils.drawRoundRect(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, 1, new Color(64, 128, 255));
         font.drawString(customtext, fontstartx, fontstarty, new Color(255, 255, 255).getRGB());
+        if (isHovered(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
+            check = 9;
+            keydown = true;
+            keydownX = (int) (mouseX - x);
+            keydownY = (int) (mouseY - y);
+        }
 
         check(mouseX, mouseY);
 
@@ -270,21 +276,7 @@ public class ClickUI extends GuiScreen {
     }
 
     public float toanim(float now, float end, float multiplier, float min) {
-        float speed = Math.max((Math.abs(now - end) / multiplier), min) * beterspeedinfps;
-        if (now < end) {
-            if (now + speed > end) {
-                now = end;
-            } else {
-                now += speed;
-            }
-        } else if (now > end) {
-            if (now - speed < end) {
-                now = end;
-            } else {
-                now -= speed;
-            }
-        }
-        return now;
+        return RenderUtils.toanim(now, end, multiplier, min);
     }
 
     public void check(int mouseX, int mouseY) {
@@ -335,6 +327,10 @@ public class ClickUI extends GuiScreen {
             keydown = true;
             keydownX = (int) (mouseX - x);
             keydownY = (int) (mouseY - y);
+        }
+
+        if (check == 9) {
+            this.mc.displayGuiScreen(new Custom());
         }
 
         if (check == 1) {

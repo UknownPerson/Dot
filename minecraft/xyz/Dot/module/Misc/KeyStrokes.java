@@ -12,15 +12,15 @@ import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
 
-public class KeyBoard extends Module {
-    public KeyBoard() {
-        super("KeyBoard", Keyboard.KEY_NONE, Category.Misc);
+public class KeyStrokes extends Module {
+    public KeyStrokes() {
+        super("KeyStrokes", Keyboard.KEY_NONE, Category.Misc);
     }
 
     @EventHandler
     public void renderHud(EventRender2D event) {
         int x = 20;
-        int y =200;
+        int y = 200;
         int background = new Color(0, 0, 0, 100).getRGB();
         int press = new Color(255, 255, 255, 190).getRGB();
 

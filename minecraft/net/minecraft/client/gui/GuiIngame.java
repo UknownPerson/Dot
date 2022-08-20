@@ -3,9 +3,6 @@ package net.minecraft.client.gui;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -33,18 +30,16 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.src.Config;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.FoodStats;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
+import xyz.Dot.module.ModuleManager;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class GuiIngame extends Gui
 {
@@ -176,8 +171,7 @@ public class GuiIngame extends Gui
         this.mc.getTextureManager().bindTexture(icons);
         GlStateManager.enableBlend();
 
-        if (this.showCrosshair())
-        {
+        if (this.showCrosshair()) {
             GlStateManager.tryBlendFuncSeparate(775, 769, 1, 0);
             GlStateManager.enableAlpha();
             this.drawTexturedModalRect(i / 2 - 7, j / 2 - 7, 0, 0, 16, 16);
@@ -186,11 +180,12 @@ public class GuiIngame extends Gui
         GlStateManager.enableAlpha();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         this.mc.mcProfiler.startSection("bossHealth");
-        this.renderBossHealth();
+        if (!ModuleManager.getModuleByName("NoBossBar").isToggle()) {
+            this.renderBossHealth();
+        }
         this.mc.mcProfiler.endSection();
 
-        if (this.mc.playerController.shouldDrawHUD())
-        {
+        if (this.mc.playerController.shouldDrawHUD()) {
             this.renderPlayerStats(scaledresolution);
         }
 
@@ -584,21 +579,24 @@ public class GuiIngame extends Gui
 
         int i = this.getFontRenderer().getStringWidth(objective.getDisplayName());
 
-        for (Score score : collection)
-        {
+        for (Score score : collection) {
             ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
             String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
             i = Math.max(i, this.getFontRenderer().getStringWidth(s));
         }
 
         int i1 = collection.size() * this.getFontRenderer().FONT_HEIGHT;
+        //fuckyou dont forget
         int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
         int k1 = 3;
+
+        j1 = scaledRes.getScaledHeight() - 16;
+        k1 = 16;
+
         int l1 = scaledRes.getScaledWidth() - i - k1;
         int j = 0;
 
-        for (Score score1 : collection)
-        {
+        for (Score score1 : collection) {
             ++j;
             ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
             String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());

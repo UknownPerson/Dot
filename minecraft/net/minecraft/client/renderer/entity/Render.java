@@ -16,15 +16,12 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.src.Config;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.optifine.entity.model.IEntityRenderer;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.module.Misc.Teams;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
@@ -394,10 +391,16 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
             }
 
             int j;
-            boolean nt = ModuleManager.getModuleByName("NameTag").isToggle() && Minecraft.getMinecraft().theWorld.playerEntities.contains(entityIn);
+            boolean nt = ModuleManager.getModuleByName("NameTag").isToggle() && Minecraft.getMinecraft().theWorld.playerEntities.contains(entityIn) && str.contains(entityIn.getName());
             CFontRenderer font = FontLoaders.normalfont16;
-            if(nt){
-                str = str + " " + Math.round(((EntityLivingBase)entityIn).getHealth() * 10) / 10.0f;
+            if(nt) {
+                String head;
+                if (!Teams.isOnSameTeam(entityIn)) {
+                    head = "";
+                } else {
+                    head = "[TEAM] ";
+                }
+                str = head + str + Math.round(((EntityLivingBase) entityIn).getHealth() * 10) / 10.0f;
                 j = font.getStringWidth(str) / 2;
             }else{
                 j = fontrenderer.getStringWidth(str) / 2;

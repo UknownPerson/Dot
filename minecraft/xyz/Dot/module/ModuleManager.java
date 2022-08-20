@@ -1,15 +1,16 @@
 package xyz.Dot.module;
 
-import xyz.Dot.module.Render.NameTag;
-import xyz.Dot.module.Cheat.ViewClip;
-import xyz.Dot.module.Client.ClickGui;
-import xyz.Dot.module.Client.HUD;
-import xyz.Dot.module.Misc.KeyBoard;
-import xyz.Dot.module.Misc.Sprint;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.module.Cheat.NoJumpDelay;
+import xyz.Dot.module.Cheat.ViewClip;
+import xyz.Dot.module.Client.ClickGui;
+import xyz.Dot.module.Client.HUD;
+import xyz.Dot.module.Misc.BetterSneak;
+import xyz.Dot.module.Misc.KeyStrokes;
+import xyz.Dot.module.Misc.Sprint;
+import xyz.Dot.module.Misc.Teams;
 import xyz.Dot.module.Render.*;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ModuleManager {
         EventBus.getInstance().register(this);
     }
 
-    public void loadModule(){
+    public void loadModule() {
         //Cheat
         this.addModule(new NoJumpDelay());
         this.addModule(new ViewClip());
@@ -32,13 +33,17 @@ public class ModuleManager {
         this.addModule(new HUD());
 
         //Misc
-        this.addModule(new KeyBoard());
+        this.addModule(new BetterSneak());
+        this.addModule(new KeyStrokes());
         this.addModule(new Sprint());
+        this.addModule(new Teams());
 
         //Render
+        this.addModule(new BetterTabList());
         this.addModule(new EveryThingBlock());
         this.addModule(new FullBright());
         this.addModule(new NameTag());
+        this.addModule(new NoBossBar());
         this.addModule(new NoHurtCamera());
         this.addModule(new OldBlockRender());
     }

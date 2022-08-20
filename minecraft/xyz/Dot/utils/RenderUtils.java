@@ -1,16 +1,10 @@
 package xyz.Dot.utils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -102,6 +96,25 @@ public class RenderUtils {
 
     public static int height() {
         return new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight();
+    }
+
+    public static float toanim(float now, float end, float multiplier, float min) {
+        float beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
+        float speed = Math.max((Math.abs(now - end) / multiplier), min) * beterspeedinfps;
+        if (now < end) {
+            if (now + speed > end) {
+                now = end;
+            } else {
+                now += speed;
+            }
+        } else if (now > end) {
+            if (now - speed < end) {
+                now = end;
+            } else {
+                now -= speed;
+            }
+        }
+        return now;
     }
 
     public static void doGlScissor(float x, float y, float x1, float y1) {

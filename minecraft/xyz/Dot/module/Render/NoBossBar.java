@@ -4,10 +4,8 @@ import org.lwjgl.input.Keyboard;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 
-public class NameTag extends Module {
-
-    public NameTag() {
-        super("NameTag", Keyboard.KEY_NONE, Category.Render);
+public class NoBossBar extends Module {
+    public NoBossBar() {
+        super("NoBossBar", Keyboard.KEY_NONE, Category.Render);
     }
-
 }
