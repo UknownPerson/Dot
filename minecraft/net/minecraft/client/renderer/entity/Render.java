@@ -400,7 +400,7 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
                 } else {
                     head = "[TEAM] ";
                 }
-                str = head + str + Math.round(((EntityLivingBase) entityIn).getHealth() * 10) / 10.0f;
+                str = head + str + " " + Math.round(((EntityLivingBase) entityIn).getHealth() * 10) / 10.0f;
                 j = font.getStringWidth(str) / 2;
             }else{
                 j = fontrenderer.getStringWidth(str) / 2;

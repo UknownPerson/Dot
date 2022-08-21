@@ -49,6 +49,7 @@ public class ModuleManager {
         this.addModule(new NoBossBar());
         this.addModule(new NoHurtCamera());
         this.addModule(new OldBlockRender());
+        this.addModule(new SmoothZoom());
     }
 
     private void addModule(Module m){

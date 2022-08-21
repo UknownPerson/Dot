@@ -209,9 +209,10 @@ public class EntityRenderer implements IResourceManagerReloadListener {
     private float avgServerTickDiff = 0.0F;
     private ShaderGroup[] fxaaShaders = new ShaderGroup[10];
     private boolean loadVisibleChunks = false;
+    public static float ftemp = 1.0f;
+    public static float fto;
 
-    public EntityRenderer(Minecraft mcIn, IResourceManager resourceManagerIn)
-    {
+    public EntityRenderer(Minecraft mcIn, IResourceManager resourceManagerIn) {
         this.shaderIndex = shaderCount;
         this.useShader = false;
         this.frameCount = 0;
@@ -619,28 +620,36 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 flag = GameSettings.isKeyDown(this.mc.gameSettings.ofKeyBindZoom);
             }
 
-            if (flag)
-            {
-                if (!Config.zoomMode)
-                {
+            if (flag) {
+                if (!Config.zoomMode) {
                     Config.zoomMode = true;
                     Config.zoomSmoothCamera = this.mc.gameSettings.debugCamEnable;
                     this.mc.gameSettings.debugCamEnable = true;
                     this.mc.renderGlobal.displayListEntitiesDirty = true;
                 }
 
-                if (Config.zoomMode)
-                {
-                    f /= 4.0F;
+                if (ModuleManager.getModuleByName("SmoothZoom").isToggle()) {
+                    if (Config.zoomMode) {
+                        fto = 4.0F;
+                    } else {
+                        fto = 1.0f;
+                    }
+                    f /= ftemp;
+                } else {
+                    f /= 4.0f;
                 }
             }
-            else if (Config.zoomMode)
-            {
+            else if (Config.zoomMode) {
                 Config.zoomMode = false;
                 this.mc.gameSettings.debugCamEnable = Config.zoomSmoothCamera;
                 this.mouseFilterXAxis = new MouseFilter();
                 this.mouseFilterYAxis = new MouseFilter();
                 this.mc.renderGlobal.displayListEntitiesDirty = true;
+                fto = 1.0f;
+                f /= ftemp;
+            } else {
+                fto = 1.0f;
+                f /= ftemp;
             }
 
             if (entity instanceof EntityLivingBase && ((EntityLivingBase)entity).getHealth() <= 0.0F)

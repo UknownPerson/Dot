@@ -25,13 +25,17 @@ public class Custom extends GuiScreen {
     static CFontRenderer font = FontLoaders.normalfont16;
     static CFontRenderer font1 = FontLoaders.normalfont10;
     static Minecraft mc = Minecraft.getMinecraft();
+    static int dotstartx = 20;
+    static int dotstarty = 25;
+    static int bpsavgstartx = 20;
+    static int bpsavgstarty = 96;
 
     public static void drawDot() {
         Minecraft mc = Minecraft.getMinecraft();
         String CName = Client.instance.client_name;
 
-        int StartX = 20;
-        int StartY = 25;
+        int StartX = dotstartx;
+        int StartY = dotstarty;
         RenderUtils.drawRect(StartX, StartY + 12, StartX + 64, StartY + 56, new Color(0, 0, 0, 64).getRGB());
         RenderUtils.drawRect(StartX, StartY, StartX + 64, StartY + 12, new Color(64, 128, 255, 200).getRGB());
 
@@ -63,8 +67,8 @@ public class Custom extends GuiScreen {
     }
 
     public static void drawBPSAVG() {
-        int StartXspeed = 20;
-        int StartYspeed = 96;
+        int StartXspeed = bpsavgstartx;
+        int StartYspeed = bpsavgstarty;
         RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
         RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64, 128, 255, 200).getRGB());
         int numsm = HUD.nums - 1;
@@ -132,7 +136,7 @@ public class Custom extends GuiScreen {
             if (false) {
                 s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
             } else {
-                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": ";
+                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + 10;
             }
             i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
         }
@@ -169,10 +173,16 @@ public class Custom extends GuiScreen {
 
             if (j == collection.size()) {
                 String s3 = objective.getDisplayName();
-                RenderUtils.drawRect(l1 - 2, k - 12, l, k, new Color(64, 128, 255, 200).getRGB());
-                mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 1, 553648127);
+                RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
+                RenderUtils.drawRect(l1 - 2, k - 1, l, k, 1342177280);
+                mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 2, 553648127);
             }
         }
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+
     }
 
     public static boolean isHovered(float x, float y, float x2, float y2, int mouseX, int mouseY) {
@@ -182,12 +192,6 @@ public class Custom extends GuiScreen {
     @Override
     public void initGui() {
         super.initGui();
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-
-
     }
 
     @Override
