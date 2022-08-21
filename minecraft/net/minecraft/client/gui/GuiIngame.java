@@ -348,13 +348,10 @@ public class GuiIngame extends Gui
         GlStateManager.popMatrix();
         scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(0);
 
-        if (this.mc.gameSettings.keyBindCommand.isKeyDown() && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.getPlayerInfoMap().size() > 1 || scoreobjective1 != null))
-        {
+        if ((this.mc.gameSettings.keyBindCommand.isKeyDown() || ModuleManager.getModuleByName("BetterTabList").isToggle()) && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.getPlayerInfoMap().size() > 1 || scoreobjective1 != null)) {
             this.overlayPlayerList.updatePlayerList(true);
             this.overlayPlayerList.renderPlayerlist(i, scoreboard, scoreobjective1);
-        }
-        else
-        {
+        } else {
             this.overlayPlayerList.updatePlayerList(false);
         }
 
