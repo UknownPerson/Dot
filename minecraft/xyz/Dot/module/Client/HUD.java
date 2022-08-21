@@ -1,9 +1,11 @@
 package xyz.Dot.module.Client;
 
+import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
+import xyz.Dot.event.events.world.EventPacketRecieve;
 import xyz.Dot.event.events.world.EventPreUpdate;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
@@ -33,6 +35,8 @@ public class HUD extends Module {
     public static float[] bps = new float[128];
     public static int nums = 0;
     float beterspeedinfps;
+    boolean fakemspeed = false;
+    private TimerUtil timerUtil = new TimerUtil();
 
     public float threegenhao(float num) {
         Scanner sc = new Scanner(String.valueOf(num));
@@ -64,6 +68,10 @@ public class HUD extends Module {
         lastpz = posz;
         if (movespeed < 0 || time == 0) {
             movespeed = 0;
+        }
+        if (fakemspeed) {
+            movespeed = 0;
+            fakemspeed = false;
         }
         bps[nums] = movespeed;
 
@@ -131,6 +139,13 @@ public class HUD extends Module {
                 //font1.drawString(m.getName(), x, y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(rainbow.getRed(), rainbow.getGreen(), rainbow.getBlue(), alpha).getRGB());
             }
             y += yadd;
+        }
+    }
+
+    @EventHandler
+    private void onPacket(EventPacketRecieve ep) {
+        if (ep.getPacket() instanceof S08PacketPlayerPosLook) {
+            fakemspeed = true;
         }
     }
 }
