@@ -1,17 +1,30 @@
 package xyz.Dot.ui;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.scoreboard.Score;
+import net.minecraft.scoreboard.ScoreObjective;
+import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.util.EnumChatFormatting;
 import xyz.Dot.Client;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 public class Custom extends GuiScreen {
 
     static CFontRenderer font = FontLoaders.normalfont16;
+    static CFontRenderer font1 = FontLoaders.normalfont10;
+    static Minecraft mc = Minecraft.getMinecraft();
 
     public static void drawDot() {
         Minecraft mc = Minecraft.getMinecraft();
@@ -73,7 +86,7 @@ public class Custom extends GuiScreen {
         }
 
         String maxstring = String.valueOf((int) (xnum * 50));
-        font.drawString(maxstring, StartXspeed + 96 - font.getStringWidth(maxstring) - 2, StartYspeed + 16, new Color(0, 0, 0, 128).getRGB());
+        font1.drawString(maxstring, StartXspeed + 96 - font1.getStringWidth(maxstring) - 2, StartYspeed + 16, new Color(0, 0, 0, 128).getRGB());
 
         for (int i = 0; i <= 95; i++) {
             int rank = numsm - i;
@@ -94,6 +107,72 @@ public class Custom extends GuiScreen {
         String mtext = "BPS.AVG: " + avg;
         font.drawString(mtext, StartXspeed + 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());
         int num = 0;
+    }
+
+    public static void drawScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
+        Scoreboard scoreboard = objective.getScoreboard();
+        Collection<Score> collection = scoreboard.getSortedScores(objective);
+        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
+            public boolean apply(Score p_apply_1_) {
+                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
+            }
+        }));
+
+        if (list.size() > 15) {
+            collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
+        } else {
+            collection = list;
+        }
+
+        int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName());
+
+        for (Score score : collection) {
+            ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
+            String s;
+            if (false) {
+                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
+            } else {
+                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": ";
+            }
+            i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
+        }
+
+        int i1 = collection.size() * mc.fontRendererObj.FONT_HEIGHT;
+        //fuckyou dont forget
+        int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
+        int k1 = 3;
+
+        j1 = scaledRes.getScaledHeight() - 16;
+        k1 = 16;
+
+        int l1 = scaledRes.getScaledWidth() - i - k1;
+        int j = 0;
+
+        for (Score score1 : collection) {
+            ++j;
+            ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
+            String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
+            String s2;
+            if (false) {
+                s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
+            } else {
+                s2 = "";
+            }
+
+            int k = j1 - j * mc.fontRendererObj.FONT_HEIGHT;
+            int l = scaledRes.getScaledWidth() - k1 + 2;
+            RenderUtils.drawRect(l1 - 2, k, l, k + mc.fontRendererObj.FONT_HEIGHT, new Color(0, 0, 0, 64).getRGB());
+            mc.fontRendererObj.drawString(s1, l1, k, 553648127);
+            if (false) {
+                mc.fontRendererObj.drawString(s2, l - mc.fontRendererObj.getStringWidth(s2), k, 553648127);
+            }
+
+            if (j == collection.size()) {
+                String s3 = objective.getDisplayName();
+                RenderUtils.drawRect(l1 - 2, k - 12, l, k, new Color(64, 128, 255, 200).getRGB());
+                mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 1, 553648127);
+            }
+        }
     }
 
     public static boolean isHovered(float x, float y, float x2, float y2, int mouseX, int mouseY) {

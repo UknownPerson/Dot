@@ -36,6 +36,7 @@ import net.optifine.CustomColors;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.ui.Custom;
 
 import java.util.Collection;
 import java.util.List;
@@ -556,64 +557,62 @@ public class GuiIngame extends Gui
         this.streamIndicator.render(scaledRes.getScaledWidth() - 10, 10);
     }
 
-    private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes)
-    {
-        Scoreboard scoreboard = objective.getScoreboard();
-        Collection<Score> collection = scoreboard.getSortedScores(objective);
-        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>()
-        {
-            public boolean apply(Score p_apply_1_)
-            {
-                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
+    private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
+        if (ModuleManager.getModuleByName("BetterScoreboard").isToggle()) {
+
+            Custom.drawScoreboard(objective, scaledRes);
+
+        } else {
+
+            Scoreboard scoreboard = objective.getScoreboard();
+            Collection<Score> collection = scoreboard.getSortedScores(objective);
+            List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
+                public boolean apply(Score p_apply_1_) {
+                    return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
+                }
+            }));
+
+            if (list.size() > 15) {
+                collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
+            } else {
+                collection = list;
             }
-        }));
 
-        if (list.size() > 15)
-        {
-            collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
-        }
-        else
-        {
-            collection = list;
-        }
+            int i = this.getFontRenderer().getStringWidth(objective.getDisplayName());
 
-        int i = this.getFontRenderer().getStringWidth(objective.getDisplayName());
-
-        for (Score score : collection) {
-            ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
-            String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
-            i = Math.max(i, this.getFontRenderer().getStringWidth(s));
-        }
-
-        int i1 = collection.size() * this.getFontRenderer().FONT_HEIGHT;
-        //fuckyou dont forget
-        int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
-        int k1 = 3;
-
-        j1 = scaledRes.getScaledHeight() - 16;
-        k1 = 16;
-
-        int l1 = scaledRes.getScaledWidth() - i - k1;
-        int j = 0;
-
-        for (Score score1 : collection) {
-            ++j;
-            ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
-            String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
-            String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-            int k = j1 - j * this.getFontRenderer().FONT_HEIGHT;
-            int l = scaledRes.getScaledWidth() - k1 + 2;
-            drawRect(l1 - 2, k, l, k + this.getFontRenderer().FONT_HEIGHT, 1342177280);
-            this.getFontRenderer().drawString(s1, l1, k, 553648127);
-            this.getFontRenderer().drawString(s2, l - this.getFontRenderer().getStringWidth(s2), k, 553648127);
-
-            if (j == collection.size())
-            {
-                String s3 = objective.getDisplayName();
-                drawRect(l1 - 2, k - this.getFontRenderer().FONT_HEIGHT - 1, l, k - 1, 1610612736);
-                drawRect(l1 - 2, k - 1, l, k, 1342177280);
-                this.getFontRenderer().drawString(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT, 553648127);
+            for (Score score : collection) {
+                ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
+                String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
+                i = Math.max(i, this.getFontRenderer().getStringWidth(s));
             }
+
+            int i1 = collection.size() * this.getFontRenderer().FONT_HEIGHT;
+            //fuckyou dont forget
+            int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
+            int k1 = 3;
+
+            int l1 = scaledRes.getScaledWidth() - i - k1;
+            int j = 0;
+
+            for (Score score1 : collection) {
+                ++j;
+                ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
+                String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
+                String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
+                int k = j1 - j * this.getFontRenderer().FONT_HEIGHT;
+                int l = scaledRes.getScaledWidth() - k1 + 2;
+                drawRect(l1 - 2, k, l, k + this.getFontRenderer().FONT_HEIGHT, 1342177280);
+                this.getFontRenderer().drawString(s1, l1, k, 553648127);
+                this.getFontRenderer().drawString(s2, l - this.getFontRenderer().getStringWidth(s2), k, 553648127);
+
+                if (j == collection.size()) {
+                    String s3 = objective.getDisplayName();
+                    drawRect(l1 - 2, k - this.getFontRenderer().FONT_HEIGHT - 1, l, k - 1, 1610612736);
+                    drawRect(l1 - 2, k - 1, l, k, 1342177280);
+                    this.getFontRenderer().drawString(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT, 553648127);
+                }
+            }
+
         }
     }
 

@@ -83,7 +83,6 @@ public class HUD extends Module {
         if (mc.gameSettings.showDebugProfilerChart) {
             return;
         }
-        CFontRenderer font = FontLoaders.normalfont10;
         CFontRenderer font1 = FontLoaders.normalfont16;
         String CName = Client.instance.client_name;
 

@@ -12,8 +12,10 @@ public class Help
     @Override
     public String execute(String[] args) {
         String bind = "\u00a77.bind <module> <key>";
+        String say = "\u00a77.say <message>";
         String toggle = "\u00a77.t <module>";
         Helper.sendMessageWithoutPrefix(bind);
+        Helper.sendMessageWithoutPrefix(say);
         Helper.sendMessageWithoutPrefix(toggle);
         return null;
     }

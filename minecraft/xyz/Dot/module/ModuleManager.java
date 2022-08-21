@@ -6,6 +6,7 @@ import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.module.Cheat.NoJumpDelay;
 import xyz.Dot.module.Cheat.ViewClip;
 import xyz.Dot.module.Client.ClickGui;
+import xyz.Dot.module.Client.Command;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Misc.BetterSneak;
 import xyz.Dot.module.Misc.KeyStrokes;
@@ -30,6 +31,7 @@ public class ModuleManager {
 
         //Client
         this.addModule(new ClickGui());
+        this.addModule(new Command());
         this.addModule(new HUD());
 
         //Misc
@@ -39,6 +41,7 @@ public class ModuleManager {
         this.addModule(new Teams());
 
         //Render
+        this.addModule(new BetterScoreboard());
         this.addModule(new BetterTabList());
         this.addModule(new EveryThingBlock());
         this.addModule(new FullBright());

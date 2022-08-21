@@ -5,6 +5,7 @@ package xyz.Dot.command;
 
 import xyz.Dot.command.commands.Bind;
 import xyz.Dot.command.commands.Help;
+import xyz.Dot.command.commands.Say;
 import xyz.Dot.command.commands.Toggle;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
@@ -21,7 +22,7 @@ public class CommandManager{
 
     public void run() {
         this.commands = new ArrayList<Command>();
-        this.commands.add(new Command("test", new String[]{"test"}, "", "testing"){
+        this.commands.add(new Command("test", new String[]{"test"}, "", "testing") {
 
             @Override
             public String execute(String[] args) {
@@ -30,8 +31,9 @@ public class CommandManager{
                 return null;
             }
         });
-        this.commands.add(new Toggle());
         this.commands.add(new Bind());
+        this.commands.add(new Toggle());
+        this.commands.add(new Say());
         this.commands.add(new Help());
         EventBus.getInstance().register(this);
     }
@@ -77,7 +79,7 @@ public class CommandManager{
                     Helper.sendMessage(result);
                 }
             } else {
-                Helper.sendMessageWithoutPrefix(String.format("Command not found."));
+                Helper.sendMessageWithoutPrefix(String.format("Command not found. May you want to use .say <message>?"));
             }
         }
     }
