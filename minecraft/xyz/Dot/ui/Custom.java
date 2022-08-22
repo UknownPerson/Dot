@@ -136,7 +136,7 @@ public class Custom extends GuiScreen {
             if (false) {
                 s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
             } else {
-                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + 10;
+                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": ";
             }
             i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
         }
@@ -172,7 +172,7 @@ public class Custom extends GuiScreen {
             }
 
             if (j == collection.size()) {
-                String s3 = objective.getDisplayName();
+                String s3 = objective.getDisplayName() + 10;
                 RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
                 RenderUtils.drawRect(l1 - 2, k - 1, l, k, 1342177280);
                 mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 2, 553648127);
