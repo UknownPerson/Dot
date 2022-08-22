@@ -15,6 +15,10 @@ public class SmoothZoom extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-        EntityRenderer.ftemp = RenderUtils.toanim(EntityRenderer.ftemp, EntityRenderer.fto, 8, 0.01f);
+        if (EntityRenderer.ftemp > EntityRenderer.fto) {
+            EntityRenderer.ftemp = RenderUtils.toanim(EntityRenderer.ftemp, EntityRenderer.fto, 8, 0.01f);
+        } else {
+            EntityRenderer.ftemp = RenderUtils.toanim(EntityRenderer.ftemp, EntityRenderer.fto, 16, 0.01f);
+        }
     }
 }
