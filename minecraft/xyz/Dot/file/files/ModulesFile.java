@@ -39,7 +39,7 @@ public class ModulesFile extends CustomFile {
 
             if (jsonObject == null) {
                 fr.close();
-                return;
+                continue;
             }
 
 
