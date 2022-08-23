@@ -6,7 +6,7 @@ import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.event.events.world.EventPacketRecieve;
-import xyz.Dot.event.events.world.EventPreUpdate;
+import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
@@ -51,7 +51,7 @@ public class HUD extends Module {
     }
 
     @EventHandler
-    private void onPreUpdate(EventPreUpdate e) {
+    private void onTick(EventTick e) {
 
         posx = mc.thePlayer.posX;
         posy = mc.thePlayer.posY;
