@@ -396,11 +396,11 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
             if(nt) {
                 String head;
                 if (!Teams.isOnSameTeam(entityIn)) {
-                    head = "\u00a74[ENEMY]";
+                    head = "";
                 } else {
-                    head = "\u00a7a[TEAM] ";
+                    head = "\u00a7b[TEAM] \u00a7f";
                 }
-                str = head + str + " " + Math.round(((EntityLivingBase) entityIn).getHealth() * 10) / 10.0f;
+                str = head + str + " \u00a7f" + Math.round(((EntityLivingBase) entityIn).getHealth() * 10) / 10.0f;
                 j = font.getStringWidth(str) / 2;
             }else{
                 j = fontrenderer.getStringWidth(str) / 2;

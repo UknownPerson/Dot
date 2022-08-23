@@ -30,6 +30,14 @@ public class Custom extends GuiScreen {
     static int bpsavgstartx = 20;
     static int bpsavgstarty = 96;
 
+    boolean keydown = false;
+    int check = 0;
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        // if()
+    }
+
     public static void drawDot() {
         Minecraft mc = Minecraft.getMinecraft();
         String CName = Client.instance.client_name;
@@ -50,7 +58,6 @@ public class Custom extends GuiScreen {
         RenderUtils.drawFilledCircle(StartX + 7, StartY + 6, 3, new Color(255, 0, 0, 128));
         //RenderUtils.drawFilledCircle(StartX + 8, StartY + 6, 3, new Color(0, 255, 0,128));
         RenderUtils.drawFilledCircle(StartX + 9, StartY + 6, 3, new Color(0, 0, 255, 128));
-
 
         font.drawString(CName, StartX + 14, StartY + 4, new Color(255, 255, 255).getRGB());
         StartY += 20;
@@ -178,11 +185,6 @@ public class Custom extends GuiScreen {
                 mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 2, 553648127);
             }
         }
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-
     }
 
     public static boolean isHovered(float x, float y, float x2, float y2, int mouseX, int mouseY) {
