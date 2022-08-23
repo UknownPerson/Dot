@@ -11,6 +11,7 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.EnumChatFormatting;
+import org.lwjgl.input.Mouse;
 import xyz.Dot.Client;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.utils.RenderUtils;
@@ -29,13 +30,90 @@ public class Custom extends GuiScreen {
     static int dotstarty = 25;
     static int bpsavgstartx = 20;
     static int bpsavgstarty = 96;
-
+    static int scoreboardx;
+    static int scoreboardy;
+    static boolean first = false;
     boolean keydown = false;
     int check = 0;
+    static int thisj = 0;
+    int keydownX, keydownY;
 
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        // if()
+    public static void drawScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
+        Scoreboard scoreboard = objective.getScoreboard();
+        Collection<Score> collection = scoreboard.getSortedScores(objective);
+        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
+            public boolean apply(Score p_apply_1_) {
+                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
+            }
+        }));
+
+        if (list.size() > 15) {
+            collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
+        } else {
+            collection = list;
+        }
+
+        int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName());
+
+        for (Score score : collection) {
+            ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
+            String s;
+            if (false) {
+                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
+            } else {
+                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": ";
+            }
+            i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
+        }
+
+        int i1 = collection.size() * mc.fontRendererObj.FONT_HEIGHT;
+        //fuckyou dont forget
+        int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
+        int k1 = 3;
+
+        j1 = scaledRes.getScaledHeight() - 16;
+        k1 = 16;
+
+        int l1 = scaledRes.getScaledWidth() - i - k1;
+        int j = 0;
+        if (first) {
+            l1 = scoreboardx + 2;
+            j1 = scoreboardy - j * mc.fontRendererObj.FONT_HEIGHT + 13;
+        }
+        int jtemp = 0;
+        for (Score score1 : collection) {
+            ++j;
+            jtemp = j;
+            ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
+            String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
+            String s2;
+            if (false) {
+                s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
+            } else {
+                s2 = "";
+            }
+
+            int k = j1 - j * mc.fontRendererObj.FONT_HEIGHT;
+            int l = scoreboardx + i + 2;
+            RenderUtils.drawRect(l1 - 2, k, l, k + mc.fontRendererObj.FONT_HEIGHT, new Color(0, 0, 0, 64).getRGB());
+            mc.fontRendererObj.drawString(s1, l1, k, 553648127);
+            if (false) {
+                mc.fontRendererObj.drawString(s2, l - mc.fontRendererObj.getStringWidth(s2), k, 553648127);
+            }
+
+            if (j == collection.size()) {
+                String s3 = objective.getDisplayName() + 10;
+                RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
+                if (!first) {
+                    scoreboardx = l1 - 2;
+                    scoreboardy = k - 13 + j * mc.fontRendererObj.FONT_HEIGHT;
+                    first = true;
+                }
+                RenderUtils.drawRect(l1 - 2, k - 1, l, k, 1342177280);
+                mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 2, 553648127);
+            }
+        }
+        thisj = jtemp;
     }
 
     public static void drawDot() {
@@ -120,70 +198,57 @@ public class Custom extends GuiScreen {
         int num = 0;
     }
 
-    public static void drawScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
-        Scoreboard scoreboard = objective.getScoreboard();
-        Collection<Score> collection = scoreboard.getSortedScores(objective);
-        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
-            public boolean apply(Score p_apply_1_) {
-                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
-            }
-        }));
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        float x, y;
 
-        if (list.size() > 15) {
-            collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
-        } else {
-            collection = list;
+        if (isHovered(bpsavgstartx, bpsavgstarty, bpsavgstartx + 96, bpsavgstarty + 12, mouseX, mouseY) && !keydown) {
+            x = bpsavgstartx;
+            y = bpsavgstarty;
+            check = 2;
+            keydown = true;
+            keydownX = (int) (mouseX - x);
+            keydownY = (int) (mouseY - y);
         }
 
-        int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName());
-
-        for (Score score : collection) {
-            ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
-            String s;
-            if (false) {
-                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
-            } else {
-                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": ";
-            }
-            i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
+        if (isHovered(dotstartx, dotstarty, dotstartx + 64, dotstarty + 12, mouseX, mouseY) && !keydown) {
+            x = dotstartx;
+            y = dotstarty;
+            check = 1;
+            keydown = true;
+            keydownX = (int) (mouseX - x);
+            keydownY = (int) (mouseY - y);
         }
 
-        int i1 = collection.size() * mc.fontRendererObj.FONT_HEIGHT;
-        //fuckyou dont forget
-        int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
-        int k1 = 3;
+        if (isHovered(scoreboardx, scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT, scoreboardx + 96, scoreboardy + 12 - thisj * mc.fontRendererObj.FONT_HEIGHT, mouseX, mouseY) && !keydown) {
+            x = scoreboardx;
+            y = scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT;
+            check = 3;
+            keydown = true;
+            keydownX = (int) (mouseX - x);
+            keydownY = (int) (mouseY - y);
+        }
 
-        j1 = scaledRes.getScaledHeight() - 16;
-        k1 = 16;
+        if (check == 1) {
+            dotstartx = mouseX - keydownX;
+            dotstarty = mouseY - keydownY;
+        }
 
-        int l1 = scaledRes.getScaledWidth() - i - k1;
-        int j = 0;
+        if (check == 2) {
+            bpsavgstartx = mouseX - keydownX;
+            bpsavgstarty = mouseY - keydownY;
+        }
 
-        for (Score score1 : collection) {
-            ++j;
-            ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
-            String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
-            String s2;
-            if (false) {
-                s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-            } else {
-                s2 = "";
-            }
+        if (check == 3) {
+            scoreboardx = mouseX - keydownX;
+            scoreboardy = mouseY - keydownY + thisj * mc.fontRendererObj.FONT_HEIGHT;
+        }
 
-            int k = j1 - j * mc.fontRendererObj.FONT_HEIGHT;
-            int l = scaledRes.getScaledWidth() - k1 + 2;
-            RenderUtils.drawRect(l1 - 2, k, l, k + mc.fontRendererObj.FONT_HEIGHT, new Color(0, 0, 0, 64).getRGB());
-            mc.fontRendererObj.drawString(s1, l1, k, 553648127);
-            if (false) {
-                mc.fontRendererObj.drawString(s2, l - mc.fontRendererObj.getStringWidth(s2), k, 553648127);
-            }
-
-            if (j == collection.size()) {
-                String s3 = objective.getDisplayName() + 10;
-                RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
-                RenderUtils.drawRect(l1 - 2, k - 1, l, k, 1342177280);
-                mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 2, 553648127);
-            }
+        if (!Mouse.isButtonDown(0)) {
+            check = 0;
+            keydown = false;
+            keydownX = mouseX;
+            keydownY = mouseY;
         }
     }
 
