@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
@@ -18,6 +19,7 @@ import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,6 +39,96 @@ public class Custom extends GuiScreen {
     int check = 0;
     static int thisj = 0;
     int keydownX, keydownY;
+    static int keystrokesx = 20, keystrokesy = 200;
+    static ArrayList<Long> cpsl = new ArrayList<>();
+    static ArrayList<Long> cpsr = new ArrayList<>();
+    static boolean cpsldown;
+    static boolean cpsrdown;
+
+    public static void drawKeyStrokes() {
+        int x = keystrokesx;
+        int y = keystrokesy;
+        int background = new Color(0, 0, 0, 100).getRGB();
+        int press = new Color(255, 255, 255, 190).getRGB();
+
+        Minecraft minecraft = Minecraft.getMinecraft();
+        GameSettings gameSettings = minecraft.gameSettings;
+
+        String s;
+        s = "W";
+        RenderUtils.drawRect(x + 28, y, x + 53, y + 25, gameSettings.keyBindLeft.isKeyDown() ? press : background);
+        font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+        s = "S";
+        RenderUtils.drawRect(x + 28, y + 28, x + 53, y + 53, gameSettings.keyBindRight.isKeyDown() ? press : background);
+        font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+        s = "A";
+        RenderUtils.drawRect(x, y + 28, x + 25, y + 53, gameSettings.keyBindBack.isKeyDown() ? press : background);
+        font.drawString(s, x + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+        s = "D";
+        RenderUtils.drawRect(x + 56, y + 28, x + 81, y + 53, gameSettings.keyBindJump.isKeyDown() ? press : background);
+        font.drawString(s, x + 56 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+        if (!gameSettings.keyBindPickBlock.isKeyDown()) {
+            cpsldown = false;
+        }
+        if (gameSettings.keyBindPickBlock.isKeyDown() && !cpsldown) {
+            cpsl.add(System.nanoTime());
+            cpsldown = true;
+        }
+
+        if (!gameSettings.keyBindDrop.isKeyDown()) {
+            cpsrdown = false;
+        }
+        if (gameSettings.keyBindDrop.isKeyDown() && !cpsrdown) {
+            cpsr.add(System.nanoTime());
+            cpsrdown = true;
+        }
+
+        y += 56;
+        s = "LMB";
+        RenderUtils.drawRect(x, y, x + (81 - 3) / 2, y + 25, gameSettings.keyBindPickBlock.isKeyDown() ? press : background);
+        font.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        int count = 0;
+        for (long i : cpsl) {
+            long thistime = System.nanoTime();
+            if ((thistime - i) < 1000000000) {
+                count += 1;
+            } else {
+                cpsl.remove(i);
+            }
+        }
+        s = String.valueOf(count);
+        font1.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+        s = "RMB";
+        RenderUtils.drawRect(x + (81 + 3) / 2, y, x + 81, y + 25, gameSettings.keyBindDrop.isKeyDown() ? press : background);
+        font.drawString(s, x + ((81 + 3) / 2) + ((81 - ((81 + 3) / 2)) - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        int count1 = 0;
+        for (long i : cpsr) {
+            long thistime = System.nanoTime();
+            if ((thistime - i) < 1000000000) {
+                count1 += 1;
+            } else {
+                cpsr.remove(i);
+            }
+        }
+        s = String.valueOf(count1);
+        font1.drawString(s, x + ((81 + 3) / 2) + ((81 - ((81 + 3) / 2)) - font.getStringWidth(s)) / 2 + 1, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+        y += 28;
+        s = "\u00a77\u00a7m\u00a7l--------";
+        RenderUtils.drawRect(x, y, x + 81, y + 15, gameSettings.keyBindSneak.isKeyDown() ? press : background);
+        font.drawString(s, x + (81 - font.getStringWidth(s)) / 2 - 1, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+        y += 18;
+        s = "Sneak";
+        RenderUtils.drawRect(x, y, x + 81, y + 15, gameSettings.keyBindSprint.isKeyDown() ? press : background);
+        font.drawString(s, x + (81 - font.getStringWidth(s)) / 2, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+    }
 
     public static void drawScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
         Scoreboard scoreboard = objective.getScoreboard();
@@ -198,9 +290,21 @@ public class Custom extends GuiScreen {
         int num = 0;
     }
 
-    @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         float x, y;
+
+        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy - 12, new Color(64, 128, 255, 200).getRGB());
+        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy + 117, new Color(0, 0, 0, 64).getRGB());
+        font.drawString("KeyStrokes", keystrokesx + 5, keystrokesy - 12 + 4, new Color(255, 255, 255).getRGB());
+
+        if (isHovered(keystrokesx, keystrokesy - 12, keystrokesx + 75, keystrokesy, mouseX, mouseY) && !keydown) {
+            x = keystrokesx;
+            y = keystrokesy;
+            check = 4;
+            keydown = true;
+            keydownX = (int) (mouseX - x);
+            keydownY = (int) (mouseY - y);
+        }
 
         if (isHovered(bpsavgstartx, bpsavgstarty, bpsavgstartx + 96, bpsavgstarty + 12, mouseX, mouseY) && !keydown) {
             x = bpsavgstartx;
@@ -242,6 +346,11 @@ public class Custom extends GuiScreen {
         if (check == 3) {
             scoreboardx = mouseX - keydownX;
             scoreboardy = mouseY - keydownY + thisj * mc.fontRendererObj.FONT_HEIGHT;
+        }
+
+        if (check == 4) {
+            keystrokesx = mouseX - keydownX;
+            keystrokesy = mouseY - keydownY;
         }
 
         if (!Mouse.isButtonDown(0)) {
