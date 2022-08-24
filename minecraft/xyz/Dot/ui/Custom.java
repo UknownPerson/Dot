@@ -113,15 +113,16 @@ public class Custom extends GuiScreen {
             long thistime = System.nanoTime();
             if ((thistime - i) < 1000000000) {
                 count1 += 1;
-            } else {
-                cpsr.remove(i);
+            }
+            if (count == 0) {
+                cpsl.clear();
             }
         }
         s = String.valueOf(count1);
         font1.drawString(s, x + ((81 + 3) / 2) + ((81 - ((81 + 3) / 2)) - font.getStringWidth(s)) / 2 + 1, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         y += 28;
-        s = "\u00a77\u00a7m\u00a7l--------";
+        s = "\u00a7m\u00a7l--------";
         RenderUtils.drawRect(x, y, x + 81, y + 15, gameSettings.keyBindSneak.isKeyDown() ? press : background);
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2 - 1, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
