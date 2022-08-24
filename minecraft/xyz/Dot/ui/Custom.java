@@ -145,7 +145,7 @@ public class Custom extends GuiScreen {
             collection = list;
         }
 
-        int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName());
+        int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName()) + 10;
 
         for (Score score : collection) {
             ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
@@ -194,7 +194,7 @@ public class Custom extends GuiScreen {
             }
 
             if (j == collection.size()) {
-                String s3 = objective.getDisplayName() + 10;
+                String s3 = objective.getDisplayName();
                 RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
                 if (!first) {
                     scoreboardx = l1 - 2;
