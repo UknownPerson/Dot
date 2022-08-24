@@ -44,6 +44,7 @@ public class Custom extends GuiScreen {
     static ArrayList<Long> cpsr = new ArrayList<>();
     static boolean cpsldown;
     static boolean cpsrdown;
+    public static boolean open = false;
 
     public static void drawKeyStrokes() {
         int x = keystrokesx;
@@ -96,9 +97,10 @@ public class Custom extends GuiScreen {
             long thistime = System.nanoTime();
             if ((thistime - i) < 1000000000) {
                 count += 1;
-            } else {
-                cpsl.remove(i);
             }
+        }
+        if (count == 0) {
+            cpsl.clear();
         }
         s = String.valueOf(count);
         font1.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
@@ -127,6 +129,13 @@ public class Custom extends GuiScreen {
         s = "Sneak";
         RenderUtils.drawRect(x, y, x + 81, y + 15, gameSettings.keyBindSprint.isKeyDown() ? press : background);
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+
+    }
+
+    public static void ks() {
+        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy - 12, new Color(64, 128, 255, 200).getRGB());
+        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy + 117, new Color(0, 0, 0, 64).getRGB());
+        font.drawString("KeyStrokes", keystrokesx + 5, keystrokesy - 12 + 4, new Color(255, 255, 255).getRGB());
 
     }
 
@@ -290,13 +299,14 @@ public class Custom extends GuiScreen {
         int num = 0;
     }
 
+    @Override
+    public void onGuiClosed() {
+        open = false;
+    }
+
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        open = true;
         float x, y;
-
-        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy - 12, new Color(64, 128, 255, 200).getRGB());
-        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy + 117, new Color(0, 0, 0, 64).getRGB());
-        font.drawString("KeyStrokes", keystrokesx + 5, keystrokesy - 12 + 4, new Color(255, 255, 255).getRGB());
-
         if (isHovered(keystrokesx, keystrokesy - 12, keystrokesx + 75, keystrokesy, mouseX, mouseY) && !keydown) {
             x = keystrokesx;
             y = keystrokesy;

@@ -14,6 +14,9 @@ public class KeyStrokes extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
+        if (Custom.open) {
+            Custom.ks();
+        }
         Custom.drawKeyStrokes();
     }
 }
