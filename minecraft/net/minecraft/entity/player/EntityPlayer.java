@@ -1961,7 +1961,6 @@ public abstract class EntityPlayer extends EntityLivingBase {
         } else {
             f -= fto;
         }
-
         return f;
     }
 

@@ -3,6 +3,7 @@ package xyz.Dot.ui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 import xyz.Dot.Client;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.ClickGui;
@@ -183,7 +184,14 @@ public class ClickUI extends GuiScreen {
             } else {
                 round = 0;
             }
+
+            GL11.glEnable(GL11.GL_SCISSOR_TEST);
+            RenderUtils.doGlScissor((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5);
+
             RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5, round, new Color(255, 255, 255));
+            font.drawString(ClickGui.settingmodule.getName(), (int) (userxendanim + 13), (int) (ry + 8), new Color(0, 0, 0).getRGB());
+
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
         }
 
         for (Module m : ModuleManager.getModules()) {

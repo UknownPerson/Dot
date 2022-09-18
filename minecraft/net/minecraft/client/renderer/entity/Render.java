@@ -400,7 +400,8 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
                 } else {
                     head = "\u00a7b[TEAM] \u00a7f";
                 }
-                str = head + str + " \u00a7f" + Math.round(((EntityLivingBase) entityIn).getHealth() * 10) / 10.0f;
+                float health = ((EntityLivingBase) entityIn).getHealth();
+                str = head + str + " \u00a7f" + Math.round(health * 10) / 10.0f;
                 j = font.getStringWidth(str) / 2;
             }else{
                 j = fontrenderer.getStringWidth(str) / 2;
@@ -414,8 +415,8 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
                 worldrenderer.pos((double)(j + 5), (double)(8 + i + 5), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                 worldrenderer.pos((double)(j + 5), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 
-                float h =((EntityLivingBase)entityIn).getHealth();
-                float maxh = ((EntityLivingBase)entityIn).getMaxHealth();
+                float h = ((EntityLivingBase) entityIn).getHealthTemp();
+                float maxh = ((EntityLivingBase) entityIn).getMaxHealth();
                 float hx = ((j + 5) - (-j - 5)) * (h / maxh) + (-j - 5);
                 worldrenderer.pos((double)(-j - 5), (double)(-1 + i + 12), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
                 worldrenderer.pos((double)(-j - 5), (double)(8 + i + 5), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();

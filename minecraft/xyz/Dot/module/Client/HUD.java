@@ -2,7 +2,6 @@ package xyz.Dot.module.Client;
 
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
-import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.event.events.world.EventPacketRecieve;
@@ -92,7 +91,6 @@ public class HUD extends Module {
             return;
         }
         CFontRenderer font1 = FontLoaders.normalfont16;
-        String CName = Client.instance.client_name;
 
         ArrayList<Module> list = new ArrayList<Module>();
         for (Module m : ModuleManager.getModules()) {
@@ -104,6 +102,7 @@ public class HUD extends Module {
         Custom.drawBPSAVG();
 
         float y = 15;
+        boolean iamfirst = false;
         for (Module m : list) {
             if (!m.isToggle() && m.getAnimY() == 0) {
                 continue;
@@ -112,6 +111,7 @@ public class HUD extends Module {
             float yaddto;
             float endx = RenderUtils.width() - 10;
             float x = endx - font1.getStringWidth(m.getName());
+
             beterspeedinfps = 120.0f / mc.getDebugFPS();
 
             if (m.isToggle()) {
@@ -122,7 +122,14 @@ public class HUD extends Module {
 
             float yadtemp = 15;
 
-            m.setAnimY(toanim(m.getAnimY(), yaddto, 10, 0.1f));
+            if (!iamfirst) {
+                m.setAnimY(toanim(m.getAnimY(), yaddto, 10, 0.1f));
+            }
+
+            if (2.5f * m.getAnimY() < yaddto) {
+                iamfirst = true;
+            }
+
             float yadd = m.getAnimY();
             RenderUtils.drawRect((int) x - 3, (int) y, (int) (endx + 3), (int) (y + yadd), new Color(0, 0, 0, 64).getRGB());
             //RenderUtils.drawRect((int) (endx + 2), (int) y, (int) (endx + 2 + 1), (int) (y + yadd), rainbow.getRGB());
@@ -146,6 +153,12 @@ public class HUD extends Module {
     private void onPacket(EventPacketRecieve ep) {
         if (ep.getPacket() instanceof S08PacketPlayerPosLook) {
             fakemspeed = true;
+        }
+    }
+
+    public void onDisable() {
+        for (Module m : ModuleManager.getModules()) {
+            m.setAnimY(0);
         }
     }
 }
