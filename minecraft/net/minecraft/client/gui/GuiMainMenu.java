@@ -2,15 +2,6 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -36,6 +27,16 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 {
@@ -660,22 +661,22 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
             if (Reflector.ForgeHooksClient_renderMainMenu.exists())
             {
-                Reflector.call(Reflector.ForgeHooksClient_renderMainMenu, new Object[] {this, this.fontRendererObj, Integer.valueOf(this.width), Integer.valueOf(this.height)});
+                Reflector.call(Reflector.ForgeHooksClient_renderMainMenu, new Object[]{this, this.fontRendererObj, Integer.valueOf(this.width), Integer.valueOf(this.height)});
             }
-        }
-        else
-        {
+        } else {
             this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
         }
 
         String s2 = "Copyright Mojang AB. Do not distribute!";
         this.drawString(this.fontRendererObj, s2, this.width - this.fontRendererObj.getStringWidth(s2) - 2, this.height - 10, -1);
 
-        if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
-        {
+        String dev = "Code by 极品茄子的煤矿 Dev Team.";
+        this.drawString(this.fontRendererObj, dev, this.width - this.fontRendererObj.getStringWidth(dev) - 2, this.height - 20, -1);
+
+        if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0) {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
             this.drawString(this.fontRendererObj, this.openGLWarning1, this.field_92022_t, this.field_92021_u, -1);
-            this.drawString(this.fontRendererObj, this.openGLWarning2, (this.width - this.field_92024_r) / 2, ((GuiButton)this.buttonList.get(0)).yPosition - 12, -1);
+            this.drawString(this.fontRendererObj, this.openGLWarning2, (this.width - this.field_92024_r) / 2, ((GuiButton) this.buttonList.get(0)).yPosition - 12, -1);
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);

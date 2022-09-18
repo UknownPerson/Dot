@@ -176,12 +176,12 @@ public class Custom extends GuiScreen {
         j1 = scaledRes.getScaledHeight() - 16;
         k1 = 16;
 
-        int l1 = scaledRes.getScaledWidth() - i - k1;
         int j = 0;
         if (first) {
-            l1 = scoreboardx + 2;
+            k1 = scoreboardx;
             j1 = scoreboardy - j * mc.fontRendererObj.FONT_HEIGHT + 13;
         }
+        int l1 = scaledRes.getScaledWidth() - i - k1;
         int jtemp = 0;
         for (Score score1 : collection) {
             ++j;
@@ -196,7 +196,7 @@ public class Custom extends GuiScreen {
             }
 
             int k = j1 - j * mc.fontRendererObj.FONT_HEIGHT;
-            int l = scoreboardx + i + 2;
+            int l = l1 + i + 2;
             RenderUtils.drawRect(l1 - 2, k, l, k + mc.fontRendererObj.FONT_HEIGHT, new Color(0, 0, 0, 64).getRGB());
             mc.fontRendererObj.drawString(s1, l1, k, 553648127);
             if (false) {
@@ -207,7 +207,7 @@ public class Custom extends GuiScreen {
                 String s3 = objective.getDisplayName();
                 RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
                 if (!first) {
-                    scoreboardx = l1 - 2;
+                    scoreboardx = k1;
                     scoreboardy = k - 13 + j * mc.fontRendererObj.FONT_HEIGHT;
                     first = true;
                 }

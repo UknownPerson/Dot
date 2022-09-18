@@ -5,21 +5,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.gui.GuiNewChat;
@@ -34,14 +19,7 @@ import net.minecraft.network.play.client.C15PacketClientSettings;
 import net.minecraft.src.Config;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
-import net.optifine.ClearWater;
-import net.optifine.CustomColors;
-import net.optifine.CustomGuis;
-import net.optifine.CustomSky;
-import net.optifine.DynamicLights;
-import net.optifine.Lang;
-import net.optifine.NaturalTextures;
-import net.optifine.RandomEntities;
+import net.optifine.*;
 import net.optifine.reflect.Reflector;
 import net.optifine.shaders.Shaders;
 import net.optifine.util.KeyUtils;
@@ -53,6 +31,14 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+
+import java.io.*;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class GameSettings
 {
@@ -557,7 +543,7 @@ public class GameSettings
         if (settingsOption == GameSettings.Options.FORCE_UNICODE_FONT)
         {
             this.logger = !this.logger;
-            this.difficulty.fontRendererObj.setUnicodeFlag(this.difficulty.getLanguageManager().isCurrentLocaleUnicode() || this.logger);
+            this.difficulty.fontRendererObj.setUnicodeFlag(/*this.difficulty.getLanguageManager().isCurrentLocaleUnicode() ||*/ !this.logger);
         }
 
         if (settingsOption == GameSettings.Options.FBO_ENABLE)
