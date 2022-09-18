@@ -186,6 +186,7 @@ public class ClickUI extends GuiScreen {
             }
 
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
+
             RenderUtils.doGlScissor((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5);
 
             RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5, round, new Color(255, 255, 255));

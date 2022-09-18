@@ -410,18 +410,18 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
             worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
             if(nt){
                 i -= 5;
-                worldrenderer.pos((double)(-j - 5), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-                worldrenderer.pos((double)(-j - 5), (double)(8 + i + 5), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-                worldrenderer.pos((double)(j + 5), (double)(8 + i + 5), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-                worldrenderer.pos((double)(j + 5), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double) (-j - 5), (double) (-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double) (-j - 5), (double) (8 + i + 5), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double) (j + 5), (double) (8 + i + 5), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+                worldrenderer.pos((double) (j + 5), (double) (-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
 
                 float h = ((EntityLivingBase) entityIn).getHealthTemp();
                 float maxh = ((EntityLivingBase) entityIn).getMaxHealth();
                 float hx = ((j + 5) - (-j - 5)) * (h / maxh) + (-j - 5);
-                worldrenderer.pos((double)(-j - 5), (double)(-1 + i + 12), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
-                worldrenderer.pos((double)(-j - 5), (double)(8 + i + 5), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
-                worldrenderer.pos((double)(hx), (double)(8 + i + 5), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
-                worldrenderer.pos((double)(hx), (double)(-1 + i + 12), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+                worldrenderer.pos((double) (-j - 5), (double) (-1 + i + 12), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+                worldrenderer.pos((double) (-j - 5), (double) (8 + i + 5), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+                worldrenderer.pos((double) (hx), (double) (8 + i + 5), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
+                worldrenderer.pos((double) (hx), (double) (-1 + i + 12), 0.0D).color(1.0F, 0.0F, 0.0F, 0.5f).endVertex();
             }else{
                 worldrenderer.pos((double)(-j - 1), (double)(-1 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
                 worldrenderer.pos((double)(-j - 1), (double)(8 + i), 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();

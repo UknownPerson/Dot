@@ -1515,15 +1515,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             if (this.objectMouseOver == null) {
                 logger.warn("Null returned as \'hitResult\', this shouldn\'t happen!");
             } else {
-                switch (this.objectMouseOver.typeOfHit)
-                {
+                switch (this.objectMouseOver.typeOfHit) {
                     case ENTITY:
-                        if (this.playerController.isPlayerRightClickingOnEntity(this.thePlayer, this.objectMouseOver.entityHit, this.objectMouseOver))
-                        {
+                        if (this.playerController.isPlayerRightClickingOnEntity(this.thePlayer, this.objectMouseOver.entityHit, this.objectMouseOver)) {
                             flag = false;
-                        }
-                        else if (this.playerController.interactWithEntitySendPacket(this.thePlayer, this.objectMouseOver.entityHit))
-                        {
+                        } else if (this.playerController.interactWithEntitySendPacket(this.thePlayer, this.objectMouseOver.entityHit)) {
                             flag = false;
                         }
 

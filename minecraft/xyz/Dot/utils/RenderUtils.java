@@ -122,10 +122,13 @@ public class RenderUtils {
         float height = y1 - y;
         Minecraft mc = Minecraft.getMinecraft();
         int scaleFactor = 1;
-        int k = (int) mc.gameSettings.guiScale;
+        int k = (int) mc.gameSettings.particleSetting;
+        k = mc.displayWidth / width();
+
         if (k == 0) {
             k = 1000;
         }
+
         while (scaleFactor < k && mc.displayWidth / (scaleFactor + 1) >= 320
                 && mc.displayHeight / (scaleFactor + 1) >= 240) {
             ++scaleFactor;
