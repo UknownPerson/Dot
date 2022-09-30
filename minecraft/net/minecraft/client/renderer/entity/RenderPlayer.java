@@ -4,12 +4,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.layers.LayerArrow;
-import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
-import net.minecraft.client.renderer.entity.layers.LayerCape;
-import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
-import net.minecraft.client.renderer.entity.layers.LayerDeadmau5Head;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
+import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -20,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventPostRenderPlayer;
 import xyz.Dot.event.events.rendering.EventPreRenderPlayer;
+import xyz.Dot.module.ModuleManager;
 
 public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
 {
@@ -57,12 +53,10 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         EventPreRenderPlayer event = new EventPreRenderPlayer();
         EventBus.getInstance().call(event);
 
-        if (!entity.isUser() || this.renderManager.livingPlayer == entity)
-        {
+        if ((!entity.isUser() || ModuleManager.getModuleByName("NameTag").isToggle()) || this.renderManager.livingPlayer == entity) {
             double d0 = y;
 
-            if (entity.isSneaking() && !(entity instanceof EntityPlayerSP))
-            {
+            if (entity.isSneaking() && !(entity instanceof EntityPlayerSP)) {
                 d0 = y - 0.125D;
             }
 

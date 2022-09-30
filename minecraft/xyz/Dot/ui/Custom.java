@@ -33,6 +33,7 @@ public class Custom extends GuiScreen {
     static int bpsavgstartx = 20;
     static int bpsavgstarty = 96;
     static int scoreboardx;
+    static int scoreboardx1;
     static int scoreboardy;
     static boolean first = false;
     boolean keydown = false;
@@ -141,6 +142,13 @@ public class Custom extends GuiScreen {
     }
 
     public static void drawScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
+        if (scoreboardx > RenderUtils.width()) {
+            scoreboardx = RenderUtils.width();
+        }
+        if (scoreboardy > RenderUtils.height() - 9) {
+            scoreboardy = RenderUtils.height() - 9;
+        }
+
         Scoreboard scoreboard = objective.getScoreboard();
         Collection<Score> collection = scoreboard.getSortedScores(objective);
         List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
@@ -176,12 +184,12 @@ public class Custom extends GuiScreen {
         j1 = scaledRes.getScaledHeight() - 16;
         k1 = 16;
 
+        int l1 = scaledRes.getScaledWidth() - i - k1;
         int j = 0;
         if (first) {
-            k1 = scoreboardx;
-            j1 = scoreboardy - j * mc.fontRendererObj.FONT_HEIGHT + 13;
+            l1 = RenderUtils.width() - scoreboardx + 2;
+            j1 = RenderUtils.height() - scoreboardy - j * mc.fontRendererObj.FONT_HEIGHT + 13;
         }
-        int l1 = scaledRes.getScaledWidth() - i - k1;
         int jtemp = 0;
         for (Score score1 : collection) {
             ++j;
@@ -196,7 +204,7 @@ public class Custom extends GuiScreen {
             }
 
             int k = j1 - j * mc.fontRendererObj.FONT_HEIGHT;
-            int l = l1 + i + 2;
+            int l = RenderUtils.width() - scoreboardx + i + 2;
             RenderUtils.drawRect(l1 - 2, k, l, k + mc.fontRendererObj.FONT_HEIGHT, new Color(0, 0, 0, 64).getRGB());
             mc.fontRendererObj.drawString(s1, l1, k, 553648127);
             if (false) {
@@ -206,9 +214,10 @@ public class Custom extends GuiScreen {
             if (j == collection.size()) {
                 String s3 = objective.getDisplayName();
                 RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
+                scoreboardx1 = l;
                 if (!first) {
-                    scoreboardx = k1;
-                    scoreboardy = k - 13 + j * mc.fontRendererObj.FONT_HEIGHT;
+                    scoreboardx = RenderUtils.width() - (l1 - 2);
+                    scoreboardy = RenderUtils.height() - (k - 13 + j * mc.fontRendererObj.FONT_HEIGHT);
                     first = true;
                 }
                 RenderUtils.drawRect(l1 - 2, k - 1, l, k, 1342177280);
@@ -335,9 +344,10 @@ public class Custom extends GuiScreen {
             keydownY = (int) (mouseY - y);
         }
 
-        if (isHovered(scoreboardx, scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT, scoreboardx + 96, scoreboardy + 12 - thisj * mc.fontRendererObj.FONT_HEIGHT, mouseX, mouseY) && !keydown) {
-            x = scoreboardx;
-            y = scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT;
+        //RenderUtils.drawRect(RenderUtils.width() - scoreboardx, RenderUtils.height() - scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT, scoreboardx1, RenderUtils.height() - scoreboardy + 12 - thisj * mc.fontRendererObj.FONT_HEIGHT,-1);
+        if (isHovered(RenderUtils.width() - scoreboardx, RenderUtils.height() - scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT, scoreboardx1, RenderUtils.height() - scoreboardy + 12 - thisj * mc.fontRendererObj.FONT_HEIGHT, mouseX, mouseY) && !keydown) {
+            x = RenderUtils.width() - scoreboardx;
+            y = RenderUtils.height() - scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT;
             check = 3;
             keydown = true;
             keydownX = (int) (mouseX - x);
@@ -355,8 +365,8 @@ public class Custom extends GuiScreen {
         }
 
         if (check == 3) {
-            scoreboardx = mouseX - keydownX;
-            scoreboardy = mouseY - keydownY + thisj * mc.fontRendererObj.FONT_HEIGHT;
+            scoreboardx = RenderUtils.width() - (mouseX - keydownX);
+            scoreboardy = RenderUtils.height() - (mouseY - keydownY + thisj * mc.fontRendererObj.FONT_HEIGHT);
         }
 
         if (check == 4) {

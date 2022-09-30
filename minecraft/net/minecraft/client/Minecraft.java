@@ -715,7 +715,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public boolean isUnicode()
     {
-        return this.mcLanguageManager.isCurrentLocaleUnicode() || this.gameSettings.logger;
+        return this.mcLanguageManager.isCurrentLocaleUnicode() || !this.gameSettings.logger;
     }
 
     public void refreshResources()

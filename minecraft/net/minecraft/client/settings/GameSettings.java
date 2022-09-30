@@ -543,7 +543,7 @@ public class GameSettings
         if (settingsOption == GameSettings.Options.FORCE_UNICODE_FONT)
         {
             this.logger = !this.logger;
-            this.difficulty.fontRendererObj.setUnicodeFlag(/*this.difficulty.getLanguageManager().isCurrentLocaleUnicode() ||*/ !this.logger);
+            this.difficulty.fontRendererObj.setUnicodeFlag(this.difficulty.getLanguageManager().isCurrentLocaleUnicode() || !this.logger);
         }
 
         if (settingsOption == GameSettings.Options.FBO_ENABLE)

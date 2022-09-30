@@ -2,6 +2,10 @@ package xyz.Dot.module;
 
 import net.minecraft.client.Minecraft;
 import xyz.Dot.event.EventBus;
+import xyz.Dot.setting.Setting;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Module {
     private String name;
@@ -31,6 +35,15 @@ public class Module {
     }
 
     float partialTicks;
+    static ArrayList<Setting> values = new ArrayList<>();
+
+    protected void addValues(Setting value) {
+        values.add(value);
+    }
+
+    public List<Setting> getValues() {
+        return this.values;
+    }
 
     public float getAnimY() {
         return this.animy;

@@ -9,6 +9,7 @@ import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.setting.Setting;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -194,6 +195,13 @@ public class ClickUI extends GuiScreen {
 
             RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5, round, new Color(255, 255, 255));
             font.drawString(ClickGui.settingmodule.getName(), (int) (userxendanim + 13), (int) (ry + 8), new Color(0, 0, 0).getRGB());
+
+            for (Setting s : ClickGui.settingmodule.getValues()) {
+                if (s.isBoolean()) {
+                    font.drawString(s.getName(), (int) (userxendanim + 13), (int) (ry + 18), new Color(0, 0, 0).getRGB());
+                }
+
+            }
 
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
         }

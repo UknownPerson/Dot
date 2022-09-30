@@ -2,11 +2,7 @@ package net.minecraft.client.renderer.tileentity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -198,21 +194,19 @@ public class RenderItemFrame extends Render<EntityItemFrame>
         }
     }
 
-    protected void renderName(EntityItemFrame entity, double x, double y, double z)
-    {
-        if (Minecraft.isGuiEnabled() && entity.getDisplayedItem() != null && entity.getDisplayedItem().hasDisplayName() && this.renderManager.pointedEntity == entity)
-        {
+    public void renderName(EntityItemFrame entity, double x, double y, double z) {
+        if (Minecraft.isGuiEnabled() && entity.getDisplayedItem() != null && entity.getDisplayedItem().hasDisplayName() && this.renderManager.pointedEntity == entity) {
             float f = 1.6F;
             float f1 = 0.016666668F * f;
             double d0 = entity.getDistanceSqToEntity(this.renderManager.livingPlayer);
             float f2 = entity.isSneaking() ? 32.0F : 64.0F;
 
-            if (d0 < (double)(f2 * f2))
-            {
+            if (d0 < (double) (f2 * f2)) {
                 String s = entity.getDisplayedItem().getDisplayName();
 
                 if (entity.isSneaking())
                 {
+                    //fuck
                     FontRenderer fontrenderer = this.getFontRendererFromRenderManager();
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((float)x + 0.0F, (float)y + entity.height + 0.5F, (float)z);
