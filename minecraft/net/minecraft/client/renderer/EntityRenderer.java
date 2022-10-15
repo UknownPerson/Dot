@@ -1277,8 +1277,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
         this.mc.mcProfiler.startSection("mouse");
 
-        if (flag && Minecraft.isRunningOnMac && this.mc.inGameHasFocus && !Mouse.isInsideWindow())
-        {
+        if ((flag && Minecraft.isRunningOnMac && this.mc.inGameHasFocus && !Mouse.isInsideWindow())) {
             Mouse.setGrabbed(false);
             Mouse.setCursorPosition(Display.getWidth() / 2, Display.getHeight() / 2);
             Mouse.setGrabbed(true);

@@ -197,9 +197,7 @@ public class ClickUI extends GuiScreen {
             font.drawString(ClickGui.settingmodule.getName(), (int) (userxendanim + 13), (int) (ry + 8), new Color(0, 0, 0).getRGB());
 
             for (Setting s : ClickGui.settingmodule.getValues()) {
-                if (s.isBoolean()) {
-                    font.drawString(s.getName(), (int) (userxendanim + 13), (int) (ry + 18), new Color(0, 0, 0).getRGB());
-                }
+
 
             }
 

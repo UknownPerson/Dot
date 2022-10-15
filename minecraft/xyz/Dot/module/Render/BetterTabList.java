@@ -15,6 +15,10 @@ public class BetterTabList extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-        GuiPlayerTabOverlay.k1 = RenderUtils.toanim(GuiPlayerTabOverlay.k1, GuiPlayerTabOverlay.yto, 12, 1f);
+        if (GuiPlayerTabOverlay.yto > GuiPlayerTabOverlay.k1) {
+            GuiPlayerTabOverlay.k1 = RenderUtils.toanim(GuiPlayerTabOverlay.k1, GuiPlayerTabOverlay.yto, 12, 1f);
+        } else {
+            GuiPlayerTabOverlay.k1 = RenderUtils.toanim1(GuiPlayerTabOverlay.k1, 0, GuiPlayerTabOverlay.yto, 12, 2f);
+        }
     }
 }

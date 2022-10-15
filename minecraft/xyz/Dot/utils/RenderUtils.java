@@ -23,21 +23,22 @@ public class RenderUtils {
         GL11.glColor4f(red, green, blue, alpha);
     }
 
-    public static void drawRoundRect(int x1, int y1, int x2,int y2, int roundsize, Color color) {
-        int x1t = x1 +roundsize;
+    public static void drawRoundRect(int x1, int y1, int x2, int y2, int roundsize, Color color) {
+        int x1t = x1 + roundsize;
         int y1t = y1 + roundsize;
         int x2t = x2 - roundsize;
         int y2t = y2 - roundsize;
-        Gui.drawRect(x1t,y1t,x2t,y2t,color.getRGB());
-        Gui.drawRect(x1t,y1,x2t,y1t,color.getRGB());
-        Gui.drawRect(x2t,y1t,x2,y2t,color.getRGB());
-        Gui.drawRect(x1t,y2t,x2t,y2,color.getRGB());
-        Gui.drawRect(x1,y1t,x1t,y2t,color.getRGB());
-        drawFilledCircle(x1t,y1t,roundsize,color);
-        drawFilledCircle(x2t,y1t,roundsize,color);
-        drawFilledCircle(x1t,y2t,roundsize,color);
-        drawFilledCircle(x2t,y2t,roundsize,color);
+        Gui.drawRect(x1t, y1t, x2t, y2t, color.getRGB());
+        Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
+        Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
+        Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
+        Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
+        drawFilledCircle(x1t, y1t, roundsize, color);
+        drawFilledCircle(x2t, y1t, roundsize, color);
+        drawFilledCircle(x1t, y2t, roundsize, color);
+        drawFilledCircle(x2t, y2t, roundsize, color);
     }
+
     public static void drawFilledCircle(final int n, final int n2, final int n3, final Color color) {
         final int n4 = 100;
         final double n5 = 6.283185307179586 / n4;
@@ -64,30 +65,30 @@ public class RenderUtils {
 
     public static void drawImage(ResourceLocation image, int x, int y, int width, int height) {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-        GL11.glDisable((int)2929);
-        GL11.glEnable((int)3042);
-        GL11.glDepthMask((boolean)false);
-        OpenGlHelper.glBlendFunc((int)770, (int)771, (int)1, (int)0);
-        GL11.glColor4f((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
+        GL11.glDisable((int) 2929);
+        GL11.glEnable((int) 3042);
+        GL11.glDepthMask((boolean) false);
+        OpenGlHelper.glBlendFunc((int) 770, (int) 771, (int) 1, (int) 0);
+        GL11.glColor4f((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
         Minecraft.getMinecraft().getTextureManager().bindTexture(image);
-        Gui.drawModalRectWithCustomSizedTexture((int)x, (int)y, (float)0.0f, (float)0.0f, (int)width, (int)height, (float)width, (float)height);
-        GL11.glDepthMask((boolean)true);
-        GL11.glDisable((int)3042);
-        GL11.glEnable((int)2929);
+        Gui.drawModalRectWithCustomSizedTexture((int) x, (int) y, (float) 0.0f, (float) 0.0f, (int) width, (int) height, (float) width, (float) height);
+        GL11.glDepthMask((boolean) true);
+        GL11.glDisable((int) 3042);
+        GL11.glEnable((int) 2929);
     }
 
     public static void drawImage(ResourceLocation image, int x, int y, int width, int height, Color color) {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
-        GL11.glDisable((int)2929);
-        GL11.glEnable((int)3042);
-        GL11.glDepthMask((boolean)false);
-        OpenGlHelper.glBlendFunc((int)770, (int)771, (int)1, (int)0);
-        GL11.glColor4f((float)((float)color.getRed() / 255.0f), (float)((float)color.getBlue() / 255.0f), (float)((float)color.getRed() / 255.0f), (float)1.0f);
+        GL11.glDisable((int) 2929);
+        GL11.glEnable((int) 3042);
+        GL11.glDepthMask((boolean) false);
+        OpenGlHelper.glBlendFunc((int) 770, (int) 771, (int) 1, (int) 0);
+        GL11.glColor4f((float) ((float) color.getRed() / 255.0f), (float) ((float) color.getBlue() / 255.0f), (float) ((float) color.getRed() / 255.0f), (float) 1.0f);
         Minecraft.getMinecraft().getTextureManager().bindTexture(image);
-        Gui.drawModalRectWithCustomSizedTexture((int)x, (int)y, (float)0.0f, (float)0.0f, (int)width, (int)height, (float)width, (float)height);
-        GL11.glDepthMask((boolean)true);
-        GL11.glDisable((int)3042);
-        GL11.glEnable((int)2929);
+        Gui.drawModalRectWithCustomSizedTexture((int) x, (int) y, (float) 0.0f, (float) 0.0f, (int) width, (int) height, (float) width, (float) height);
+        GL11.glDepthMask((boolean) true);
+        GL11.glDisable((int) 3042);
+        GL11.glEnable((int) 2929);
     }
 
     public static int width() {
@@ -101,6 +102,25 @@ public class RenderUtils {
     public static float toanim(float now, float end, float multiplier, float min) {
         float beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
         float speed = Math.max((Math.abs(now - end) / multiplier), min) * beterspeedinfps;
+        if (now < end) {
+            if (now + speed > end) {
+                now = end;
+            } else {
+                now += speed;
+            }
+        } else if (now > end) {
+            if (now - speed < end) {
+                now = end;
+            } else {
+                now -= speed;
+            }
+        }
+        return now;
+    }
+
+    public static float toanim1(float now, float start, float end, float multiplier, float min) {
+        float beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
+        float speed = Math.max((Math.abs(start - now) / multiplier), min) * beterspeedinfps;
         if (now < end) {
             if (now + speed > end) {
                 now = end;

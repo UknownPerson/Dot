@@ -2,6 +2,7 @@ package xyz.Dot.module.Client;
 
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.event.events.world.EventPacketRecieve;
@@ -29,6 +30,7 @@ public class HUD extends Module {
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;
     int startTime = 0;
+    long startT = 0;
     float range = 0;
     //float[] bps;
     public static float[] bps = new float[128];
@@ -36,6 +38,7 @@ public class HUD extends Module {
     float beterspeedinfps;
     boolean fakemspeed = false;
     private TimerUtil timerUtil = new TimerUtil();
+    float t;
 
     public float threegenhao(float num) {
         Scanner sc = new Scanner(String.valueOf(num));
@@ -56,11 +59,21 @@ public class HUD extends Module {
         posy = mc.thePlayer.posY;
         posz = mc.thePlayer.posZ;
         int overTime = mc.thePlayer.ticksExisted;
+        long overT = System.nanoTime();
+
         float time = (overTime - startTime) / 20.0f;
+        t = (time / ((overT - startT) * 0.000000001f)) * 20;
+
         startTime = mc.thePlayer.ticksExisted;
+        startT = System.nanoTime();
+
+        long t1 = System.nanoTime();
         //float move = threegenhao((float) (Math.pow(Math.abs(posx - lastpx), 3) + Math.pow(Math.abs(posy - lastpy), 3) + Math.pow(Math.abs(posz - lastpz), 3)));
         float move = (float) Math.sqrt((float) (Math.pow(Math.abs(posx - lastpx), 2) + Math.pow(Math.abs(posz - lastpz), 2)));
         movespeed = Math.round((move / time) * 100) / 100.0f;
+        if (Client.instance.inDevelopment) {
+            movespeed = move / time;
+        }
         range += move;
         lastpx = posx;
         lastpy = posy;
@@ -73,6 +86,12 @@ public class HUD extends Module {
             fakemspeed = false;
         }
         bps[nums] = movespeed;
+
+        int n = nums;
+        if (n < 1) {
+            n += 100;
+        }
+        Custom.fucktest[n] = 0;
 
         // times[nums] = startTime;
         if (++nums > 100) {
@@ -90,6 +109,11 @@ public class HUD extends Module {
         if (mc.gameSettings.showDebugProfilerChart) {
             return;
         }
+
+        if (Client.instance.inDevelopment) {
+            FontLoaders.normalfont16.drawString(t + "Tick/S", 100, 50, new Color(255, 255, 255).getRGB());
+        }
+
         CFontRenderer font1 = FontLoaders.normalfont16;
 
         ArrayList<Module> list = new ArrayList<Module>();

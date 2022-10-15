@@ -670,7 +670,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         String s2 = "Copyright Mojang AB. Do not distribute!";
         this.drawString(this.fontRendererObj, s2, this.width - this.fontRendererObj.getStringWidth(s2) - 2, this.height - 10, -1);
 
-        String dev = "Code by 极品茄子的煤矿 Dev Team.";
+        String dev = "Code by \u6781\u54c1\u8304\u5b50\u7684\u7164\u77ff Dev Team.";
         this.drawString(this.fontRendererObj, dev, this.width - this.fontRendererObj.getStringWidth(dev) - 2, this.height - 20, -1);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0) {
