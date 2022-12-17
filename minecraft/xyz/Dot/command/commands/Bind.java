@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
 import xyz.Dot.command.Command;
 import xyz.Dot.module.Module;
-import xyz.Dot.utils.Helper;
+import xyz.Dot.ui.Notification;
 
 public class Bind
 extends Command {
@@ -28,12 +28,12 @@ extends Command {
                 Object[] arrobject = new Object[2];
                 arrobject[0] = m.getName();
                 arrobject[1] = k == 0 ? "none" : args[1].toUpperCase();
-                Helper.sendMessageWithoutPrefix(String.format("Successful bind %s to %s", arrobject));
+                Notification.sendClientMessage(String.format("Successful bind %s to %s", arrobject), Notification.Type.SUCCESS);
             } else {
-                Helper.sendMessageWithoutPrefix("Bind unsuccessful, please check spelling.");
+                Notification.sendClientMessage("Bind unsuccessful, please check spelling.", Notification.Type.WARNING);
             }
         } else {
-            Helper.sendMessageWithoutPrefix("\u00a77.bind <module> <key>");
+            Notification.sendClientMessage(".bind <module> <key>", Notification.Type.INFO);
         }
         return null;
     }

@@ -591,8 +591,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         {
             Display.setFullscreen(true);
             DisplayMode displaymode = Display.getDisplayMode();
-            this.displayWidth = Math.max(1, displaymode.getWidth());
-            this.displayHeight = Math.max(1, displaymode.getHeight());
+            this.displayWidth = Math.max(1, displaymode.getWidth() / 2);
+            this.displayHeight = Math.max(1, displaymode.getHeight() / 2);
         }
         else
         {
@@ -1186,9 +1186,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
     }
 
-    public int getLimitFramerate()
-    {
-        return this.theWorld == null && this.currentScreen != null ? 30 : this.gameSettings.limitFramerate;
+    public int getLimitFramerate() {
+        //return this.theWorld == null && this.currentScreen != null ? 30 : this.gameSettings.limitFramerate;
+        return this.theWorld == null && this.currentScreen != null ? Integer.MAX_VALUE : this.gameSettings.limitFramerate;
+        //fuck
     }
 
     public boolean isFramerateLimitBelowMax()
@@ -1507,7 +1508,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     {
         if (!this.playerController.getIsHittingBlock()) {
             this.rightClickDelayTimer = 4;
-            //this.rightClickDelayTimer = 0;
             //fuck
             boolean flag = true;
             ItemStack itemstack = this.thePlayer.inventory.getCurrentItem();

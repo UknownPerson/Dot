@@ -8,6 +8,7 @@ import xyz.Dot.module.Cheat.ViewClip;
 import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.module.Client.Command;
 import xyz.Dot.module.Client.HUD;
+import xyz.Dot.module.Client.Notifications;
 import xyz.Dot.module.Misc.BetterSneak;
 import xyz.Dot.module.Misc.KeyStrokes;
 import xyz.Dot.module.Misc.Sprint;
@@ -33,6 +34,7 @@ public class ModuleManager {
         this.addModule(new ClickGui());
         this.addModule(new Command());
         this.addModule(new HUD());
+        this.addModule(new Notifications());
 
         //Misc
         this.addModule(new BetterSneak());

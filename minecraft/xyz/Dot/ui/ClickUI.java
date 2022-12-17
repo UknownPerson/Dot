@@ -226,7 +226,7 @@ public class ClickUI extends GuiScreen {
             float fontcoloranim = m.getColoranim();
             Color fontcanim = new Color(0, 0, 0, (int) fontcoloranim);
 
-            if (m.getModuletype() == ClickGui.curType) {
+            if (m.getModuletype() != ClickGui.curType) {
 
                 itemp -= 20;
 
@@ -271,13 +271,6 @@ public class ClickUI extends GuiScreen {
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
         if (isHovered((int) rx, (int) y + 12, (int) userxendanim, (int) (y + height), mouseX, mouseY)) {
-            int dwheel = Mouse.getDWheel();
-            if (dwheel < 0) {
-                tempdy -= 16;
-            }
-            if (dwheel > 0 && tempdy < 0) {
-                tempdy += 16;
-            }
 
             if (tempdy > 0) {
                 tempdy = 0;
@@ -286,8 +279,17 @@ public class ClickUI extends GuiScreen {
             if (tempdy < itemp && itemp < 0) {
                 tempdy = itemp;
             }
+
             if (itemp > 0) {
                 tempdy = 0;
+            }
+
+            int dwheel = Mouse.getDWheel();
+            if (dwheel < 0) {
+                tempdy -= 16;
+            }
+            if (dwheel > 0) {
+                tempdy += 16;
             }
 
             dy = RenderUtils.toanim(dy, tempdy, 8, 0.1f);
@@ -407,6 +409,7 @@ public class ClickUI extends GuiScreen {
         }*/
 
         if (check == 7) {
+
             togglemodule.toggle();
             check = 0;
         }

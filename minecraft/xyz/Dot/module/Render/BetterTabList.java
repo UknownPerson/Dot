@@ -18,7 +18,7 @@ public class BetterTabList extends Module {
         if (GuiPlayerTabOverlay.yto > GuiPlayerTabOverlay.k1) {
             GuiPlayerTabOverlay.k1 = RenderUtils.toanim(GuiPlayerTabOverlay.k1, GuiPlayerTabOverlay.yto, 12, 1f);
         } else {
-            GuiPlayerTabOverlay.k1 = RenderUtils.toanim1(GuiPlayerTabOverlay.k1, 0, GuiPlayerTabOverlay.yto, 12, 2f);
+            GuiPlayerTabOverlay.k1 = RenderUtils.toanim(GuiPlayerTabOverlay.k1, GuiPlayerTabOverlay.yto, 12, 1f);
         }
     }
 }

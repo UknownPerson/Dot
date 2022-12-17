@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
 import xyz.Dot.command.CommandManager;
 import xyz.Dot.event.EventBus;
+import xyz.Dot.event.EventHandler;
+import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.file.CustomFileManager;
 import xyz.Dot.log.Log_Dot;
 import xyz.Dot.module.ModuleManager;
@@ -41,7 +43,12 @@ public enum Client {
         customfilemanager.loadFiles();
     }
 
-    public void stop(){
+    @EventHandler
+    public static void onTick(EventTick e) {
+
+    }
+
+    public void stop() {
 
         save();
         mc.gameSettings.saturation = FullBright.old;

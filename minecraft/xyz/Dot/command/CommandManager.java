@@ -10,6 +10,7 @@ import xyz.Dot.command.commands.Toggle;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventChat;
+import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.Helper;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class CommandManager{
                     Helper.sendMessage(result);
                 }
             } else {
-                Helper.sendMessageWithoutPrefix(String.format("Command not found. May you want to use .say <message>?"));
+                Notification.sendClientMessage("Command not found. May you want to use .say <message>?", Notification.Type.WARNING);
             }
         }
     }

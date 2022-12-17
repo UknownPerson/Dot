@@ -37,6 +37,7 @@ import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.Custom;
+import xyz.Dot.ui.Notification;
 
 import java.util.Collection;
 import java.util.List;
@@ -356,6 +357,10 @@ public class GuiIngame extends Gui
         }
 
         EventBus.getInstance().call(new EventRender2D(partialTicks));
+
+        if (ModuleManager.getModuleByName("Notifications").isToggle()) {
+            Notification.drawNotifications();
+        }
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();

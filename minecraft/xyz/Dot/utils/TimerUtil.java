@@ -22,7 +22,7 @@ public class TimerUtil {
     }
 
     public boolean delay(float milliSec) {
-        if ((float)(this.getTime() - this.lastMS) >= milliSec) {
+        if ((float) (this.getTime() - this.lastMS) >= milliSec) {
             return true;
         }
         return false;
@@ -30,6 +30,10 @@ public class TimerUtil {
 
     public long getTime() {
         return System.nanoTime() / 1000000L;
+    }
+
+    public long gettime() {
+        return this.getCurrentMS() - this.lastMS;
     }
 }
 

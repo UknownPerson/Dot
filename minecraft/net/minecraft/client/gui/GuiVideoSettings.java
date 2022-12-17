@@ -1,30 +1,23 @@
 package net.minecraft.client.gui;
 
-import java.io.IOException;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.src.Config;
 import net.optifine.Lang;
-import net.optifine.gui.GuiAnimationSettingsOF;
-import net.optifine.gui.GuiDetailSettingsOF;
-import net.optifine.gui.GuiOptionButtonOF;
-import net.optifine.gui.GuiOptionSliderOF;
-import net.optifine.gui.GuiOtherSettingsOF;
-import net.optifine.gui.GuiPerformanceSettingsOF;
-import net.optifine.gui.GuiQualitySettingsOF;
-import net.optifine.gui.GuiScreenOF;
-import net.optifine.gui.TooltipManager;
-import net.optifine.gui.TooltipProviderOptions;
+import net.optifine.gui.*;
 import net.optifine.shaders.gui.GuiShaders;
 
-public class GuiVideoSettings extends GuiScreenOF
-{
+import java.io.IOException;
+
+public class GuiVideoSettings extends GuiScreenOF {
     private GuiScreen parentGuiScreen;
     protected String screenTitle = "Video Settings";
     private GameSettings guiGameSettings;
 
-    /** An array of all of GameSettings.Options's video options. */
-    private static GameSettings.Options[] videoOptions = new GameSettings.Options[] {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.USE_VBO, GameSettings.Options.GAMMA, GameSettings.Options.BLOCK_ALTERNATIVES, GameSettings.Options.DYNAMIC_LIGHTS, GameSettings.Options.DYNAMIC_FOV};
+    /**
+     * An array of all of GameSettings.Options's video options.
+     */
+    private static GameSettings.Options[] videoOptions = new GameSettings.Options[]{GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.USE_VBO, GameSettings.Options.GAMMA, GameSettings.Options.BLOCK_ALTERNATIVES, GameSettings.Options.DYNAMIC_LIGHTS, GameSettings.Options.DYNAMIC_FOV};
     private TooltipManager tooltipManager = new TooltipManager(this, new TooltipProviderOptions());
 
     public GuiVideoSettings(GuiScreen parentScreenIn, GameSettings gameSettingsIn)

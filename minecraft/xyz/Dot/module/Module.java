@@ -3,6 +3,7 @@ package xyz.Dot.module;
 import net.minecraft.client.Minecraft;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.setting.Setting;
+import xyz.Dot.ui.Notification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,33 +97,31 @@ public class Module {
     }
 
     public void setToggle(boolean toggle) {
-        if(toggle){
+        if (this.toggle == toggle) {
+            return;
+        }
+        if (toggle) {
             EventBus.getInstance().register(new Object[]{this});
-        }else{
+            onEnable();
+            Notification.sendClientMessage(this.name + " was enabled.", Notification.Type.SUCCESS);
+        } else {
             EventBus.getInstance().unregister(new Object[]{this});
+            onDisable();
+            Notification.sendClientMessage(this.name + " was disabled.", Notification.Type.ERROR);
         }
         this.toggle = toggle;
     }
 
-    public void toggle(){
-        this.toggle = !this.toggle;
-        if(this.toggle){
-            EventBus.getInstance().register(new Object[]{this});
-            onEnable();
-        }else{
-            EventBus.getInstance().unregister(new Object[]{this});
-            onDisable();
-        }
+    public void toggle() {
+        setToggle(!this.toggle);
+        //  BlockSourceImpl.worldObj.playSoundEffect(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, "random.click", 0.3F, isToggle() ? 0.6F : 0.5F);
+    }
 
-      //  BlockSourceImpl.worldObj.playSoundEffect(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, "random.click", 0.3F, isToggle() ? 0.6F : 0.5F);
+    public void onEnable() {
 
     }
 
-    public void onEnable(){
-
-    }
-
-    public void onDisable(){
+    public void onDisable() {
 
     }
 }

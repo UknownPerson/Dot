@@ -303,23 +303,28 @@ public class Custom extends GuiScreen {
 
             float mspeed = HUD.bps[rank];
 
-            int dick = 0;
-            float dick1 = fucktest[rank];
-            float dick2 = HUD.bps[rank];
-            while (dick1 != 0) {
-                dick1 = RenderUtils.toanim1(dick1, dick2, 0, 2, 0.1f);
-                dick++;
-            }
-            dick = 95 - dick;
+            if (Client.instance.inDevelopment && false) {
+                int dick = 0;
+                float dick1 = fucktest[rank];
+                float dick2 = mspeed;
+                while (dick1 != 0) {
+                    dick1 = RenderUtils.toanim1(dick1, dick2, 0, 2, 0.1f);
+                    dick++;
+                }
+                dick = 95 - dick;
 
-            if (i > dick) {
-                fucktest[rank] = RenderUtils.toanim1(fucktest[rank], dick2, 0, 2, 0.1f);
+                if (i > dick) {
+                    fucktest[rank] = RenderUtils.toanim1(fucktest[rank], dick2, 0, 2, 0.1f);
+                } else {
+                    fucktest[rank] = RenderUtils.toanim(fucktest[rank], HUD.bps[rank], 32, 0.1f);
+                }
+
+                float mspeed1 = fucktest[rank];
+                RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (62 - (mspeed1 / xnum))), StartXspeed + 96 - i, StartYspeed + 62, new Color(255, 255, 255, 128).getRGB());
+
             } else {
-                fucktest[rank] = RenderUtils.toanim(fucktest[rank], HUD.bps[rank], 32, 0.1f);
+                RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (62 - (mspeed / xnum))), StartXspeed + 96 - i, StartYspeed + 62, new Color(255, 255, 255, 128).getRGB());
             }
-
-            float mspeed1 = fucktest[rank];
-            RenderUtils.drawRect(StartXspeed + 95 - i, (int) (StartYspeed + (62 - (mspeed1 / xnum))), StartXspeed + 96 - i, StartYspeed + 62, new Color(255, 255, 255, 128).getRGB());
         }
 
         float avg = 0;
