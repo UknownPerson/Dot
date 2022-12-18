@@ -2,7 +2,6 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.TimerUtil;
 
@@ -12,18 +11,13 @@ import java.util.ArrayList;
 public class Notification {
 
     public static ArrayList<Notification> notifications = new ArrayList<>();
-    Minecraft mc = Minecraft.getMinecraft();
     Type type;
     private String message;
     private TimerUtil timer;
-    private double lastY;
     private double posY;
     private double width;
     private double height;
     private double animationX;
-    private int color;
-    private int imageWidth;
-    private ResourceLocation image;
 
     public Notification(final String message, final Type type) {
         this.message = message;
@@ -32,10 +26,8 @@ public class Notification {
         this.width = font.getStringWidth(message) + 25;
         this.height = 20.0;
         this.animationX = this.width;
-        this.imageWidth = 13;
         this.posY = -1.0;
         this.type = type;
-        this.color = new Color(220, 220, 220, 220).getRGB();
     }
 
     public static void sendClientMessage(String message, Notification.Type type) {
@@ -57,7 +49,6 @@ public class Notification {
     }
 
     public void draw(double getY, final double lastY) {
-        this.lastY = lastY;
         if (this.isFinished()) {
             this.animationX = RenderUtils.toanim1((float) this.animationX, 0f, (float) this.width, 16, 1f);
         } else {

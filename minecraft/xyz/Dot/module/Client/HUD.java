@@ -105,7 +105,6 @@ public class HUD extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-
         if (mc.gameSettings.showDebugProfilerChart) {
             return;
         }

@@ -226,7 +226,7 @@ public class ClickUI extends GuiScreen {
             float fontcoloranim = m.getColoranim();
             Color fontcanim = new Color(0, 0, 0, (int) fontcoloranim);
 
-            if (m.getModuletype() != ClickGui.curType) {
+            if (m.getModuletype() == ClickGui.curType) {
 
                 itemp -= 20;
 
