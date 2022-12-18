@@ -23,7 +23,7 @@ public class Notification {
         this.message = message;
         (this.timer = new TimerUtil()).reset();
         final CFontRenderer font = FontLoaders.normalfont16;
-        this.width = font.getStringWidth(message) + 25;
+        this.width = font.getStringWidth(message) + 20;
         this.height = 20.0;
         this.animationX = this.width;
         this.posY = -1.0;
@@ -50,9 +50,9 @@ public class Notification {
 
     public void draw(double getY, final double lastY) {
         if (this.isFinished()) {
-            this.animationX = RenderUtils.toanim1((float) this.animationX, 0f, (float) this.width, 16, 1f);
+            this.animationX = RenderUtils.toanim1((float) this.animationX, 0f, (float) this.width, 20, 1f);
         } else {
-            this.animationX = RenderUtils.toanim((float) this.animationX, 0.0f, 16, 0.1f);
+            this.animationX = RenderUtils.toanim((float) this.animationX, 0.0f, 20, 0.1f);
         }
 
         float p = (float) (1 - this.animationX / this.width);
@@ -60,7 +60,7 @@ public class Notification {
         if (this.posY == -1.0) {
             this.posY = 0;
         } else {
-            this.posY = RenderUtils.toanim((float) this.posY, (float) getY, 12, 0.1f);
+            this.posY = RenderUtils.toanim((float) this.posY, (float) getY, 10, 0.1f);
         }
         final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
         final int x1 = (int) (res.getScaledWidth() - this.width + this.animationX) - 5;
@@ -68,10 +68,10 @@ public class Notification {
         final int y1 = (int) this.posY;
         final int y2 = (int) (y1 + this.height);
         RenderUtils.drawRect(x1, y1, x2, y2, new Color(255, 255, 255, (int) (p * 235)).getRGB());
-        int test = (int) ((1 - (timer.gettime() / Math.max(FontLoaders.normalfont16.getStringWidth(message) * 15f, 1500f))) * (x2 - x1) + x1);
+        int test = (int) ((1 - (timer.gettime() / Math.max(FontLoaders.normalfont16.getStringWidth(message) * 20f, 2000f))) * (x2 - x1) + x1);
         RenderUtils.drawRect(x1, y2 - 2, test > x1 ? test : x1, y2, new Color(0, 0, 0, (int) (p * 255)).getRGB());
         CFontRenderer font = FontLoaders.normalfont16;
-        Color c = new Color(64, 128, 255);
+        Color c;
         int alpha = (int) (p * 255);
         if (this.type == Type.SUCCESS) {
             c = new Color(64, 128, 255, alpha);
@@ -91,7 +91,7 @@ public class Notification {
     }
 
     private boolean isFinished() {
-        return this.timer.hasReached(Math.max(FontLoaders.normalfont16.getStringWidth(message) * 15, 1500));
+        return this.timer.hasReached(Math.max(FontLoaders.normalfont16.getStringWidth(message) * 20, 2000));
     }
 
     public double getHeight() {

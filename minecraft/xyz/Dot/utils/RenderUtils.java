@@ -40,8 +40,8 @@ public class RenderUtils {
     }
 
     public static void drawFilledCircle(final int n, final int n2, final int n3, final Color color) {
-        final int n4 = 100;
-        final double n5 = 6.283185307179586 / n4;
+        final int n4 = n3 * 10;
+        final double n5 = 2 * Math.PI / n4;
         GL11.glPushMatrix();
         GL11.glEnable(3042);
         GL11.glDisable(3553);
