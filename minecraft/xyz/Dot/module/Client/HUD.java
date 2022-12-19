@@ -35,7 +35,6 @@ public class HUD extends Module {
     //float[] bps;
     public static float[] bps = new float[128];
     public static int nums = 0;
-    float beterspeedinfps;
     boolean fakemspeed = false;
     private TimerUtil timerUtil = new TimerUtil();
     float t;
@@ -134,8 +133,6 @@ public class HUD extends Module {
             float yaddto;
             float endx = RenderUtils.width() - 10;
             float x = endx - font1.getStringWidth(m.getName());
-
-            beterspeedinfps = 120.0f / mc.getDebugFPS();
 
             if (m.isToggle()) {
                 yaddto = 15;

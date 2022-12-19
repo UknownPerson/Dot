@@ -11,6 +11,8 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 public class RenderUtils {
+    public static float fps;
+
     public static void drawRect(int x, int y, int x1, int y1, int color) {
         Gui.drawRect(x, y, x1, y1, color);
     }
@@ -100,7 +102,8 @@ public class RenderUtils {
     }
 
     public static float toanim(float now, float end, float multiplier, float min) {
-        float beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
+
+        float beterspeedinfps = 120.0f / fps;
         float speed = Math.max((Math.abs(now - end) / multiplier), min) * beterspeedinfps;
         if (now < end) {
             if (now + speed > end) {

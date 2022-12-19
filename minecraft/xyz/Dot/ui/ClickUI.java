@@ -35,6 +35,7 @@ public class ClickUI extends GuiScreen {
     float customx = RenderUtils.width();
     boolean customend = false;
     static float tempdy, dy;
+    long time;
 
     @Override
     public void initGui() {
@@ -270,8 +271,7 @@ public class ClickUI extends GuiScreen {
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
-        if (isHovered((int) rx, (int) y + 12, (int) userxendanim, (int) (y + height), mouseX, mouseY)) {
-
+        if (System.nanoTime() - time > 30000000f) { //0.03s
             if (tempdy > 0) {
                 tempdy = 0;
             }
@@ -283,17 +283,25 @@ public class ClickUI extends GuiScreen {
             if (itemp > 0) {
                 tempdy = 0;
             }
+        }
+
+        if (isHovered((int) rx, (int) y + 12, (int) userxendanim, (int) (y + height), mouseX, mouseY)) {
 
             int dwheel = Mouse.getDWheel();
+
+            if (dwheel != 0) {
+                time = System.nanoTime();
+            }
+
             if (dwheel < 0) {
                 tempdy -= 16;
             }
             if (dwheel > 0) {
                 tempdy += 16;
             }
-
-            dy = RenderUtils.toanim(dy, tempdy, 8, 0.1f);
         }
+
+        dy = RenderUtils.toanim(dy, tempdy, 8, 0.1f);
 
         int customstartxto = windowX - 50;
         int customstarty = windowY - 25;
@@ -339,7 +347,7 @@ public class ClickUI extends GuiScreen {
 
     public void check(int mouseX, int mouseY) {
 
-        if (!keydown) {
+        if (check == 0) {
             float cgx = ClickGui.x;
             float cgy = ClickGui.y;
             float end;
