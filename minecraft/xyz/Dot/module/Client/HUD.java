@@ -155,7 +155,6 @@ public class HUD extends Module {
             //RenderUtils.drawRect((int) (endx + 2), (int) y, (int) (endx + 2 + 1), (int) (y + yadd), rainbow.getRGB());
             if (yadd > font1.getStringHeight(m.getName())) {
                 int alpha = Math.round(((yadd - font1.getStringHeight(m.getName())) / (yadtemp - 6.0f)) * 255);
-
                 if (alpha < 5) {
                     alpha = 5;
                 } else if (alpha > 255) {

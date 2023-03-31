@@ -539,6 +539,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 }
             }
 
+            //fuck
             if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > 3.0D)
             {
                 this.pointedEntity = null;

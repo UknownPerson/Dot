@@ -306,7 +306,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message) {
         boolean bool = true;
-        if (ModuleManager.getModuleByName("Command").isToggle()) {
+        if (!ModuleManager.getModuleByName("NoCommand").isToggle()) {
             EventChat event = new EventChat(message);
             EventBus.getInstance().call(event);
             bool = !event.isCancelled();

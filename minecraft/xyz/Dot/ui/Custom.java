@@ -48,31 +48,50 @@ public class Custom extends GuiScreen {
     public static boolean open = false;
 
     public static float[] fucktest = new float[12800];
+    static float wc = 0f;
+    static float sc = 0f;
+    static float ac = 0f;
+    static float dc = 0f;
+    static float lc = 0f;
+    static float rc = 0f;
+    static float spacec = 0f;
+    static float shiftc = 0f;
 
     public static void drawKeyStrokes() {
         int x = keystrokesx;
         int y = keystrokesy;
-        int background = new Color(0, 0, 0, 100).getRGB();
-        int press = new Color(255, 255, 255, 190).getRGB();
+        int background = 0;
+        int press = 255;
 
         Minecraft minecraft = Minecraft.getMinecraft();
         GameSettings gameSettings = minecraft.gameSettings;
 
+        int multiplier = 6;
+
+        wc = RenderUtils.toanim(wc, gameSettings.keyBindLeft.isKeyDown() ? press : background, multiplier, 0.1f);
+        sc = RenderUtils.toanim(sc, gameSettings.keyBindRight.isKeyDown() ? press : background, multiplier, 0.1f);
+        ac = RenderUtils.toanim(ac, gameSettings.keyBindBack.isKeyDown() ? press : background, multiplier, 0.1f);
+        dc = RenderUtils.toanim(dc, gameSettings.keyBindJump.isKeyDown() ? press : background, multiplier, 0.1f);
+        lc = RenderUtils.toanim(lc, gameSettings.keyBindPickBlock.isKeyDown() ? press : background, multiplier, 0.1f);
+        rc = RenderUtils.toanim(rc, gameSettings.keyBindDrop.isKeyDown() ? press : background, multiplier, 0.1f);
+        spacec = RenderUtils.toanim(spacec, gameSettings.keyBindSneak.isKeyDown() ? press : background, multiplier, 0.1f);
+        shiftc = RenderUtils.toanim(shiftc, gameSettings.keyBindSprint.isKeyDown() ? press : background, multiplier, 0.1f);
+
         String s;
         s = "W";
-        RenderUtils.drawRect(x + 28, y, x + 53, y + 25, gameSettings.keyBindLeft.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x + 28, y, x + 53, y + 25, new Color((int) wc, (int) wc, (int) wc, 128).getRGB());
         font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "S";
-        RenderUtils.drawRect(x + 28, y + 28, x + 53, y + 53, gameSettings.keyBindRight.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x + 28, y + 28, x + 53, y + 53, new Color((int) sc, (int) sc, (int) sc, 128).getRGB());
         font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "A";
-        RenderUtils.drawRect(x, y + 28, x + 25, y + 53, gameSettings.keyBindBack.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x, y + 28, x + 25, y + 53, new Color((int) ac, (int) ac, (int) ac, 128).getRGB());
         font.drawString(s, x + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "D";
-        RenderUtils.drawRect(x + 56, y + 28, x + 81, y + 53, gameSettings.keyBindJump.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x + 56, y + 28, x + 81, y + 53, new Color((int) dc, (int) dc, (int) dc, 128).getRGB());
         font.drawString(s, x + 56 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         if (!gameSettings.keyBindPickBlock.isKeyDown()) {
@@ -93,7 +112,7 @@ public class Custom extends GuiScreen {
 
         y += 56;
         s = "LMB";
-        RenderUtils.drawRect(x, y, x + (81 - 3) / 2, y + 25, gameSettings.keyBindPickBlock.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x, y, x + (81 - 3) / 2, y + 25, new Color((int) lc, (int) lc, (int) lc, 128).getRGB());
         font.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count = 0;
         for (long i : cpsl) {
@@ -109,7 +128,7 @@ public class Custom extends GuiScreen {
         font1.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "RMB";
-        RenderUtils.drawRect(x + (81 + 3) / 2, y, x + 81, y + 25, gameSettings.keyBindDrop.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x + (81 + 3) / 2, y, x + 81, y + 25, new Color((int) rc, (int) rc, (int) rc, 128).getRGB());
         font.drawString(s, x + ((81 + 3) / 2) + ((81 - ((81 + 3) / 2)) - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count1 = 0;
         for (long i : cpsr) {
@@ -126,12 +145,12 @@ public class Custom extends GuiScreen {
 
         y += 28;
         s = "\u00a7m\u00a7l--------";
-        RenderUtils.drawRect(x, y, x + 81, y + 15, gameSettings.keyBindSneak.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x, y, x + 81, y + 15, new Color((int) spacec, (int) spacec, (int) spacec, 128).getRGB());
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2 - 1, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         y += 18;
         s = "Sneak";
-        RenderUtils.drawRect(x, y, x + 81, y + 15, gameSettings.keyBindSprint.isKeyDown() ? press : background);
+        RenderUtils.drawRect(x, y, x + 81, y + 15, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128).getRGB());
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
     }

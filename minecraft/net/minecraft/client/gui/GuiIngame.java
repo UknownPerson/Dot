@@ -38,6 +38,7 @@ import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.Notification;
+import xyz.Dot.utils.RenderUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -103,6 +104,7 @@ public class GuiIngame extends Gui
 
     /** Used with updateCounter to make the heart bar flash */
     private long healthUpdateCounter = 0L;
+    float tempx = 0;
 
     public GuiIngame(Minecraft mcIn)
     {
@@ -377,8 +379,14 @@ public class GuiIngame extends Gui
             int i = sr.getScaledWidth() / 2;
             float f = this.zLevel;
             this.zLevel = -90.0F;
+            //aaa
+            if(tempx == 0){
+                tempx = i - 91 - 1 + entityplayer.inventory.currentItem * 20;
+            }
+            tempx = RenderUtils.toanim(tempx,i - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f);
             this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
-            this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+            this.drawTexturedModalRect(tempx, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+            //this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
             this.zLevel = f;
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableBlend();

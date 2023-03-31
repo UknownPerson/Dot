@@ -2021,6 +2021,7 @@ public abstract class Entity implements ICommandSender
 
     public float getCollisionBorderSize() {
         float f = 0.1f;
+        //f += 0.1;
         return f;
         //fuck
     }

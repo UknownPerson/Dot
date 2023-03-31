@@ -6,7 +6,7 @@ import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.module.Cheat.NoJumpDelay;
 import xyz.Dot.module.Cheat.ViewClip;
 import xyz.Dot.module.Client.ClickGui;
-import xyz.Dot.module.Client.Command;
+import xyz.Dot.module.Client.NoCommand;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Client.Notifications;
 import xyz.Dot.module.Misc.BetterSneak;
@@ -30,9 +30,9 @@ public class ModuleManager {
         this.addModule(new NoJumpDelay());
         this.addModule(new ViewClip());
 
-        //Client
+        //ClientNoCommand
         this.addModule(new ClickGui());
-        this.addModule(new Command());
+        this.addModule(new NoCommand());
         this.addModule(new HUD());
         this.addModule(new Notifications());
 
@@ -47,6 +47,7 @@ public class ModuleManager {
         this.addModule(new BetterTabList());
         this.addModule(new EveryThingBlock());
         this.addModule(new FullBright());
+        this.addModule(new HUDPP());
         this.addModule(new NameTag());
         this.addModule(new NoBossBar());
         this.addModule(new NoHurtCamera());
