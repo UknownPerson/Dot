@@ -105,6 +105,7 @@ public class GuiIngame extends Gui
     /** Used with updateCounter to make the heart bar flash */
     private long healthUpdateCounter = 0L;
     float tempx = 0;
+    float lastto;
 
     public GuiIngame(Minecraft mcIn)
     {
@@ -382,10 +383,17 @@ public class GuiIngame extends Gui
             //aaa
             if(tempx == 0){
                 tempx = i - 91 - 1 + entityplayer.inventory.currentItem * 20;
+
             }
-            tempx = RenderUtils.toanim(tempx,i - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f);
+            if(lastto == 0){
+                lastto = i - 91 - 1 + entityplayer.inventory.currentItem * 20;
+            }
+            tempx = RenderUtils.toanim2(tempx,lastto,i - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f,1f);
             this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
             this.drawTexturedModalRect(tempx, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+            if(tempx == i - 91 - 1 + entityplayer.inventory.currentItem * 20){
+                lastto = i - 91 - 1 + entityplayer.inventory.currentItem * 20;;
+            }
             //this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
             this.zLevel = f;
             GlStateManager.enableRescaleNormal();
