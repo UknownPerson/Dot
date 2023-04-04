@@ -17,7 +17,7 @@ public enum Client {
     instance;
     public String client_name = "Dot";
     public String client_version = "0.1";
-    public boolean inDevelopment = false;
+    public boolean inDevelopment = true;
     protected Minecraft mc = Minecraft.getMinecraft();
     public EventBus eventmanger;
     public ModuleManager modulemanager;

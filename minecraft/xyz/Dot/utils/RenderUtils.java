@@ -140,6 +140,39 @@ public class RenderUtils {
         return now;
     }
 
+    public static float toanim2(float now, float start, float end, float multiplier, float min) {
+        if(now > start){
+            if (now < (start + end) / 2) {
+                now = toanim1(now, start, end, multiplier, min);
+            } else {
+                now = toanim(now, end, multiplier, min);
+            }
+        }else{
+            if (now > (start + end) / 2) {
+                now = toanim1(now, start, end, multiplier, min);
+            } else {
+                now = toanim(now, end, multiplier, min);
+            }
+        }
+        return now;
+    }
+    public static float toanim2(float now, float start, float end, float multiplier, float min1,float min2) {
+        if(now > start){
+            if (now < (start + end) / 2) {
+                now = toanim1(now, start, end, multiplier, min2);
+            } else {
+                now = toanim(now, end, multiplier, min1);
+            }
+        }else{
+            if (now > (start + end) / 2) {
+                now = toanim1(now, start, end, multiplier, min2);
+            } else {
+                now = toanim(now, end, multiplier, min1);
+            }
+        }
+        return now;
+    }
+
     public static void doGlScissor(float x, float y, float x1, float y1) {
         float width = x1 - x;
         float height = y1 - y;

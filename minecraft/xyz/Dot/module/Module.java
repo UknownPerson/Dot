@@ -36,9 +36,9 @@ public class Module {
     }
 
     float partialTicks;
-    static ArrayList<Setting> values = new ArrayList<>();
+    private ArrayList<Setting> values = new ArrayList<>();
 
-    protected void addValues(Setting value) {
+    public void addValues(Setting value) {
         values.add(value);
     }
 

@@ -12,17 +12,54 @@ public class Setting {
     private String currentMode;
     private ArrayList<String> Modes;
     private Category category;
+    private float settingx = 0;
+    private float Red = 0;
+    private float Green = 0;
+    private float Blue = 0;
 
     public enum Category{
         BOOLEAN,
         VALUE,
-        MODE;
+        MODE
+    }
+
+    public float getSettingX() {
+        return this.settingx;
+    }
+
+    public float getRed() {
+        return Red;
+    }
+
+    public void setRed(float red) {
+        Red = red;
+    }
+
+    public float getGreen() {
+        return Green;
+    }
+
+    public void setGreen(float green) {
+        Green = green;
+    }
+
+    public float getBlue() {
+        return Blue;
+    }
+
+    public void setBlue(float blue) {
+        Blue = blue;
+    }
+
+    public void setSettingX(float settingx) {
+        this.settingx = settingx;
     }
 
     public Setting(Module module, String name, boolean toggle) {
         this.module = module;
         this.name = name;
         this.toggle = toggle;
+        category = Category.BOOLEAN;
     }
 
     public Setting(Module module, String name, double currentValue, double minValue, double maxValue, double incValue) {
@@ -32,6 +69,7 @@ public class Setting {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.incValue = incValue;
+        category = Category.VALUE;
     }
 
     public Setting(Module module, String name, String currentMode, ArrayList<String> modes) {
@@ -39,6 +77,7 @@ public class Setting {
         this.name = name;
         this.currentMode = currentMode;
         Modes = modes;
+        category = Category.MODE;
     }
 
     public Module getModule() {

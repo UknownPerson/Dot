@@ -23,7 +23,7 @@ public class ClickUI extends GuiScreen {
     float x, y = RenderUtils.height(); // ClickGui位置
     int xend, yend; // ClickGui位置终
     boolean keydown = false, keydown1 = false; // 是否按下左键、右键
-    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6保留 curtype) (7 moduletoggle) (8 module setting) (9 custom)
+    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6保留 curtype) (7 moduletoggle) (8 module setting) (9 custom) (10 setting)
     int keydownX, keydownY; // 按下左键时的X Y
     float beterspeedinfps; // 动画帧率修补量
     boolean animyaninend = false; //进入动画Y轴是否结束
@@ -195,11 +195,60 @@ public class ClickUI extends GuiScreen {
             RenderUtils.doGlScissor((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5);
 
             RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5, round, new Color(255, 255, 255));
-            font.drawString(ClickGui.settingmodule.getName(), (int) (userxendanim + 13), (int) (ry + 8), new Color(0, 0, 0).getRGB());
 
+
+            float thisry = ry + 8;
+            font.drawString(ClickGui.settingmodule.getName(), (int) (userxendanim + 13), (int) thisry, new Color(0, 0, 0).getRGB());
+            thisry += 10;
+            RenderUtils.drawRect((int) (userxendanim + 10), (int) thisry, (int) (userxendanim + 143), (int) (thisry + 1), new Color(200, 200, 200).getRGB());
+            thisry += 10;
             for (Setting s : ClickGui.settingmodule.getValues()) {
 
+                if (s.isBoolean()) {
+                    font1.drawString(s.getName(), (int) (userxendanim + 20), (int) thisry, new Color(64, 64, 64).getRGB());
+                    RenderUtils.drawRoundRect((int) (userxendanim + 130 -10), (int) thisry- 2, (int) (userxendanim + 145 -10), (int) thisry + 8 - 2, 4, new Color(200, 200, 200));
+                    if (isHovered((int) (userxendanim + 130 -10), (int) thisry - 2, (int) (userxendanim + 145 -10), (int) thisry + 8 - 2, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
+                        check = 10;
+                        keydown = true;
+                        keydownX = (int) (mouseX - x);
+                        keydownY = (int) (mouseY - y);
+                        s.setToggle(!s.isToggle());
+                    }
+                    int settingto;
+                    int settingto1;
+                    int redto;
+                    int blueto;
+                    settingto = s.isToggle() ? 145 - 5 -10 : 130 + 5 -10;
+                    settingto1 = !s.isToggle() ? 145 - 5 -10 : 130 + 5 -10;
+                    redto = s.isToggle() ? 64 : 128;
+                    blueto = s.isToggle() ? 255 : 128;
 
+                    if (s.getSettingX() == 0) {
+                        s.setSettingX(settingto);
+                    }
+                    if (s.getRed() == 0) {
+                        s.setRed(redto);
+                    }
+                    if (s.getBlue() == 0) {
+                        s.setBlue(blueto);
+                    }
+                    s.setSettingX(RenderUtils.toanim2(s.getSettingX(), settingto1, settingto, 4, 0.001f,0.1f));
+                    s.setRed(RenderUtils.toanim(s.getRed(), redto, 8, 0.1f));
+                    s.setGreen(128);
+                    s.setBlue(RenderUtils.toanim(s.getBlue(), blueto, 8, 0.1f));
+
+                    RenderUtils.drawFilledCircle((int) (s.getSettingX() + userxendanim), (int) (thisry - 2 + 4), 3, new Color((int) s.getRed(), (int) s.getGreen(), (int) s.getBlue()));
+                }
+
+                if (s.isValue()) {
+
+                }
+
+                if(s.isMode()){
+
+                }
+
+                thisry += 16;
             }
 
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
