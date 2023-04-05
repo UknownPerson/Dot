@@ -10,6 +10,7 @@ import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.FontLoaders;
@@ -21,12 +22,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HUD extends Module {
+    public static Setting dotbox = new Setting(ModuleManager.getModuleByName("HUD"), "Dot", true);
+    public static Setting bpsavg = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG", true);
+    public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
 
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
+        this.addValues(dotbox,bpsavg,hudarraylist);
     }
-
-    private TimerUtil timer = new TimerUtil();
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;
     int startTime = 0;
@@ -120,8 +123,15 @@ public class HUD extends Module {
         }
         list.sort((o1, o2) -> font1.getStringWidth(o2.getName()) - font1.getStringWidth(o1.getName()));
 
-        Custom.drawDot();
-        Custom.drawBPSAVG();
+        if(dotbox.isToggle()){
+            Custom.drawDot();
+        }
+        if(bpsavg.isToggle()){
+            Custom.drawBPSAVG();
+        }
+        if(!hudarraylist.isToggle()){
+            return;
+        }
 
         float y = 15;
         boolean iamfirst = false;

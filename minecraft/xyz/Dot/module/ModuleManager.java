@@ -3,6 +3,7 @@ package xyz.Dot.module;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
+import xyz.Dot.module.Cheat.HitBox;
 import xyz.Dot.module.Cheat.NoJumpDelay;
 import xyz.Dot.module.Cheat.ViewClip;
 import xyz.Dot.module.Client.ClickGui;
@@ -27,6 +28,7 @@ public class ModuleManager {
 
     public void loadModule() {
         //Cheat
+        this.addModule(new HitBox());
         this.addModule(new NoJumpDelay());
         this.addModule(new ViewClip());
 

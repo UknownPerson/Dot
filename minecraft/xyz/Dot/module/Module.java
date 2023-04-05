@@ -7,6 +7,7 @@ import xyz.Dot.ui.Notification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Module {
     private String name;
@@ -38,8 +39,13 @@ public class Module {
     float partialTicks;
     private ArrayList<Setting> values = new ArrayList<>();
 
-    public void addValues(Setting value) {
-        values.add(value);
+    public void addValues(Setting... values) {
+        Setting[] s = values;
+        int l = values.length;
+        for (int i = 0; i < l; ++i) {
+            Setting value = s[i];
+            this.values.add(value);
+        }
     }
 
     public List<Setting> getValues() {

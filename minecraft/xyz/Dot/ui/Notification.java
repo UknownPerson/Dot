@@ -2,6 +2,7 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import xyz.Dot.module.Client.Notifications;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.TimerUtil;
 
@@ -54,8 +55,13 @@ public class Notification {
         } else {
             this.animationX = RenderUtils.toanim((float) this.animationX, 0.0f, 20, 0.1f);
         }
+        float p;
+        if (Notifications.fade.isToggle()) {
+            p = (float) (1 - this.animationX / this.width);
+        } else {
+            p = 1;
+        }
 
-        float p = (float) (1 - this.animationX / this.width);
 
         if (this.posY == -1.0) {
             this.posY = 0;
@@ -67,7 +73,7 @@ public class Notification {
         final int x2 = (int) (x1 + this.width);
         final int y1 = (int) this.posY;
         final int y2 = (int) (y1 + this.height);
-        RenderUtils.drawRect(x1, y1, x2, y2, new Color(255, 255, 255, (int) (1 * 235)).getRGB());
+        RenderUtils.drawRect(x1, y1, x2, y2, new Color(255, 255, 255, (int) (p * 235)).getRGB());
         int test = (int) ((1 - (timer.gettime() / Math.max(FontLoaders.normalfont16.getStringWidth(message) * 20f, 2000f))) * (x2 - x1) + x1);
         RenderUtils.drawRect(x1, y2 - 2, test > x1 ? test : x1, y2, new Color(0, 0, 0, (int) (p * 255)).getRGB());
         CFontRenderer font = FontLoaders.normalfont16;

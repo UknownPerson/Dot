@@ -14,6 +14,7 @@ import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class ClickUI extends GuiScreen {
     CFontRenderer font = FontLoaders.normalfont16; // 字体
@@ -207,9 +208,8 @@ public class ClickUI extends GuiScreen {
                 if (s.isBoolean()) {
                     //RenderUtils.drawRect((int) (userxendanim + 18), (int) thisry - 2 - 4  , (int) (userxendanim + 145 -10), (int) thisry + 8 - 2 + 4,new Color(0,0,0).getRGB());
                     font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
-                    RenderUtils.drawRoundRect((int) (userxendanim + 130 -10), (int) thisry- 2, (int) (userxendanim + 145 -10), (int) thisry + 8 - 2, 4, new Color(200, 200, 200));
-                    if (isHovered((int) (userxendanim + 18), (int) thisry - 2 - 4  , (int) (userxendanim + 145 -10), (int) thisry + 8 - 2 + 4, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
-                        check = 10;
+                    RenderUtils.drawRoundRect((int) (userxendanim + 130 - 10), (int) thisry - 2, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2, 4, new Color(200, 200, 200));
+                    if (isHovered((int) (userxendanim + 18), (int) thisry - 2 - 4, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2 + 4, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                         keydown = true;
                         keydownX = (int) (mouseX - x);
                         keydownY = (int) (mouseY - y);
@@ -219,8 +219,8 @@ public class ClickUI extends GuiScreen {
                     int settingto1;
                     int redto;
                     int blueto;
-                    settingto = s.isToggle() ? 145 - 5 -10 : 130 + 5 -10;
-                    settingto1 = !s.isToggle() ? 145 - 5 -10 : 130 + 5 -10;
+                    settingto = s.isToggle() ? 145 - 5 - 10 : 130 + 5 - 10;
+                    settingto1 = !s.isToggle() ? 145 - 5 - 10 : 130 + 5 - 10;
                     redto = s.isToggle() ? 64 : 128;
                     blueto = s.isToggle() ? 255 : 128;
 
@@ -233,19 +233,51 @@ public class ClickUI extends GuiScreen {
                     if (s.getBlue() == 0) {
                         s.setBlue(blueto);
                     }
-                    s.setSettingX(RenderUtils.toanim2(s.getSettingX(), settingto1, settingto, 4, 0.001f,0.1f));
+                    s.setSettingX(RenderUtils.toanim2(s.getSettingX(), settingto1, settingto, 4, 0.001f, 0.1f));
                     s.setRed(RenderUtils.toanim(s.getRed(), redto, 8, 0.1f));
                     s.setGreen(128);
                     s.setBlue(RenderUtils.toanim(s.getBlue(), blueto, 8, 0.1f));
-
                     RenderUtils.drawFilledCircle((int) (s.getSettingX() + userxendanim), (int) (thisry - 2 + 4), 3, new Color((int) s.getRed(), (int) s.getGreen(), (int) s.getBlue()));
                 }
 
                 if (s.isValue()) {
-
+                    font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
+                    font1.drawString(String.valueOf(s.getCurrentValue()), (int) (userxendanim + 143 - 8 - font1.getStringWidth(String.valueOf(s.getCurrentValue()))), (int) thisry, new Color(64, 64, 64).getRGB());
+                    thisry += 8;
+                    RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), 2, new Color(200, 200, 200));
+                    double l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
+                    RenderUtils.drawFilledCircle((int) (userxendanim + 10 + 8 + 2 + l), (int) thisry + 2, 3, new Color(64, 128, 255));
+                    if (isHovered((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
+                        check = 10;
+                        keydown = true;
+                        keydownX = (int) (mouseX - x);
+                        keydownY = (int) (mouseY - y);
+                    }
+                    if (check == 10) {
+                        if (mouseX > (int) (userxendanim + 10 + 8 + 2 + l)) {
+                            BigDecimal shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
+                            BigDecimal shit2 = new BigDecimal(Double.toString(s.getIncValue()));
+                            while(Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12)))))){
+                                s.setCurrentValue(Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()));
+                                l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
+                                shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
+                                shit2 = new BigDecimal(Double.toString(s.getIncValue()));
+                            }
+                        }
+                        if (mouseX < (int) (userxendanim + 10 + 8 + 2 + l)) {
+                            BigDecimal shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
+                            BigDecimal shit2 = new BigDecimal(Double.toString(s.getIncValue()));
+                            while(Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.subtract(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12)))))){
+                                s.setCurrentValue(Math.max(shit1.subtract(shit2).doubleValue(), s.getMinValue()));
+                                shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
+                                shit2 = new BigDecimal(Double.toString(s.getIncValue()));
+                                l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
+                            }
+                        }
+                    }
                 }
 
-                if(s.isMode()){
+                if (s.isMode()) {
 
                 }
 

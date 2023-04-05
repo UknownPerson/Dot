@@ -27,6 +27,8 @@ import net.minecraft.util.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import xyz.Dot.module.Cheat.HitBox;
+import xyz.Dot.module.ModuleManager;
 
 import java.util.List;
 import java.util.Random;
@@ -2021,7 +2023,9 @@ public abstract class Entity implements ICommandSender
 
     public float getCollisionBorderSize() {
         float f = 0.1f;
-        //f += 0.1;
+        if(ModuleManager.getModuleByName("HitBox").isToggle()){
+            f = (float) HitBox.size.getCurrentValue();
+        }
         return f;
         //fuck
     }

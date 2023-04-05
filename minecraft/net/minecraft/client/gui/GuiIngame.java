@@ -33,6 +33,7 @@ import net.minecraft.src.Config;
 import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.ModuleManager;
@@ -381,20 +382,23 @@ public class GuiIngame extends Gui
             float f = this.zLevel;
             this.zLevel = -90.0F;
             //aaa
-            if(tempx == 0){
-                tempx = i - 91 - 1 + entityplayer.inventory.currentItem * 20;
+            if(Client.instance.inDevelopment){
+                if(tempx == 0){
+                    tempx =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
 
+                }
+                if(lastto == 0){
+                    lastto =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
+                }
+                tempx = RenderUtils.toanim2(tempx,lastto, - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f,1f);
+                this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
+                this.drawTexturedModalRect(tempx + i, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+                if(tempx ==  - 91 - 1 + entityplayer.inventory.currentItem * 20){
+                    lastto =  - 91 - 1 + entityplayer.inventory.currentItem * 20;;
+                }
+            }else{
+                this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
             }
-            if(lastto == 0){
-                lastto = i - 91 - 1 + entityplayer.inventory.currentItem * 20;
-            }
-            tempx = RenderUtils.toanim2(tempx,lastto,i - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f,1f);
-            this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
-            this.drawTexturedModalRect(tempx, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
-            if(tempx == i - 91 - 1 + entityplayer.inventory.currentItem * 20){
-                lastto = i - 91 - 1 + entityplayer.inventory.currentItem * 20;;
-            }
-            //this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
             this.zLevel = f;
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableBlend();

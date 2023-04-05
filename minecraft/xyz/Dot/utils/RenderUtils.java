@@ -5,6 +5,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -102,7 +104,6 @@ public class RenderUtils {
     }
 
     public static float toanim(float now, float end, float multiplier, float min) {
-
         float beterspeedinfps = 120.0f / fps;
         float speed = Math.max((Math.abs(now - end) / multiplier), min) * beterspeedinfps;
         if (now < end) {
@@ -141,13 +142,13 @@ public class RenderUtils {
     }
 
     public static float toanim2(float now, float start, float end, float multiplier, float min) {
-        if(now > start){
+        if (now > start) {
             if (now < (start + end) / 2) {
                 now = toanim1(now, start, end, multiplier, min);
             } else {
                 now = toanim(now, end, multiplier, min);
             }
-        }else{
+        } else {
             if (now > (start + end) / 2) {
                 now = toanim1(now, start, end, multiplier, min);
             } else {
@@ -156,14 +157,15 @@ public class RenderUtils {
         }
         return now;
     }
-    public static float toanim2(float now, float start, float end, float multiplier, float min1,float min2) {
-        if(now > start){
+
+    public static float toanim2(float now, float start, float end, float multiplier, float min1, float min2) {
+        if (now > start) {
             if (now < (start + end) / 2) {
                 now = toanim1(now, start, end, multiplier, min2);
             } else {
                 now = toanim(now, end, multiplier, min1);
             }
-        }else{
+        } else {
             if (now > (start + end) / 2) {
                 now = toanim1(now, start, end, multiplier, min2);
             } else {

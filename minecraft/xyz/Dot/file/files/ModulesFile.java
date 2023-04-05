@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import xyz.Dot.Client;
 import xyz.Dot.file.CustomFile;
 import xyz.Dot.module.Module;
+import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ModulesFile extends CustomFile {
 
@@ -29,7 +31,7 @@ public class ModulesFile extends CustomFile {
         makeDirecotry();
 
 
-        for (Module module : Client.instance.getModuleManager().getModules()) {
+        for (Module module : ModuleManager.getModules()) {
 
             makeModuleFile(module);
 
@@ -52,7 +54,7 @@ public class ModulesFile extends CustomFile {
                 module.setKeyBind(Integer.parseInt(jsonObject.get("key").getAsString()));
 
 
-            ArrayList<Setting> settings = Client.instance.settingmanager.getSettingForModule(module);
+            List<Setting> settings = module.getValues();
 
             if (settings != null && jsonObject.has("settings")) {
 
@@ -84,7 +86,7 @@ public class ModulesFile extends CustomFile {
     public void saveFile() throws IOException {
         makeDirecotry();
 
-        for (Module module : Client.instance.modulemanager.getModules()) {
+        for (Module module : ModuleManager.getModules()) {
 
             makeModuleFile(module);
 
@@ -102,14 +104,12 @@ public class ModulesFile extends CustomFile {
             jsonObject.addProperty("key", module.getKeyBind());
 
 
-            ArrayList<Setting> settings = Client.instance.settingmanager.getSettingForModule(module);
-
+            List<Setting> settings = module.getValues();
             if (settings != null) {
 
                 JsonArray jsonArray = new JsonArray();
                 JsonObject jsonObject1 = new JsonObject();
 
-                
                 settings.forEach(setting -> {
                     if (setting.isBoolean())
                         jsonObject1.addProperty(setting.getName(), setting.isToggle());
