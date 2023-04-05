@@ -310,6 +310,7 @@ public class ClickUI extends GuiScreen {
                             keydownX = (int) (mouseX - x);
                             keydownY = (int) (mouseY - y);
                             s.setCurrentMode(s.getModes().get(i));
+                            s.setOpen(false);
                         }
                     }
 
