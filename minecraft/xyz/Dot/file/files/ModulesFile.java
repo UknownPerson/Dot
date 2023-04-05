@@ -116,7 +116,7 @@ public class ModulesFile extends CustomFile {
                     else if (setting.isValue())
                         jsonObject1.addProperty(setting.getName(), setting.getCurrentValue());
                     else
-                        jsonObject1.addProperty(setting.getName(), setting.getCurrentValue());
+                        jsonObject1.addProperty(setting.getName(), setting.getCurrentMode());
                 });
 
                 jsonArray.add(jsonObject1);

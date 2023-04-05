@@ -32,15 +32,17 @@ public class RenderUtils {
         int y1t = y1 + roundsize;
         int x2t = x2 - roundsize;
         int y2t = y2 - roundsize;
-        Gui.drawRect(x1t, y1t, x2t, y2t, color.getRGB());
-        Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
-        Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
-        Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
-        Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
-        drawFilledCircle(x1t, y1t, roundsize, color);
-        drawFilledCircle(x2t, y1t, roundsize, color);
-        drawFilledCircle(x1t, y2t, roundsize, color);
-        drawFilledCircle(x2t, y2t, roundsize, color);
+        if(x1 != x2 && y1 != y2){
+            Gui.drawRect(x1t, y1t, x2t, y2t, color.getRGB());
+            Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
+            Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
+            Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
+            Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
+            drawFilledCircle(x1t, y1t, roundsize, color);
+            drawFilledCircle(x2t, y1t, roundsize, color);
+            drawFilledCircle(x1t, y2t, roundsize, color);
+            drawFilledCircle(x2t, y2t, roundsize, color);
+        }
     }
 
     public static void drawFilledCircle(final int n, final int n2, final int n3, final Color color) {

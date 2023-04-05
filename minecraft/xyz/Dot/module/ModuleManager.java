@@ -1,15 +1,14 @@
 package xyz.Dot.module;
 
+import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.module.Cheat.HitBox;
 import xyz.Dot.module.Cheat.NoJumpDelay;
+import xyz.Dot.module.Cheat.Reach;
 import xyz.Dot.module.Cheat.ViewClip;
-import xyz.Dot.module.Client.ClickGui;
-import xyz.Dot.module.Client.NoCommand;
-import xyz.Dot.module.Client.HUD;
-import xyz.Dot.module.Client.Notifications;
+import xyz.Dot.module.Client.*;
 import xyz.Dot.module.Misc.BetterSneak;
 import xyz.Dot.module.Misc.KeyStrokes;
 import xyz.Dot.module.Misc.Sprint;
@@ -30,13 +29,17 @@ public class ModuleManager {
         //Cheat
         this.addModule(new HitBox());
         this.addModule(new NoJumpDelay());
+        this.addModule(new Reach());
         this.addModule(new ViewClip());
 
-        //ClientNoCommand
+        //Client
         this.addModule(new ClickGui());
         this.addModule(new NoCommand());
         this.addModule(new HUD());
         this.addModule(new Notifications());
+        if(Client.instance.inDevelopment){
+            this.addModule(new TestModule());
+        }
 
         //Misc
         this.addModule(new BetterSneak());

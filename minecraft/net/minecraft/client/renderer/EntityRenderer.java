@@ -74,7 +74,10 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender3D;
+import xyz.Dot.module.Cheat.HitBox;
+import xyz.Dot.module.Cheat.Reach;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.setting.SettingManager;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
@@ -540,7 +543,11 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             }
 
             //fuck
-            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > 3.0D)
+            Double fuck = 3.0d;
+            if(ModuleManager.getModuleByName("Reach").isToggle()){
+                fuck = Reach.range.getCurrentValue();
+            }
+            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > fuck)
             {
                 this.pointedEntity = null;
                 this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, (EnumFacing)null, new BlockPos(vec33));

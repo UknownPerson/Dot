@@ -12,10 +12,20 @@ public class Setting {
     private String currentMode;
     private ArrayList<String> Modes;
     private Category category;
-    private float settingx = 0;
+    private float settingxy = 0;
     private float Red = 0;
     private float Green = 0;
     private float Blue = 0;
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    private boolean open = false;
 
     public enum Category{
         BOOLEAN,
@@ -23,8 +33,8 @@ public class Setting {
         MODE
     }
 
-    public float getSettingX() {
-        return this.settingx;
+    public float getSettingXY() {
+        return this.settingxy;
     }
 
     public float getRed() {
@@ -51,8 +61,8 @@ public class Setting {
         Blue = blue;
     }
 
-    public void setSettingX(float settingx) {
-        this.settingx = settingx;
+    public void setSettingXY(float settingxy) {
+        this.settingxy = settingxy;
     }
 
     public Setting(Module module, String name, boolean toggle) {
