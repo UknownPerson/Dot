@@ -5,7 +5,6 @@ package xyz.Dot.command;
 
 import xyz.Dot.command.commands.Bind;
 import xyz.Dot.command.commands.Help;
-import xyz.Dot.command.commands.Say;
 import xyz.Dot.command.commands.Toggle;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
@@ -34,7 +33,7 @@ public class CommandManager{
         });
         this.commands.add(new Bind());
         this.commands.add(new Toggle());
-        this.commands.add(new Say());
+        //this.commands.add(new Say());
         this.commands.add(new Help());
         EventBus.getInstance().register(this);
     }
@@ -80,7 +79,7 @@ public class CommandManager{
                     Helper.sendMessage(result);
                 }
             } else {
-                Notification.sendClientMessage("Command not found. May you want to use .say <message>?", Notification.Type.WARNING);
+                Notification.sendClientMessage("Command not found.", Notification.Type.WARNING);
             }
         }
     }

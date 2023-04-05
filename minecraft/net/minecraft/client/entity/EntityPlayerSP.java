@@ -841,12 +841,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
         {
             this.setSprinting(true);
         }
-
         if (this.isSprinting() && (this.movementInput.moveForward < f || this.isCollidedHorizontally || !flag3))
         {
             this.setSprinting(false);
         }
-
         if (this.capabilities.allowFlying)
         {
             if (this.mc.playerController.isSpectatorMode())

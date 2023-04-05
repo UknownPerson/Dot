@@ -256,20 +256,20 @@ public class ClickUI extends GuiScreen {
                         keydownY = (int) (mouseY - y);
                     }
                     if (check == 10) {
-                        if (mouseX > (int) (userxendanim + 10 + 8 + 2 + l)) {
+                        if (mouseX >  (userxendanim + 10 + 8 + 2 + l)) {
                             BigDecimal shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                             BigDecimal shit2 = new BigDecimal(Double.toString(s.getIncValue()));
-                            while (Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12)))))) {
+                            while (Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((userxendanim + 143 - 8) - (userxendanim + 10 + 12)))))) {
                                 s.setCurrentValue(Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()));
                                 l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
                                 shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                                 shit2 = new BigDecimal(Double.toString(s.getIncValue()));
                             }
                         }
-                        if (mouseX < (int) (userxendanim + 10 + 8 + 2 + l)) {
+                        if (mouseX <  (userxendanim + 10 + 8 + 2 + l)) {
                             BigDecimal shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                             BigDecimal shit2 = new BigDecimal(Double.toString(s.getIncValue()));
-                            while (Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (int) (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.subtract(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12)))))) {
+                            while (Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.subtract(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ( (userxendanim + 143 - 8) - (userxendanim + 10 + 12)))))) {
                                 s.setCurrentValue(Math.max(shit1.subtract(shit2).doubleValue(), s.getMinValue()));
                                 shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                                 shit2 = new BigDecimal(Double.toString(s.getIncValue()));
@@ -325,7 +325,7 @@ public class ClickUI extends GuiScreen {
                         openyto = 0;
                         openyto1 = (s.getModes().size() - 1) * 12;
                     }
-                    float tempr = RenderUtils.toanim2(s.getSettingXY(), openyto1, openyto, 8, 0.1f, 1f);
+                    float tempr = RenderUtils.toanim2(s.getSettingXY(), openyto1, openyto, 8, 0.1f, 0.5f);
                     s.setSettingXY(tempr);
                     thisry += tempr;
                 }
