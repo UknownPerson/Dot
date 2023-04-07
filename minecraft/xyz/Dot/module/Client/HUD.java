@@ -22,13 +22,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HUD extends Module {
+    public static Setting dotx = new Setting(ModuleManager.getModuleByName("HUD"), "Dot_X", 20.0d, 0.0d, 1.0d, 1.0d);
+    public static Setting doty = new Setting(ModuleManager.getModuleByName("HUD"), "Dot_Y", 25.0d, 0.0d, 1.0d, 1.0d);
+    public static Setting bpsx = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG_X", 20.0d, 0.0d, 1.0d, 1.0d);
+    public static Setting bpsy = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG_Y", 96.0d, 0.0d, 1.0d, 1.0d);
     public static Setting dotbox = new Setting(ModuleManager.getModuleByName("HUD"), "Dot", true);
     public static Setting bpsavg = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG", true);
     public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
 
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
-        this.addValues(dotbox,bpsavg,hudarraylist);
+        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist);
     }
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;
@@ -41,18 +45,6 @@ public class HUD extends Module {
     boolean fakemspeed = false;
     private TimerUtil timerUtil = new TimerUtil();
     float t;
-
-    public float threegenhao(float num) {
-        Scanner sc = new Scanner(String.valueOf(num));
-        double a = sc.nextDouble();
-        double l = -10000, r = 10000;
-        while (r - l > 1e-8) {
-            double mid = (l + r) / 2;
-            if (mid * mid * mid >= a) r = mid;
-            else l = mid;
-        }
-        return (float) r;
-    }
 
     @EventHandler
     private void onTick(EventTick e) {
@@ -73,7 +65,7 @@ public class HUD extends Module {
         //float move = threegenhao((float) (Math.pow(Math.abs(posx - lastpx), 3) + Math.pow(Math.abs(posy - lastpy), 3) + Math.pow(Math.abs(posz - lastpz), 3)));
         float move = (float) Math.sqrt((float) (Math.pow(Math.abs(posx - lastpx), 2) + Math.pow(Math.abs(posz - lastpz), 2)));
         movespeed = Math.round((move / time) * 100) / 100.0f;
-        if (Client.instance.inDevelopment) {
+        if (Client.instance.inDevelopment && false) {
             movespeed = move / time;
         }
         range += move;
@@ -107,11 +99,17 @@ public class HUD extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
+    	
+        dotx.setMaxValue(RenderUtils.width());
+        doty.setMaxValue(RenderUtils.height());
+        bpsx.setMaxValue(RenderUtils.width());
+        bpsy.setMaxValue(RenderUtils.height());
+    	
         if (mc.gameSettings.showDebugProfilerChart) {
             return;
         }
 
-        if (Client.instance.inDevelopment) {
+        if (Client.instance.inDevelopment && false) {
             FontLoaders.normalfont16.drawString(t + "Tick/S", 100, 50, new Color(255, 255, 255).getRGB());
         }
 

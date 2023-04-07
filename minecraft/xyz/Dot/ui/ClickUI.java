@@ -2,6 +2,7 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import xyz.Dot.Client;
@@ -38,6 +39,7 @@ public class ClickUI extends GuiScreen {
     boolean customend = false;
     static float tempdy, dy;
     long time;
+    String check10setting;
 
     @Override
     public void initGui() {
@@ -251,25 +253,26 @@ public class ClickUI extends GuiScreen {
                     RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 10 + 8 + 4 + l), (int) (thisry + 4), 2, new Color(64, 128, 255));
                     if (isHovered((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                         check = 10;
+                        check10setting = s.getName();
                         keydown = true;
                         keydownX = (int) (mouseX - x);
                         keydownY = (int) (mouseY - y);
                     }
-                    if (check == 10) {
-                        if (mouseX >  (userxendanim + 10 + 8 + 2 + l)) {
+                    if (check == 10 && check10setting.equals(s.getName())) {
+                        if (mouseX > (userxendanim + 10 + 8 + 2 + l)) {
                             BigDecimal shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                             BigDecimal shit2 = new BigDecimal(Double.toString(s.getIncValue()));
-                            while (Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((userxendanim + 143 - 8) - (userxendanim + 10 + 12)))))) {
+                            while (Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((userxendanim + 143 - 8) - (userxendanim + 10 + 12))))) || s.getCurrentValue() < s.getMinValue()) {
                                 s.setCurrentValue(Math.min(shit1.add(shit2).doubleValue(), s.getMaxValue()));
-                                l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
                                 shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                                 shit2 = new BigDecimal(Double.toString(s.getIncValue()));
+                                l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
                             }
                         }
-                        if (mouseX <  (userxendanim + 10 + 8 + 2 + l)) {
+                        if (mouseX < (userxendanim + 10 + 8 + 2 + l)) {
                             BigDecimal shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                             BigDecimal shit2 = new BigDecimal(Double.toString(s.getIncValue()));
-                            while (Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.subtract(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ( (userxendanim + 143 - 8) - (userxendanim + 10 + 12)))))) {
+                            while (Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + l)) > Math.abs(mouseX - (userxendanim + 10 + 8 + 2 + (Math.min(1, Math.max(0, (Math.min(shit1.subtract(shit2).doubleValue(), s.getMaxValue()) - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((userxendanim + 143 - 8) - (userxendanim + 10 + 12))))) || s.getCurrentValue() > s.getMaxValue()) {
                                 s.setCurrentValue(Math.max(shit1.subtract(shit2).doubleValue(), s.getMinValue()));
                                 shit1 = new BigDecimal(Double.toString(s.getCurrentValue()));
                                 shit2 = new BigDecimal(Double.toString(s.getIncValue()));
@@ -281,8 +284,8 @@ public class ClickUI extends GuiScreen {
 
                 if (s.isMode()) {
                     for (int i = 0; i < s.getModes().size(); i++) {
-                        if(s.getModes().get(i).equals(s.getCurrentMode())){
-                            Collections.swap(s.getModes(),i,0);
+                        if (s.getModes().get(i).equals(s.getCurrentMode())) {
+                            Collections.swap(s.getModes(), i, 0);
                         }
                     }
                     font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());

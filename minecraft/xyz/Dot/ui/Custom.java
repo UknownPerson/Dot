@@ -15,6 +15,8 @@ import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Mouse;
 import xyz.Dot.Client;
 import xyz.Dot.module.Client.HUD;
+import xyz.Dot.module.Misc.KeyStrokes;
+import xyz.Dot.module.Render.BetterScoreboard;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -28,19 +30,19 @@ public class Custom extends GuiScreen {
     static CFontRenderer font = FontLoaders.normalfont16;
     static CFontRenderer font1 = FontLoaders.normalfont10;
     static Minecraft mc = Minecraft.getMinecraft();
-    static int dotstartx = 20;
-    static int dotstarty = 25;
-    static int bpsavgstartx = 20;
-    static int bpsavgstarty = 96;
-    static int scoreboardx;
+    //static int dotstartx = 20;
+    //static int dotstarty = 25;
+    //static int bpsavgstartx = 20;
+    //static int bpsavgstarty = 96;
+    //static int scoreboardx;
     static int scoreboardx1;
-    static int scoreboardy;
+    //static int scoreboardy;
     static boolean first = false;
     boolean keydown = false;
     int check = 0;
     static int thisj = 0;
     int keydownX, keydownY;
-    static int keystrokesx = 20, keystrokesy = 200;
+    //static int keystrokesx = 20, keystrokesy = 200;
     static ArrayList<Long> cpsl = new ArrayList<>();
     static ArrayList<Long> cpsr = new ArrayList<>();
     static boolean cpsldown;
@@ -58,8 +60,8 @@ public class Custom extends GuiScreen {
     static float shiftc = 0f;
 
     public static void drawKeyStrokes() {
-        int x = keystrokesx;
-        int y = keystrokesy;
+        int x = (int) KeyStrokes.x.getCurrentValue();
+        int y = (int) KeyStrokes.y.getCurrentValue();
         int background = 0;
         int press = 255;
 
@@ -156,104 +158,64 @@ public class Custom extends GuiScreen {
     }
 
     public static void ks() {
-        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy - 12, new Color(64, 128, 255, 200).getRGB());
-        RenderUtils.drawRect(keystrokesx, keystrokesy, keystrokesx + 81, keystrokesy + 117, new Color(0, 0, 0, 64).getRGB());
-        font.drawString("KeyStrokes", keystrokesx + 5, keystrokesy - 12 + 4, new Color(255, 255, 255).getRGB());
+        RenderUtils.drawRect((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue(), (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue() - 12, new Color(64, 128, 255, 200).getRGB());
+        RenderUtils.drawRect((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue(), (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue() + 117, new Color(0, 0, 0, 64).getRGB());
+        font.drawString("KeyStrokes", (int) KeyStrokes.x.getCurrentValue() + 5, (int) KeyStrokes.y.getCurrentValue() - 12 + 4, new Color(255, 255, 255).getRGB());
 
     }
 
     public static void drawScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
-        if (scoreboardx > RenderUtils.width()) {
-            scoreboardx = RenderUtils.width();
-        }
-        if (scoreboardy > RenderUtils.height() - 9) {
-            scoreboardy = RenderUtils.height() - 9;
-        }
+        {
+            Scoreboard scoreboard = objective.getScoreboard();
+            Collection<Score> collection = scoreboard.getSortedScores(objective);
+            List<Score> list = Lists.newArrayList(Iterables.filter(collection, p_apply_1_ -> p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#")));
+            int x = (int) BetterScoreboard.x.getCurrentValue();
+            int y = (int) BetterScoreboard.y.getCurrentValue();
 
-        Scoreboard scoreboard = objective.getScoreboard();
-        Collection<Score> collection = scoreboard.getSortedScores(objective);
-        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
-            public boolean apply(Score p_apply_1_) {
-                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
-            }
-        }));
-
-        if (list.size() > 15) {
-            collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
-        } else {
-            collection = list;
-        }
-
-        int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName()) + 10;
-
-        for (Score score : collection) {
-            ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
-            String s;
-            if (false) {
-                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
+            if (list.size() > 15) {
+                collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
             } else {
-                s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": ";
-            }
-            i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
-        }
-
-        int i1 = collection.size() * mc.fontRendererObj.FONT_HEIGHT;
-        //fuckyou dont forget
-        int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
-        int k1 = 3;
-
-        j1 = scaledRes.getScaledHeight() - 16;
-        k1 = 16;
-
-        int l1 = scaledRes.getScaledWidth() - i - k1;
-        int j = 0;
-        if (first) {
-            l1 = RenderUtils.width() - scoreboardx + 2;
-            j1 = RenderUtils.height() - scoreboardy - j * mc.fontRendererObj.FONT_HEIGHT + 13;
-        }
-        int jtemp = 0;
-        for (Score score1 : collection) {
-            ++j;
-            jtemp = j;
-            ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
-            String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
-            String s2;
-            if (false) {
-                s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-            } else {
-                s2 = "";
+                collection = list;
             }
 
-            int k = j1 - j * mc.fontRendererObj.FONT_HEIGHT;
-            int l = RenderUtils.width() - scoreboardx + i + 2;
-            RenderUtils.drawRect(l1 - 2, k, l, k + mc.fontRendererObj.FONT_HEIGHT, new Color(0, 0, 0, 64).getRGB());
-            mc.fontRendererObj.drawString(s1, l1, k, 553648127);
-            if (false) {
-                mc.fontRendererObj.drawString(s2, l - mc.fontRendererObj.getStringWidth(s2), k, 553648127);
-            }
+            int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName());
 
-            if (j == collection.size()) {
-                String s3 = objective.getDisplayName();
-                RenderUtils.drawRect(l1 - 2, k - 13, l, k - 1, new Color(64, 128, 255, 200).getRGB());
-                scoreboardx1 = l;
-                if (!first) {
-                    scoreboardx = RenderUtils.width() - (l1 - 2);
-                    scoreboardy = RenderUtils.height() - (k - 13 + j * mc.fontRendererObj.FONT_HEIGHT);
-                    first = true;
+            for (Score score : collection) {
+                ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
+                String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + "    " + EnumChatFormatting.RED + score.getScorePoints();
+                if (BetterScoreboard.num.isToggle()) {
+                    s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + "  ";
                 }
-                RenderUtils.drawRect(l1 - 2, k - 1, l, k, 1342177280);
-                mc.fontRendererObj.drawString(s3, (l1 - 2) + 5, k - mc.fontRendererObj.FONT_HEIGHT - 2, 553648127);
+                i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
             }
+            scoreboardx1 = x + i;
+
+            int j = 0;
+            RenderUtils.drawRect(x, y + mc.fontRendererObj.FONT_HEIGHT + 3, x + i, y + mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
+            for (Score score1 : collection) {
+                ++j;
+                ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
+                String text = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
+                String num = EnumChatFormatting.RED + "" + score1.getScorePoints();
+                RenderUtils.drawRect(x, y + j * mc.fontRendererObj.FONT_HEIGHT + 4, x + i, y + (j + 1) * mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
+                mc.fontRendererObj.drawString(text, x + 2, y + j * mc.fontRendererObj.FONT_HEIGHT + 4, 553648127);
+                if (!BetterScoreboard.num.isToggle()) {
+                    mc.fontRendererObj.drawString(num, scoreboardx1 - mc.fontRendererObj.getStringWidth(num), y + j * mc.fontRendererObj.FONT_HEIGHT + 4, 553648127);
+                }
+            }
+
+            String title = objective.getDisplayName();
+            RenderUtils.drawRect(x, y, x + i, y + 12, new Color(64, 128, 255, 200).getRGB());
+            mc.fontRendererObj.drawString(title, x + 5, y + 2, new Color(255, 255, 255).getRGB());
         }
-        thisj = jtemp;
     }
 
     public static void drawDot() {
         Minecraft mc = Minecraft.getMinecraft();
         String CName = Client.instance.client_name;
 
-        int StartX = dotstartx;
-        int StartY = dotstarty;
+        int StartX = (int) HUD.dotx.getCurrentValue();
+        int StartY = (int) HUD.doty.getCurrentValue();
         RenderUtils.drawRect(StartX, StartY + 12, StartX + 64, StartY + 56, new Color(0, 0, 0, 64).getRGB());
         RenderUtils.drawRect(StartX, StartY, StartX + 64, StartY + 12, new Color(64, 128, 255, 200).getRGB());
 
@@ -284,8 +246,8 @@ public class Custom extends GuiScreen {
     }
 
     public static void drawBPSAVG() {
-        int StartXspeed = bpsavgstartx;
-        int StartYspeed = bpsavgstarty;
+        int StartXspeed = (int) HUD.bpsx.getCurrentValue();
+        int StartYspeed = (int) HUD.bpsy.getCurrentValue();
         RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
         RenderUtils.drawRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, new Color(64, 128, 255, 200).getRGB());
         int numsm = HUD.nums - 1;
@@ -365,37 +327,36 @@ public class Custom extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         open = true;
         float x, y;
-        if (isHovered(keystrokesx, keystrokesy - 12, keystrokesx + 75, keystrokesy, mouseX, mouseY) && !keydown) {
-            x = keystrokesx;
-            y = keystrokesy;
+        if (isHovered((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue() - 12, (int) KeyStrokes.x.getCurrentValue() + 75, (int) KeyStrokes.y.getCurrentValue(), mouseX, mouseY) && !keydown) {
+            x = (int) KeyStrokes.x.getCurrentValue();
+            y = (int) KeyStrokes.y.getCurrentValue();
             check = 4;
             keydown = true;
             keydownX = (int) (mouseX - x);
             keydownY = (int) (mouseY - y);
         }
 
-        if (isHovered(bpsavgstartx, bpsavgstarty, bpsavgstartx + 96, bpsavgstarty + 12, mouseX, mouseY) && !keydown) {
-            x = bpsavgstartx;
-            y = bpsavgstarty;
+        if (isHovered((int) HUD.bpsx.getCurrentValue(), (int) HUD.bpsy.getCurrentValue(), (int) HUD.bpsx.getCurrentValue() + 96, (int) HUD.bpsy.getCurrentValue() + 12, mouseX, mouseY) && !keydown) {
+            x = (int) HUD.bpsx.getCurrentValue();
+            y = (int) HUD.bpsy.getCurrentValue();
             check = 2;
             keydown = true;
             keydownX = (int) (mouseX - x);
             keydownY = (int) (mouseY - y);
         }
 
-        if (isHovered(dotstartx, dotstarty, dotstartx + 64, dotstarty + 12, mouseX, mouseY) && !keydown) {
-            x = dotstartx;
-            y = dotstarty;
+        if (isHovered((int) HUD.dotx.getCurrentValue(), (int) HUD.doty.getCurrentValue(), (int) HUD.dotx.getCurrentValue() + 64, (int) HUD.doty.getCurrentValue() + 12, mouseX, mouseY) && !keydown) {
+            x = (int) HUD.dotx.getCurrentValue();
+            y = (int) HUD.doty.getCurrentValue();
             check = 1;
             keydown = true;
             keydownX = (int) (mouseX - x);
             keydownY = (int) (mouseY - y);
         }
 
-        //RenderUtils.drawRect(RenderUtils.width() - scoreboardx, RenderUtils.height() - scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT, scoreboardx1, RenderUtils.height() - scoreboardy + 12 - thisj * mc.fontRendererObj.FONT_HEIGHT,-1);
-        if (isHovered(RenderUtils.width() - scoreboardx, RenderUtils.height() - scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT, scoreboardx1, RenderUtils.height() - scoreboardy + 12 - thisj * mc.fontRendererObj.FONT_HEIGHT, mouseX, mouseY) && !keydown) {
-            x = RenderUtils.width() - scoreboardx;
-            y = RenderUtils.height() - scoreboardy - thisj * mc.fontRendererObj.FONT_HEIGHT;
+        if (isHovered((float) BetterScoreboard.x.getCurrentValue(), (float) BetterScoreboard.y.getCurrentValue(), scoreboardx1, (float) BetterScoreboard.y.getCurrentValue() + 12, mouseX, mouseY) && !keydown) {
+            x = (float) BetterScoreboard.x.getCurrentValue();
+            y = (float) BetterScoreboard.y.getCurrentValue();
             check = 3;
             keydown = true;
             keydownX = (int) (mouseX - x);
@@ -403,23 +364,23 @@ public class Custom extends GuiScreen {
         }
 
         if (check == 1) {
-            dotstartx = mouseX - keydownX;
-            dotstarty = mouseY - keydownY;
+        	HUD.dotx.setCurrentValue(mouseX - keydownX);
+        	HUD.doty.setCurrentValue(mouseY - keydownY);
         }
 
         if (check == 2) {
-            bpsavgstartx = mouseX - keydownX;
-            bpsavgstarty = mouseY - keydownY;
+        	HUD.bpsx.setCurrentValue(mouseX - keydownX);
+        	HUD.bpsy.setCurrentValue(mouseY - keydownY);
         }
 
         if (check == 3) {
-            scoreboardx = RenderUtils.width() - (mouseX - keydownX);
-            scoreboardy = RenderUtils.height() - (mouseY - keydownY + thisj * mc.fontRendererObj.FONT_HEIGHT);
+            BetterScoreboard.x.setCurrentValue(mouseX - keydownX);
+            BetterScoreboard.y.setCurrentValue(mouseY - keydownY);
         }
 
         if (check == 4) {
-            keystrokesx = mouseX - keydownX;
-            keystrokesy = mouseY - keydownY;
+        	KeyStrokes.x.setCurrentValue(mouseX - keydownX);
+        	KeyStrokes.y.setCurrentValue(mouseY - keydownY);
         }
 
         if (!Mouse.isButtonDown(0)) {

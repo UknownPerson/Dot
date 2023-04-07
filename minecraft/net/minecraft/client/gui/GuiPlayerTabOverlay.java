@@ -18,6 +18,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldSettings;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.module.Render.BetterTabList;
 
 import java.util.Comparator;
 import java.util.List;
@@ -133,7 +134,7 @@ public class GuiPlayerTabOverlay extends Gui {
         if (!this.mc.gameSettings.keyBindCommand.isKeyDown() && end) {
             return;
         }
-        if (this.header != null && bool) {
+        if (this.header != null && bool && BetterTabList.header.isToggle()) {
             list1 = this.mc.fontRendererObj.listFormattedStringToWidth(this.header.getFormattedText(), width - 50);
 
             for (String s : list1) {
@@ -141,7 +142,7 @@ public class GuiPlayerTabOverlay extends Gui {
             }
         }
 
-        if (this.footer != null && bool) {
+        if (this.footer != null && bool && BetterTabList.footer.isToggle()) {
             list2 = this.mc.fontRendererObj.listFormattedStringToWidth(this.footer.getFormattedText(), width - 50);
 
             for (String s2 : list2) {
