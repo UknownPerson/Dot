@@ -382,7 +382,7 @@ public class GuiIngame extends Gui
             float f = this.zLevel;
             this.zLevel = -90.0F;
             //aaa
-            if(Client.instance.inDevelopment){
+            if(ModuleManager.getModuleByName("HUDPP").isToggle()){
                 if(tempx == 0){
                     tempx =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
 
