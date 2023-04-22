@@ -23,6 +23,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Custom extends GuiScreen {
@@ -171,14 +172,14 @@ public class Custom extends GuiScreen {
             List<Score> list = Lists.newArrayList(Iterables.filter(collection, p_apply_1_ -> p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#")));
             int x = (int) BetterScoreboard.x.getCurrentValue();
             int y = (int) BetterScoreboard.y.getCurrentValue();
-
+            Collections.reverse (list);
             if (list.size() > 15) {
                 collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
             } else {
                 collection = list;
             }
 
-            int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName());
+            int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName()) + 5;
 
             for (Score score : collection) {
                 ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
