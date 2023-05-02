@@ -2,7 +2,10 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.ChatComponentText;
 import xyz.Dot.module.Client.Notifications;
+import xyz.Dot.module.ModuleManager;
+import xyz.Dot.utils.Helper;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.TimerUtil;
 
@@ -31,8 +34,16 @@ public class Notification {
         this.type = type;
     }
 
-    public static void sendClientMessage(String message, Notification.Type type) {
+    public static void sendClientMessage(String message, Type type) {
         notifications.add(new Notification(message, type));
+        if (!ModuleManager.getModuleByName("Notifications").isToggle() && (type == Type.INFO || type == Type.WARNING)) {
+            try {
+                Helper.mc.thePlayer.addChatMessage(new ChatComponentText(message));
+            }catch (Exception e){
+
+            }
+
+        }
     }
 
     public static void drawNotifications() {

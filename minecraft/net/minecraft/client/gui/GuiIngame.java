@@ -382,22 +382,23 @@ public class GuiIngame extends Gui
             float f = this.zLevel;
             this.zLevel = -90.0F;
             //aaa
-            if(ModuleManager.getModuleByName("HUD++").isToggle()){
-                if(tempx == 0){
-                    tempx =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
+            if(tempx == 0){
+                tempx =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
 
-                }
-                if(lastto == 0){
-                    lastto =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
-                }
-                tempx = RenderUtils.toanim2(tempx,lastto, - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f,1f);
+            }
+            if(lastto == 0){
+                lastto =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
+            }
+            tempx = RenderUtils.toanim2(tempx,lastto, - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f,1f);
+            if(ModuleManager.getModuleByName("HUD++").isToggle()){
                 this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
                 this.drawTexturedModalRect(tempx + i, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
-                if(tempx ==  - 91 - 1 + entityplayer.inventory.currentItem * 20){
-                    lastto =  - 91 - 1 + entityplayer.inventory.currentItem * 20;;
-                }
             }else{
+                this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
                 this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+            }
+            if(tempx ==  - 91 - 1 + entityplayer.inventory.currentItem * 20){
+                lastto =  - 91 - 1 + entityplayer.inventory.currentItem * 20;;
             }
             this.zLevel = f;
             GlStateManager.enableRescaleNormal();

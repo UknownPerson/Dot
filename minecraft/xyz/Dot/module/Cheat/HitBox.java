@@ -1,6 +1,7 @@
 package xyz.Dot.module.Cheat;
 
 import org.lwjgl.input.Keyboard;
+import xyz.Dot.Client;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
@@ -11,5 +12,14 @@ public class HitBox extends Module {
     public HitBox() {
         super("HitBox", Keyboard.KEY_NONE, Category.Cheat);
         this.addValues(size);
+    }
+
+    @Override
+    public void onEnable() {
+        if(!Client.instance.SigmaMode){
+            this.setToggle(false);
+
+        }
+        super.onEnable();
     }
 }

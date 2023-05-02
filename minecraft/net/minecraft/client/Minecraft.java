@@ -162,7 +162,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * The GuiScreen that's being displayed at the moment.
      */
     public GuiScreen currentScreen;
-    private Timer timer = new Timer(20.0F);
+    public Timer timer = new Timer(20.0F);
     /**
      * Gui achievement
      */

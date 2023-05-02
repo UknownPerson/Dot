@@ -17,7 +17,8 @@ public enum Client {
     instance;
     public String client_name = "Dot";
     public String client_version = "0.1";
-    public boolean inDevelopment = false;
+    public boolean SigmaMode = true;
+    public boolean inDevelopment = true;
     protected Minecraft mc = Minecraft.getMinecraft();
     public EventBus eventmanger;
     public ModuleManager modulemanager;
@@ -36,7 +37,7 @@ public enum Client {
         commandmanager = new CommandManager();
         customfilemanager = new CustomFileManager();
         fontloaders = new FontLoaders();
-        String title = client_name + " " + client_version + " " + getDevMode() + "- Minecraft 1.8.9";
+        String title = client_name + " " + client_version + " " + getSigma() +getDevMode() + "- Minecraft 1.8.9";
         Display.setTitle(title);
         modulemanager.loadModule();
         commandmanager.run();
@@ -68,6 +69,16 @@ public enum Client {
 
         if(inDevelopment){
             return "Dev ";
+        }else{
+            return "";
+        }
+
+    }
+
+    public String getSigma(){
+
+        if(inDevelopment){
+            return "\u2211 ";
         }else{
             return "";
         }

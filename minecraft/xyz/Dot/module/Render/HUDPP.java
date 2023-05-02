@@ -22,10 +22,6 @@ public class HUDPP extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-        this.drawPotionStatus(new ScaledResolution(mc));
-    }
-
-    private void drawPotionStatus(ScaledResolution sr) {
         int y = 0;
         for (PotionEffect effect : Minecraft.thePlayer.getActivePotionEffects()) {
             int ychat;
@@ -44,20 +40,14 @@ public class HUDPP extends Module {
                     PType = PType + " IV";
                     break;
                 }
+                default: {
+                    PType = PType + effect.getAmplifier();
+                }
             }
-            /*
-            if (effect.getDuration() < 600 && effect.getDuration() > 300) {
-                PType = PType + "\u00a77:\u00a76 " + Potion.getDurationString(effect);
-            } else if (effect.getDuration() < 300) {
-                PType = PType + "\u00a77:\u00a7c " + Potion.getDurationString(effect);
-            } else if (effect.getDuration() > 600) {
-                PType = PType + "\u00a77:\u00a77 " + Potion.getDurationString(effect);
-            }
-            */
             int n = ychat = -10;
-            float x1 = sr.getScaledWidth() - mc.fontRendererObj.getStringWidth(PType) - 2;
-            float y1 = sr.getScaledHeight() - mc.fontRendererObj.FONT_HEIGHT + y - 12 - ychat - 20;
-            RenderUtils.drawRect((int) x1, (int) y1, (int) (x1 + mc.fontRendererObj.getStringWidth(PType)), (int) (y1 + mc.fontRendererObj.FONT_HEIGHT +mc.fontRendererObj.FONT_HEIGHT),new Color(255,255,255,128).getRGB());
+            float x1 = RenderUtils.width() - mc.fontRendererObj.getStringWidth(PType) - 2;
+            float y1 = RenderUtils.height() - mc.fontRendererObj.FONT_HEIGHT + y - 12 - ychat - 20;
+            RenderUtils.drawRect((int) x1, (int) y1, (int) (x1 + mc.fontRendererObj.getStringWidth(PType)), (int) (y1 + mc.fontRendererObj.FONT_HEIGHT + mc.fontRendererObj.FONT_HEIGHT), new Color(0, 0, 0, 128).getRGB());
             mc.fontRendererObj.drawStringWithShadow(PType, x1, y1, potion.getLiquidColor());
             mc.fontRendererObj.drawStringWithShadow(Potion.getDurationString(effect), x1, y1 + mc.fontRendererObj.FONT_HEIGHT, potion.getLiquidColor());
             y -= 24;

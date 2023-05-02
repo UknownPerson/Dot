@@ -18,6 +18,10 @@ public class RenderUtils {
     public static void drawRect(int x, int y, int x1, int y1, int color) {
         Gui.drawRect(x, y, x1, y1, color);
     }
+    
+    public static void drawRect(float x, float y, float x1, float y1, int color) {
+        Gui.drawRect((int)x, (int)y, (int)x1, (int)y1, color);
+    }
 
     public static void glColor(int hex) {
         float alpha = (hex >> 24 & 0xFF) / 255.0F;
@@ -126,6 +130,9 @@ public class RenderUtils {
 
     public static float toanim1(float now, float start, float end, float multiplier, float min) {
         float beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
+        if((now < start && now < end) ||(now > start && now > end)) {
+        	now = start;
+        }
         float speed = Math.max((Math.abs(start - now) / multiplier), min) * beterspeedinfps;
         if (now < end) {
             if (now + speed > end) {
@@ -172,6 +179,24 @@ public class RenderUtils {
                 now = toanim1(now, start, end, multiplier, min2);
             } else {
                 now = toanim(now, end, multiplier, min1);
+            }
+        }
+        return now;
+    }
+
+    public static float toanimNoFps(float now, float end, float multiplier, float min) {
+        float speed = Math.max((Math.abs(now - end) / multiplier), min);
+        if (now < end) {
+            if (now + speed > end) {
+                now = end;
+            } else {
+                now += speed;
+            }
+        } else if (now > end) {
+            if (now - speed < end) {
+                now = end;
+            } else {
+                now -= speed;
             }
         }
         return now;
