@@ -34,6 +34,7 @@ public class ModuleManager {
 
         //Client
         this.addModule(new ClickGui());
+        this.addModule(new CustomColor());
         this.addModule(new NoCommand());
         this.addModule(new HUD());
         this.addModule(new Notifications());

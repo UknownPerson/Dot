@@ -13,12 +13,15 @@ import xyz.Dot.module.Render.FullBright;
 import xyz.Dot.setting.SettingManager;
 import xyz.Dot.ui.FontLoaders;
 
+import java.awt.*;
+
 public enum Client {
     instance;
     public String client_name = "Dot";
     public String client_version = "0.1";
-    public boolean SigmaMode = true;
+    public boolean SigmaMode = false;
     public boolean inDevelopment = true;
+
     protected Minecraft mc = Minecraft.getMinecraft();
     public EventBus eventmanger;
     public ModuleManager modulemanager;
@@ -77,7 +80,7 @@ public enum Client {
 
     public String getSigma(){
 
-        if(inDevelopment){
+        if(SigmaMode){
             return "\u2211 ";
         }else{
             return "";

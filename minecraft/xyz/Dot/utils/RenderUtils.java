@@ -49,6 +49,19 @@ public class RenderUtils {
         }
     }
 
+    public static void drawRoundRect1(int x1, int y1, int x2, int y2, int roundsize, Color color) {
+        int x1t = x1 + roundsize;
+        int y1t = y1 + roundsize;
+        int x2t = x2 - roundsize;
+        int y2t = y2 - roundsize;
+        if(x1 != x2 && y1 != y2){
+            Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
+            Gui.drawRect(x1, y1t, x2, y2, color.getRGB());
+            drawFilledCircle(x1t, y1t, roundsize, color);
+            drawFilledCircle(x2t, y1t, roundsize, color);
+        }
+    }
+
     public static void drawFilledCircle(final int n, final int n2, final int n3, final Color color) {
         final int n4 = n3 * 10;
         final double n5 = 2 * Math.PI / n4;

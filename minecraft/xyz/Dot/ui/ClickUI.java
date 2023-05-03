@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import xyz.Dot.Client;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.ClickGui;
+import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
@@ -106,18 +107,18 @@ public class ClickUI extends GuiScreen {
         xend = (int) (rx + width);
         yend = (int) (ry + height);
 
-        RenderUtils.drawRoundRect((int) rx, (int) ry, xend, (int) (ry + blueheight), 5, new Color(64, 128, 255));
+        RenderUtils.drawRoundRect1((int) rx, (int) ry, xend, (int) (ry + 5), 4, CustomColor.getColor());
         RenderUtils.drawRect((int) rx, (int) ry + 5, xend, (int) ry + 10, new Color(200, 200, 200).getRGB());
-        RenderUtils.drawRoundRect((int) rx, (int) ry + 5, xend, yend, 5, new Color(200, 200, 200));
-        //RenderUtils.drawRect((int) rx, (int) (ry + blueheight - 5), xend, (int) (ry + blueheight), new Color(64, 128, 255).getRGB());
+        RenderUtils.drawRoundRect((int) rx, (int) ry + 5, xend, yend, 4, new Color(200, 200, 200));
+        //RenderUtils.drawRect((int) rx, (int) (ry + blueheight - 5), xend, (int) (ry + blueheight), CustomColor.getColor().getRGB());
 
         {
             float alphafuckk = 1024;
             int addy = 0;
             while (alphafuckk != 0) {
                 alphafuckk = RenderUtils.toanimNoFps(alphafuckk, 0, 16, 1f);
-                int alphafuck = (int) (255 * (alphafuckk / 1024));
-                RenderUtils.drawRect((int) rx, (int) (ry + 5 + addy), xend, (int) (ry + 6 + addy), new Color(64, 128, 255, (int) alphafuck).getRGB());
+                float alphafuck = (int) (255 * (alphafuckk / 1024));
+                RenderUtils.drawRect((int) rx, (int) (ry + 5 + addy), xend, (int) (ry + 6 + addy), new Color(CustomColor.getColor().getRed(), CustomColor.getColor().getGreen(), CustomColor.getColor().getBlue(), (int) alphafuck).getRGB());
                 addy++;
             }
         }
@@ -203,9 +204,10 @@ public class ClickUI extends GuiScreen {
         }
         float typeanimxmid = (ClickGui.typeanimx[0] + ClickGui.typeanimx[1]) / 2;
         ClickGui.typeanimx[0] = RenderUtils.toanim2(ClickGui.typeanimx[0], ClickGui.typeanimx[3], typeanimto[0], speed[0], 0.1f, 1f);
-        ClickGui.typeanimx[1] = RenderUtils.toanim2(ClickGui.typeanimx[1], ClickGui.typeanimx[4], typeanimto[1], speed[1], 0.1f,1f);
-        //RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x),  (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, new Color(64, 128, 255));
-        RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x), (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, new Color(64, 128, 255));
+        ClickGui.typeanimx[1] = RenderUtils.toanim2(ClickGui.typeanimx[1], ClickGui.typeanimx[4], typeanimto[1], speed[1], 0.1f, 1f);
+        //RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x),  (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, CustomColor.getColor());
+        RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x), (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, CustomColor.getColor());
+
 
         rx = x + 5;
         float rxendto;
@@ -232,7 +234,7 @@ public class ClickUI extends GuiScreen {
 
         if ((xend - 5) > (int) (userxendanim + 5)) {
             int round;
-            round = Math.min(((xend - 5) - (int) (userxendanim + 5)) / 2, 5);
+            round = Math.min(((xend - 5) - (int) (userxendanim + 5)) / 2, 4);
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
             RenderUtils.doGlScissor((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5);
@@ -268,8 +270,8 @@ public class ClickUI extends GuiScreen {
                     int blueto;
                     settingto = s.isToggle() ? 145 - 5 - 10 : 130 + 5 - 10;
                     settingto1 = !s.isToggle() ? 145 - 5 - 10 : 130 + 5 - 10;
-                    redto = s.isToggle() ? 64 : 128;
-                    blueto = s.isToggle() ? 255 : 128;
+                    redto = s.isToggle() ? CustomColor.getColor().getRed() : 128;
+                    blueto = s.isToggle() ? CustomColor.getColor().getBlue() : 128;
 
                     if (s.getSettingXY() == 0) {
                         s.setSettingXY(settingto);
@@ -293,8 +295,8 @@ public class ClickUI extends GuiScreen {
                     thisry += 8;
                     RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), 2, new Color(200, 200, 200));
                     double l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
-                    //RenderUtils.drawFilledCircle((int) (userxendanim + 10 + 8 + 2 + l), (int) thisry + 2, 3, new Color(64, 128, 255));
-                    RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 10 + 8 + 4 + l), (int) (thisry + 4), 2, new Color(64, 128, 255));
+                    //RenderUtils.drawFilledCircle((int) (userxendanim + 10 + 8 + 2 + l), (int) thisry + 2, 3, CustomColor.getColor());
+                    RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 10 + 8 + 4 + l), (int) (thisry + 4), 2, CustomColor.getColor());
                     if (isHovered((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                         check = 10;
                         check10setting = s.getName();
@@ -409,7 +411,7 @@ public class ClickUI extends GuiScreen {
 
                 itemp -= 20;
 
-                RenderUtils.drawRoundRect((int) rx, (int) ry, (int) userxendanim, (int) (ry + 16), 5, canim);
+                RenderUtils.drawRoundRect((int) rx, (int) ry, (int) userxendanim, (int) (ry + 16), 4, canim);
 
                 float fontytemp = ry + (20 - font.getStringHeight(m.getName())) / 2 - 1;
                 float fontxtemp = rx + 5;
@@ -502,7 +504,7 @@ public class ClickUI extends GuiScreen {
         int fontstartx = (customwidth - font.getStringWidth(customtext)) / 2 + customstartx;
         int fontstarty = (customheight - font.getStringHeight(customtext)) / 2 + customstarty + 1;
 
-        RenderUtils.drawRoundRect(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, 5, new Color(64, 128, 255));
+        RenderUtils.drawRoundRect(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, 4, CustomColor.getColor());
         font.drawString(customtext, fontstartx, fontstarty, new Color(255, 255, 255).getRGB());
         if (isHovered(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
             check = 9;

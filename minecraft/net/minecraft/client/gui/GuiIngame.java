@@ -36,6 +36,7 @@ import net.optifine.CustomColors;
 import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
+import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.Notification;
@@ -373,6 +374,17 @@ public class GuiIngame extends Gui
 
     protected void renderTooltip(ScaledResolution sr, float partialTicks)
     {
+        if (ModuleManager.getModuleByName("CustomColor").isToggle()) {
+            CustomColor.realred = RenderUtils.toanim(CustomColor.realred,(int)CustomColor.r.getCurrentValue(),16,1f);
+            CustomColor.realgreen = RenderUtils.toanim(CustomColor.realgreen,(int)CustomColor.g.getCurrentValue(),16,1f);
+            CustomColor.realblue = RenderUtils.toanim(CustomColor.realblue,(int)CustomColor.b.getCurrentValue(),16,1f);
+        }else{
+            CustomColor.realred = RenderUtils.toanim(CustomColor.realred,64,16,1f);
+            CustomColor.realgreen = RenderUtils.toanim(CustomColor.realgreen,128,16,1f);
+            CustomColor.realblue = RenderUtils.toanim(CustomColor.realblue,255,16,1f);
+        }
+
+
         if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
