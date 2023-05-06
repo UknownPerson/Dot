@@ -51,6 +51,7 @@ public class ModuleManager {
         //Render
         this.addModule(new BetterScoreboard());
         this.addModule(new BetterTabList());
+        this.addModule(new BlockOverlay());
         this.addModule(new EveryThingBlock());
         this.addModule(new FullBright());
         this.addModule(new HUDPP());

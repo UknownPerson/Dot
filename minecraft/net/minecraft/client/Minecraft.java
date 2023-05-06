@@ -167,7 +167,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Gui achievement
      */
     public GuiAchievement guiAchievement;
-    public WorldClient theWorld;
+    public static WorldClient theWorld;
     public RenderGlobal renderGlobal;
     private RenderManager renderManager;
     private RenderItem renderItem;

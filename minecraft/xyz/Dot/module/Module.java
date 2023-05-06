@@ -15,7 +15,7 @@ public class Module {
     private Category moduletype;
 
     private boolean toggle;
-    protected Minecraft mc = Minecraft.getMinecraft();
+    protected static Minecraft mc = Minecraft.getMinecraft();
     private float animy;
 
     public float getColoranim() {

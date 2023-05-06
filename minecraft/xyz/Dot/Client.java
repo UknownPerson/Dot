@@ -18,9 +18,9 @@ import java.awt.*;
 public enum Client {
     instance;
     public String client_name = "Dot";
-    public String client_version = "0.1";
+    public String client_version = "0.2";
     public boolean SigmaMode = false;
-    public boolean inDevelopment = true;
+    public boolean inDevelopment = false;
 
     protected Minecraft mc = Minecraft.getMinecraft();
     public EventBus eventmanger;
