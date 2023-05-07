@@ -4,15 +4,9 @@ import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventKey;
-import xyz.Dot.module.Cheat.HitBox;
-import xyz.Dot.module.Cheat.NoJumpDelay;
-import xyz.Dot.module.Cheat.Reach;
-import xyz.Dot.module.Cheat.ViewClip;
+import xyz.Dot.module.Cheat.*;
 import xyz.Dot.module.Client.*;
-import xyz.Dot.module.Misc.BetterSneak;
-import xyz.Dot.module.Misc.KeyStrokes;
-import xyz.Dot.module.Misc.Sprint;
-import xyz.Dot.module.Misc.Teams;
+import xyz.Dot.module.Misc.*;
 import xyz.Dot.module.Render.*;
 
 import java.util.ArrayList;
@@ -31,6 +25,7 @@ public class ModuleManager {
         this.addModule(new NoJumpDelay());
         this.addModule(new Reach());
         this.addModule(new ViewClip());
+        this.addModule(new Chams());
 
         //Client
         this.addModule(new ClickGui());
@@ -47,6 +42,7 @@ public class ModuleManager {
         this.addModule(new KeyStrokes());
         this.addModule(new Sprint());
         this.addModule(new Teams());
+        this.addModule(new AutoGG());
 
         //Render
         this.addModule(new BetterScoreboard());
