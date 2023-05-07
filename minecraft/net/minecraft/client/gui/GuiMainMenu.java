@@ -516,11 +516,13 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        GlStateManager.disableAlpha();
-        this.renderSkybox(mouseX, mouseY, partialTicks);
-        GlStateManager.enableAlpha();
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+
+        if (!Client.instance.inDevelopment) {
+            GlStateManager.disableAlpha();
+            this.renderSkybox(mouseX, mouseY, partialTicks);
+            GlStateManager.enableAlpha();
+        }
+
         int i = 274;
         int j = this.width / 2 - i / 2;
         int k = 30;
@@ -528,7 +530,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         int i1 = 16777215;
         int j1 = 0;
         int k1 = Integer.MIN_VALUE;
-        CustomPanoramaProperties custompanoramaproperties = CustomPanorama.getCustomPanoramaProperties();
 
         if (Client.instance.inDevelopment) {
             RenderUtils.drawRect(0, 0, mouseX, mouseY, new Color(150, 50, 50).getRGB());
@@ -536,8 +537,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             RenderUtils.drawRect(0, mouseY, mouseX, RenderUtils.height(), new Color(50, 50, 150).getRGB());
             RenderUtils.drawRect(mouseX, mouseY, RenderUtils.width(), RenderUtils.height(), new Color(150, 150, 50).getRGB());
 
-            int color1 = 0;
-            int color2 = 0;
+            int color1;
+            int color2;
             if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) {
                 color1 = new Color(255, 255, 255, 128).getRGB();
                 color2 = new Color(0, 0, 0, 128).getRGB();

@@ -7,7 +7,6 @@ import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.file.CustomFileManager;
-import xyz.Dot.log.Log_Dot;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.module.Render.FullBright;
 import xyz.Dot.setting.SettingManager;
@@ -20,7 +19,7 @@ public enum Client {
     public String client_name = "Dot";
     public String client_version = "0.2";
     public boolean SigmaMode = false;
-    public boolean inDevelopment = false;
+    public boolean inDevelopment = true;
 
     protected Minecraft mc = Minecraft.getMinecraft();
     public EventBus eventmanger;
@@ -33,7 +32,7 @@ public enum Client {
 
     public void run(){
 
-        Log_Dot.info("Client Start");
+        //Log_Dot.info("Client Start");
         eventmanger = new EventBus();
         modulemanager = new ModuleManager();
         settingmanager = new SettingManager();
@@ -56,14 +55,14 @@ public enum Client {
 
         save();
         mc.gameSettings.saturation = FullBright.old;
-        Log_Dot.sava_Log();
-        Log_Dot.info("Client Close");
+        //Log_Dot.sava_Log();
+        //Log_Dot.info("Client Close");
 
     }
 
     public void save(){
 
-        Log_Dot.info("Client Save");
+        //Log_Dot.info("Client Save");
         customfilemanager.saveFiles();
 
     }

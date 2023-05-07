@@ -284,8 +284,8 @@ public class RenderUtils {
         float height = y1 - y;
         Minecraft mc = Minecraft.getMinecraft();
         int scaleFactor = 1;
-        int k = (int) mc.gameSettings.particleSetting;
-        k = mc.displayWidth / width();
+        int k =  mc.gameSettings.particleSetting;
+        //k = mc.displayWidth / width();
 
         if (k == 0) {
             k = 1000;

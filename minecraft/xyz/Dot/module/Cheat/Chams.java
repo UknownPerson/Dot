@@ -11,8 +11,7 @@ import xyz.Dot.module.Module;
 import org.lwjgl.opengl.GL11;
 import xyz.Dot.ui.Notification;
 
-public class Chams
-        extends Module {
+public class Chams extends Module {
     public Chams() {
         super("Chams",  Keyboard.KEY_NONE, Category.Cheat) ;
     }
@@ -43,10 +42,4 @@ public class Chams
         GL11.glDisable((int)32823);
         GL11.glPolygonOffset((float)1.0f, (float)1100000.0f);
     }
-
-    public static enum ChamsMode {
-        Textured,
-        Normal;
-    }
-
 }

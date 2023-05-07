@@ -21,11 +21,11 @@ public class ModuleManager {
 
     public void loadModule() {
         //Cheat
+        this.addModule(new Chams());
         this.addModule(new HitBox());
         this.addModule(new NoJumpDelay());
         this.addModule(new Reach());
         this.addModule(new ViewClip());
-        this.addModule(new Chams());
 
         //Client
         this.addModule(new ClickGui());
@@ -38,11 +38,11 @@ public class ModuleManager {
         }
 
         //Misc
+        this.addModule(new AutoGG());
         this.addModule(new BetterSneak());
         this.addModule(new KeyStrokes());
         this.addModule(new Sprint());
         this.addModule(new Teams());
-        this.addModule(new AutoGG());
 
         //Render
         this.addModule(new BetterScoreboard());
