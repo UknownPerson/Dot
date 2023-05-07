@@ -18,7 +18,7 @@ public enum Client {
     instance;
     public String client_name = "Dot";
     public String client_version = "0.2";
-    public boolean SigmaMode = false;
+    public boolean SigmaMode = true;
     public boolean inDevelopment = true;
 
     protected Minecraft mc = Minecraft.getMinecraft();

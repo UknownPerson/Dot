@@ -202,11 +202,10 @@ public class ClickUI extends GuiScreen {
             speed[0] = 12;
             speed[1] = 8;
         }
-        float typeanimxmid = (ClickGui.typeanimx[0] + ClickGui.typeanimx[1]) / 2;
         ClickGui.typeanimx[0] = RenderUtils.toanim2(ClickGui.typeanimx[0], ClickGui.typeanimx[3], typeanimto[0], speed[0], 0.1f, 1f);
         ClickGui.typeanimx[1] = RenderUtils.toanim2(ClickGui.typeanimx[1], ClickGui.typeanimx[4], typeanimto[1], speed[1], 0.1f, 1f);
         //RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x),  (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, CustomColor.getColor());
-        RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x), (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, CustomColor.getColor());
+        RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x), (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, new Color(255 - CustomColor.getColor().getRed(),255 - CustomColor.getColor().getGreen(),255 - CustomColor.getColor().getBlue()));
 
 
         rx = x + 5;
