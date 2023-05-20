@@ -41,6 +41,7 @@ public class ClickUI extends GuiScreen {
     static float tempdy, dy;
     long time;
     String check10setting;
+    float tempy1 = 0,dy1 = 0;
 
     @Override
     public void initGui() {
@@ -107,7 +108,7 @@ public class ClickUI extends GuiScreen {
         xend = (int) (rx + width);
         yend = (int) (ry + height);
 
-        RenderUtils.drawRoundRect1((int) rx, (int) ry, xend, (int) (ry + 5), 4, CustomColor.getColor());
+        RenderUtils.drawHalfRoundRect((int) rx, (int) ry, xend, (int) (ry + 5), 4, CustomColor.getColor());
         RenderUtils.drawRect((int) rx, (int) ry + 5, xend, (int) ry + 10, new Color(200, 200, 200).getRGB());
         RenderUtils.drawRoundRect((int) rx, (int) ry + 5, xend, yend, 4, new Color(200, 200, 200));
         //RenderUtils.drawRect((int) rx, (int) (ry + blueheight - 5), xend, (int) (ry + blueheight), CustomColor.getColor().getRGB());
@@ -205,7 +206,7 @@ public class ClickUI extends GuiScreen {
         ClickGui.typeanimx[0] = RenderUtils.toanim2(ClickGui.typeanimx[0], ClickGui.typeanimx[3], typeanimto[0], speed[0], 0.1f, 1f);
         ClickGui.typeanimx[1] = RenderUtils.toanim2(ClickGui.typeanimx[1], ClickGui.typeanimx[4], typeanimto[1], speed[1], 0.1f, 1f);
         //RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x),  (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, CustomColor.getColor());
-        RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x), (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, new Color(255 - CustomColor.getColor().getRed(),255 - CustomColor.getColor().getGreen(),255 - CustomColor.getColor().getBlue()));
+        RenderUtils.drawRoundRect((int) (ClickGui.typeanimx[0] + x), (int) (ry + blueheight - 2), (int) (ClickGui.typeanimx[1] + x), (int) (ry + blueheight), 1, new Color(255 - CustomColor.getColor().getRed(),255 - CustomColor.getColor().getGreen(),255 - CustomColor.getColor().getBlue(),128));
 
 
         rx = x + 5;
@@ -241,7 +242,7 @@ public class ClickUI extends GuiScreen {
             RenderUtils.drawRoundRect((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5, round, new Color(255, 255, 255));
 
 
-            float thisry = ry + 8;
+            float thisry = ry + 8 + dy1;
             font.drawString(ClickGui.settingmodule.getName(), (int) (userxendanim + 13), (int) thisry, new Color(0, 0, 0).getRGB());
 
             //RenderUtils.drawRoundRect((int) (userxendanim + 143 - 8 - 32), (int) thisry - 5, (int) (userxendanim + 143 - 8), (int) (thisry + 7 ), 3, new Color(200, 200, 200));
@@ -382,6 +383,30 @@ public class ClickUI extends GuiScreen {
             }
 
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
+
+            if (System.nanoTime() - time > 30000000f) { //0.03s
+                if (tempy1 > 0) {
+                    tempy1 = 0;
+                }
+            }
+
+            if (isHovered((int) (userxendanim + 5), (int) ry, xend - 5, yend - 5, mouseX, mouseY)) {
+
+                int dwheel = Mouse.getDWheel();
+
+                if (dwheel != 0) {
+                    time = System.nanoTime();
+                }
+
+                if (dwheel < 0) {
+                    tempy1 -= 16;
+                }
+                if (dwheel > 0) {
+                    tempy1 += 16;
+                }
+            }
+
+            dy1 = RenderUtils.toanim(dy1, tempy1, 8, 0.1f);
         }
 
         ry += dy;
@@ -389,7 +414,7 @@ public class ClickUI extends GuiScreen {
 
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
-        RenderUtils.doGlScissor((int) rx, (int) y + 12, (int) userxendanim, (int) (y + height));
+        RenderUtils.doGlScissor((int) rx, (int) y + 12 + 4, (int) userxendanim, (int) (y + height));
 
         for (Module m : ModuleManager.getModules()) {
             float coloranimto;
@@ -431,6 +456,8 @@ public class ClickUI extends GuiScreen {
                         keydownX = (int) (mouseX - x);
                         keydownY = (int) (mouseY - y);
                         if (!ClickGui.settingopen) {
+                            tempy1 =0;
+                            dy1 = 0;
                             ClickGui.settingmodule = m;
                             ClickGui.settingopen = true;
                         } else {
@@ -438,6 +465,8 @@ public class ClickUI extends GuiScreen {
                                 ClickGui.settingopen = false;
                             } else {
                                 ClickGui.settingmodule = m;
+                                tempy1 =0;
+                                dy1 = 0;
                             }
                         }
                     }

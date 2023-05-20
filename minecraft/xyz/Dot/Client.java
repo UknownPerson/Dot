@@ -17,7 +17,7 @@ import java.awt.*;
 public enum Client {
     instance;
     public String client_name = "Dot";
-    public String client_version = "0.2";
+    public String client_version = "0.3";
     public boolean SigmaMode = true;
     public boolean inDevelopment = true;
 

@@ -497,7 +497,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.displayHeight = this.gameSettings.overrideHeight;
         }
 
-        logger.info("LWJGL Version: " + Sys.getVersion());
+        //logger.info("LWJGL Version: " + Sys.getVersion());
+        logger.info("LWJGL Version: 3.3.2");
         this.setWindowIcon();
         this.setInitialDisplayMode();
         this.createDisplay();
@@ -1093,6 +1094,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         thisTime = System.nanoTime();
 
         RenderUtils.fps = 1000000000f / (thisTime - lastTime);
+        RenderUtils.ms = (thisTime - lastTime) / 1000000f;
 
         while (getSystemTime() >= this.debugUpdateTime + 1000L) {
             debugFPS = this.fpsCounter;

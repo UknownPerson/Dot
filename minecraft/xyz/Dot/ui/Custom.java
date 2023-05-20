@@ -82,19 +82,19 @@ public class Custom extends GuiScreen {
 
         String s;
         s = "W";
-        RenderUtils.drawRect(x + 28, y, x + 53, y + 25, new Color((int) wc, (int) wc, (int) wc, 128).getRGB());
+        RenderUtils.drawRoundRect(x + 28, y, x + 53, y + 25, 4, new Color((int) wc, (int) wc, (int) wc, 128));
         font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "S";
-        RenderUtils.drawRect(x + 28, y + 28, x + 53, y + 53, new Color((int) sc, (int) sc, (int) sc, 128).getRGB());
+        RenderUtils.drawRoundRect(x + 28, y + 28, x + 53, y + 53, 4, new Color((int) sc, (int) sc, (int) sc, 128));
         font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "A";
-        RenderUtils.drawRect(x, y + 28, x + 25, y + 53, new Color((int) ac, (int) ac, (int) ac, 128).getRGB());
+        RenderUtils.drawRoundRect(x, y + 28, x + 25, y + 53, 4, new Color((int) ac, (int) ac, (int) ac, 128));
         font.drawString(s, x + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "D";
-        RenderUtils.drawRect(x + 56, y + 28, x + 81, y + 53, new Color((int) dc, (int) dc, (int) dc, 128).getRGB());
+        RenderUtils.drawRoundRect(x + 56, y + 28, x + 81, y + 53, 4, new Color((int) dc, (int) dc, (int) dc, 128));
         font.drawString(s, x + 56 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         if (!gameSettings.keyBindPickBlock.isKeyDown()) {
@@ -115,7 +115,7 @@ public class Custom extends GuiScreen {
 
         y += 56;
         s = "LMB";
-        RenderUtils.drawRect(x, y, x + (81 - 3) / 2, y + 25, new Color((int) lc, (int) lc, (int) lc, 128).getRGB());
+        RenderUtils.drawRoundRect(x, y, x + (81 - 3) / 2, y + 25, 4, new Color((int) lc, (int) lc, (int) lc, 128));
         font.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count = 0;
         for (long i : cpsl) {
@@ -131,7 +131,7 @@ public class Custom extends GuiScreen {
         font1.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "RMB";
-        RenderUtils.drawRect(x + (81 + 3) / 2, y, x + 81, y + 25, new Color((int) rc, (int) rc, (int) rc, 128).getRGB());
+        RenderUtils.drawRoundRect(x + (81 + 3) / 2, y, x + 81, y + 25, 4, new Color((int) rc, (int) rc, (int) rc, 128));
         font.drawString(s, x + ((81 + 3) / 2) + ((81 - ((81 + 3) / 2)) - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count1 = 0;
         for (long i : cpsr) {
@@ -148,18 +148,18 @@ public class Custom extends GuiScreen {
 
         y += 28;
         s = "\u00a7m\u00a7l--------";
-        RenderUtils.drawRect(x, y, x + 81, y + 15, new Color((int) spacec, (int) spacec, (int) spacec, 128).getRGB());
+        RenderUtils.drawRoundRect(x, y, x + 81, y + 15, 4, new Color((int) spacec, (int) spacec, (int) spacec, 128));
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2 - 1, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         y += 18;
         s = "Sneak";
-        RenderUtils.drawRect(x, y, x + 81, y + 15, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128).getRGB());
+        RenderUtils.drawRoundRect(x, y, x + 81, y + 15, 4, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
     }
 
     public static void ks() {
-        RenderUtils.drawRoundRect1((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue() - 12, (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue(), 4, CustomColor.getColor());
+        RenderUtils.drawHalfRoundRect((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue() - 12, (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue(), 4, CustomColor.getColor());
         RenderUtils.drawRect((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue(), (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue() + 117, new Color(0, 0, 0, 64).getRGB());
         font.drawString("KeyStrokes", (int) KeyStrokes.x.getCurrentValue() + 5, (int) KeyStrokes.y.getCurrentValue() - 12 + 4, new Color(255, 255, 255).getRGB());
 
@@ -179,7 +179,7 @@ public class Custom extends GuiScreen {
                 collection = list;
             }
 
-            int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName()) + 5;
+            int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName()) + 10;
 
             for (Score score : collection) {
                 ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
@@ -191,22 +191,30 @@ public class Custom extends GuiScreen {
             }
             scoreboardx1 = x + i;
 
+            int j0 = 0;
+            for (Score score1 : collection) {
+                ++j0;
+            }
+            RenderUtils.drawRoundRect(x, y, x + i, y + (j0 + 1) * mc.fontRendererObj.FONT_HEIGHT + 12, 4,new Color(0,0,0,64));
+
+            y += 4;
             int j = 0;
-            RenderUtils.drawRect(x, y + mc.fontRendererObj.FONT_HEIGHT + 3, x + i, y + mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
+            //RenderUtils.drawRect(x, y + mc.fontRendererObj.FONT_HEIGHT + 3, x + i, y + mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
             for (Score score1 : collection) {
                 ++j;
                 ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
                 String text = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
                 String num = EnumChatFormatting.RED + "" + score1.getScorePoints();
-                RenderUtils.drawRect(x, y + j * mc.fontRendererObj.FONT_HEIGHT + 4, x + i, y + (j + 1) * mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
                 mc.fontRendererObj.drawString(text, x + 2, y + j * mc.fontRendererObj.FONT_HEIGHT + 4, 553648127);
                 if (!BetterScoreboard.num.isToggle()) {
                     mc.fontRendererObj.drawString(num, scoreboardx1 - mc.fontRendererObj.getStringWidth(num), y + j * mc.fontRendererObj.FONT_HEIGHT + 4, 553648127);
                 }
             }
 
+            y -= 4;
+
             String title = objective.getDisplayName();
-            RenderUtils.drawRoundRect1(x, y, x + i, y + 12, 4, CustomColor.getColor());
+            RenderUtils.drawHalfRoundRect(x, y, x + i, y + 12, 4, CustomColor.getColor());
             mc.fontRendererObj.drawString(title, x + 5, y + 2, new Color(255, 255, 255).getRGB());
         }
     }
@@ -217,8 +225,8 @@ public class Custom extends GuiScreen {
 
         int StartX = (int) HUD.dotx.getCurrentValue();
         int StartY = (int) HUD.doty.getCurrentValue();
-        RenderUtils.drawRect(StartX, StartY + 12, StartX + 64, StartY + 56, new Color(0, 0, 0, 64).getRGB());
-        RenderUtils.drawRoundRect1(StartX, StartY, StartX + 64, StartY + 12, 4, CustomColor.getColor());
+        RenderUtils.drawRoundRect(StartX, StartY, StartX + 64, StartY + 56,4, new Color(0, 0, 0, 64));
+        RenderUtils.drawHalfRoundRect(StartX, StartY, StartX + 64, StartY + 12, 4, CustomColor.getColor());
 
         RenderUtils.drawFilledCircle(StartX + 6, StartY + 6, 3, new Color(255, 0, 0, 32));
         RenderUtils.drawFilledCircle(StartX + 7, StartY + 5, 3, new Color(255, 0, 0, 32));
@@ -251,7 +259,7 @@ public class Custom extends GuiScreen {
         int StartXspeed = (int) HUD.bpsx.getCurrentValue();
         int StartYspeed = (int) HUD.bpsy.getCurrentValue();
         RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
-        RenderUtils.drawRoundRect1(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, 4, CustomColor.getColor());
+        RenderUtils.drawHalfRoundRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, 4, CustomColor.getColor());
         int numsm = HUD.nums - 1;
         float xnum = 0.5f;
         float[] avglist = new float[100];

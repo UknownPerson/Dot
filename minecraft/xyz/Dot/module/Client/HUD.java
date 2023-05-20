@@ -1,6 +1,15 @@
 package xyz.Dot.module.Client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
+import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
@@ -99,7 +108,6 @@ public class HUD extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-    	
         dotx.setMaxValue(RenderUtils.width());
         doty.setMaxValue(RenderUtils.height());
         bpsx.setMaxValue(RenderUtils.width());
@@ -109,8 +117,9 @@ public class HUD extends Module {
             return;
         }
 
-        if (Client.instance.inDevelopment && false) {
+        if (Client.instance.inDevelopment && true) {
             FontLoaders.normalfont16.drawString(t + "Tick/S", 100, 50, new Color(255, 255, 255).getRGB());
+            FontLoaders.normalfont16.drawString(RenderUtils.ms + "ms", 100, 60, new Color(255, 255, 255).getRGB());
         }
 
         CFontRenderer font1 = FontLoaders.normalfont16;

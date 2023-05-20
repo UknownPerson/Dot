@@ -16,7 +16,7 @@ import java.awt.*;
 
 public class RenderUtils {
     public static float fps;
-
+    public static float ms;
     public static void drawCube(final AxisAlignedBB axisAlignedBB) {
         final Tessellator tessellator = Tessellator.getInstance();
         final WorldRenderer worldRenderer = tessellator.getWorldRenderer();
@@ -82,9 +82,9 @@ public class RenderUtils {
     public static void drawRect(int x, int y, int x1, int y1, int color) {
         Gui.drawRect(x, y, x1, y1, color);
     }
-    
+
     public static void drawRect(float x, float y, float x1, float y1, int color) {
-        Gui.drawRect((int)x, (int)y, (int)x1, (int)y1, color);
+        Gui.drawRect((int) x, (int) y, (int) x1, (int) y1, color);
     }
 
     public static void glColor(int hex) {
@@ -95,38 +95,57 @@ public class RenderUtils {
         GL11.glColor4f(red, green, blue, alpha);
     }
 
-    public static void drawRoundRect(int x1, int y1, int x2, int y2, int roundsize, Color color) {
-        int x1t = x1 + roundsize;
-        int y1t = y1 + roundsize;
-        int x2t = x2 - roundsize;
-        int y2t = y2 - roundsize;
-        if(x1 != x2 && y1 != y2){
-            Gui.drawRect(x1t, y1t, x2t, y2t, color.getRGB());
-            Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
-            Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
-            Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
-            Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
-            drawFilledCircle(x1t, y1t, roundsize, color);
-            drawFilledCircle(x2t, y1t, roundsize, color);
-            drawFilledCircle(x1t, y2t, roundsize, color);
-            drawFilledCircle(x2t, y2t, roundsize, color);
-        }
-    }
-
     public static void drawRoundRect1(int x1, int y1, int x2, int y2, int roundsize, Color color) {
         int x1t = x1 + roundsize;
         int y1t = y1 + roundsize;
         int x2t = x2 - roundsize;
         int y2t = y2 - roundsize;
-        if(x1 != x2 && y1 != y2){
+        if (x1 != x2 && y1 != y2) {
+            Gui.drawRect(x1t, y1t, x2t, y2t, color.getRGB());
             Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
-            Gui.drawRect(x1, y1t, x2, y2, color.getRGB());
-            drawFilledCircle(x1t, y1t, roundsize, color);
-            drawFilledCircle(x2t, y1t, roundsize, color);
+            Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
+            Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
+            Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
+            drawFilledCircle1(x1t, y1t, roundsize, color);
+            drawFilledCircle1(x2t, y1t, roundsize, color);
+            drawFilledCircle1(x1t, y2t, roundsize, color);
+            drawFilledCircle1(x2t, y2t, roundsize, color);
         }
     }
 
-    public static void drawFilledCircle(final int n, final int n2, final int n3, final Color color) {
+    public static void drawRoundRect(int x1, int y1, int x2, int y2, int roundsize, Color color) {
+        int x1t = x1 + roundsize;
+        int y1t = y1 + roundsize;
+        int x2t = x2 - roundsize;
+        int y2t = y2 - roundsize;
+        if (x1 != x2 && y1 != y2) {
+            Gui.drawRect(x1t, y1t, x2t, y2t, color.getRGB());
+            Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
+            Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
+            Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
+            Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
+            drawImage(new ResourceLocation("dot/circle_leftup.png"), x1, y1, roundsize, roundsize, color);
+            drawImage(new ResourceLocation("dot/circle_leftdown.png"), x1, y2-roundsize, roundsize, roundsize, color);
+            drawImage(new ResourceLocation("dot/circle_rightup.png"), x2-roundsize, y1, roundsize, roundsize, color);
+            drawImage(new ResourceLocation("dot/circle_rightdown.png"), x2-roundsize, y2-roundsize, roundsize, roundsize, color);
+
+        }
+    }
+
+    public static void drawHalfRoundRect(int x1, int y1, int x2, int y2, int roundsize, Color color) {
+        int x1t = x1 + roundsize;
+        int y1t = y1 + roundsize;
+        int x2t = x2 - roundsize;
+        int y2t = y2 - roundsize;
+        if (x1 != x2 && y1 != y2) {
+            Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
+            Gui.drawRect(x1, y1t, x2, y2, color.getRGB());
+            drawImage(new ResourceLocation("dot/circle_leftup.png"), x1, y1, roundsize, roundsize, color);
+            drawImage(new ResourceLocation("dot/circle_rightup.png"), x2-roundsize, y1, roundsize, roundsize, color);
+        }
+    }
+
+    public static void drawFilledCircle1(final int n, final int n2, final int n3, final Color color) {
         final int n4 = n3 * 10;
         final double n5 = 2 * Math.PI / n4;
         GL11.glPushMatrix();
@@ -150,6 +169,10 @@ public class RenderUtils {
         GL11.glPopMatrix();
     }
 
+    public static void drawFilledCircle(int x, int y, int round, Color color) {
+        drawImage(new ResourceLocation("dot/circle.png"), x - round, y - round, round * 2, round * 2, color);
+    }
+
     public static void drawImage(ResourceLocation image, int x, int y, int width, int height) {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         GL11.glDisable((int) 2929);
@@ -170,7 +193,7 @@ public class RenderUtils {
         GL11.glEnable((int) 3042);
         GL11.glDepthMask((boolean) false);
         OpenGlHelper.glBlendFunc((int) 770, (int) 771, (int) 1, (int) 0);
-        GL11.glColor4f((float) ((float) color.getRed() / 255.0f), (float) ((float) color.getBlue() / 255.0f), (float) ((float) color.getRed() / 255.0f), (float) 1.0f);
+        GL11.glColor4f((float) ((float) color.getRed() / 255.0f), (float) ((float) color.getGreen() / 255.0f), (float) ((float) color.getBlue() / 255.0f), ((float) color.getAlpha() / 255.0f));
         Minecraft.getMinecraft().getTextureManager().bindTexture(image);
         Gui.drawModalRectWithCustomSizedTexture((int) x, (int) y, (float) 0.0f, (float) 0.0f, (int) width, (int) height, (float) width, (float) height);
         GL11.glDepthMask((boolean) true);
@@ -207,8 +230,8 @@ public class RenderUtils {
 
     public static float toanim1(float now, float start, float end, float multiplier, float min) {
         float beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
-        if((now < start && now < end) ||(now > start && now > end)) {
-        	now = start;
+        if ((now < start && now < end) || (now > start && now > end)) {
+            now = start;
         }
         float speed = Math.max((Math.abs(start - now) / multiplier), min) * beterspeedinfps;
         if (now < end) {
@@ -284,7 +307,7 @@ public class RenderUtils {
         float height = y1 - y;
         Minecraft mc = Minecraft.getMinecraft();
         int scaleFactor = 1;
-        int k =  mc.gameSettings.particleSetting;
+        int k = mc.gameSettings.particleSetting;
         //k = mc.displayWidth / width();
 
         if (k == 0) {

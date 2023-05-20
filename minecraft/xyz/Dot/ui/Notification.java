@@ -84,9 +84,9 @@ public class Notification {
         final int x2 = (int) (x1 + this.width);
         final int y1 = (int) this.posY;
         final int y2 = (int) (y1 + this.height);
-        RenderUtils.drawRect(x1, y1, x2, y2, new Color(255, 255, 255, (int) (p * 235)).getRGB());
+        RenderUtils.drawRoundRect(x1, y1, x2, y2,4, new Color(255, 255, 255, (int) (p * 235)));
         int test = (int) ((1 - (timer.gettime() / Math.max(FontLoaders.normalfont16.getStringWidth(message) * 20f, 2000f))) * (x2 - x1) + x1);
-        RenderUtils.drawRect(x1, y2 - 2, test > x1 ? test : x1, y2, new Color(0, 0, 0, (int) (p * 255)).getRGB());
+        //RenderUtils.drawRoundRect(x1, y2 - 2 - 2, test > x1 ? test : x1, y2 - 2, 2,new Color(0, 0, 0, (int) (p * 255)));
         CFontRenderer font = FontLoaders.normalfont16;
         Color c;
         int alpha = (int) (p * 255);

@@ -18,6 +18,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
+import xyz.Dot.event.EventHandler;
+import xyz.Dot.event.events.rendering.EventRender2D;
 
 public abstract class GuiContainer extends GuiScreen
 {
@@ -225,7 +227,7 @@ public abstract class GuiContainer extends GuiScreen
      */
     protected abstract void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY);
 
-    private void drawSlot(Slot slotIn)
+    public void drawSlot(Slot slotIn)
     {
         int i = slotIn.xDisplayPosition;
         int j = slotIn.yDisplayPosition;

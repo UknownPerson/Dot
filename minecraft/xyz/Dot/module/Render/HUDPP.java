@@ -28,6 +28,9 @@ public class HUDPP extends Module {
             Potion potion = Potion.potionTypes[effect.getPotionID()];
             String PType = I18n.format(potion.getName());
             switch (effect.getAmplifier()) {
+                case 0: {
+                    break;
+                }
                 case 1: {
                     PType = PType + " II";
                     break;

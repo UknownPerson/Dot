@@ -341,7 +341,8 @@ public class AppGameContainer extends GameContainer {
 
 		Display.setTitle(game.getTitle());
 
-		Log.info("LWJGL Version: "+Sys.getVersion());
+		//Log.info("LWJGL Version: "+Sys.getVersion());
+		Log.info("LWJGL Version: 3.3.2");
 		Log.info("OriginalDisplayMode: "+originalDisplayMode);
 		Log.info("TargetDisplayMode: "+targetDisplayMode);
 		

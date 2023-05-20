@@ -537,127 +537,131 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             RenderUtils.drawRect(0, mouseY, mouseX, RenderUtils.height(), new Color(50, 50, 150).getRGB());
             RenderUtils.drawRect(mouseX, mouseY, RenderUtils.width(), RenderUtils.height(), new Color(150, 150, 50).getRGB());
 
-            int color1;
-            int color2;
-            if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) {
-                color1 = new Color(255, 255, 255, 128).getRGB();
-                color2 = new Color(0, 0, 0, 128).getRGB();
-            } else {
-                color1 = new Color(0, 0, 0, 128).getRGB();
-                color2 = new Color(255, 255, 255, 128).getRGB();
+            if(false){
+                int color1;
+                int color2;
+                if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) {
+                    color1 = new Color(255, 255, 255, 128).getRGB();
+                    color2 = new Color(0, 0, 0, 128).getRGB();
+                } else {
+                    color1 = new Color(0, 0, 0, 128).getRGB();
+                    color2 = new Color(255, 255, 255, 128).getRGB();
+                }
+
+                RenderUtils.drawRect(mouseX - 5, mouseY - 5, mouseX - 4, mouseY - 4, color1);
+                RenderUtils.drawRect(mouseX - 4, mouseY - 5, mouseX - 3, mouseY - 4, color2);
+                RenderUtils.drawRect(mouseX - 3, mouseY - 5, mouseX - 2, mouseY - 4, color1);
+                RenderUtils.drawRect(mouseX - 2, mouseY - 5, mouseX - 1, mouseY - 4, color2);
+                RenderUtils.drawRect(mouseX - 1, mouseY - 5, mouseX - 0, mouseY - 4, color1);
+                RenderUtils.drawRect(mouseX - 0, mouseY - 5, mouseX + 1, mouseY - 4, color2);
+                RenderUtils.drawRect(mouseX + 1, mouseY - 5, mouseX + 2, mouseY - 4, color1);
+                RenderUtils.drawRect(mouseX + 2, mouseY - 5, mouseX + 3, mouseY - 4, color2);
+                RenderUtils.drawRect(mouseX + 3, mouseY - 5, mouseX + 4, mouseY - 4, color1);
+                RenderUtils.drawRect(mouseX + 4, mouseY - 5, mouseX + 5, mouseY - 4, color2);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY - 4, mouseX - 4, mouseY - 3, color2);
+                RenderUtils.drawRect(mouseX - 4, mouseY - 4, mouseX - 3, mouseY - 3, color1);
+                RenderUtils.drawRect(mouseX - 3, mouseY - 4, mouseX - 2, mouseY - 3, color2);
+                RenderUtils.drawRect(mouseX - 2, mouseY - 4, mouseX - 1, mouseY - 3, color1);
+                RenderUtils.drawRect(mouseX - 1, mouseY - 4, mouseX - 0, mouseY - 3, color2);
+                RenderUtils.drawRect(mouseX - 0, mouseY - 4, mouseX + 1, mouseY - 3, color1);
+                RenderUtils.drawRect(mouseX + 1, mouseY - 4, mouseX + 2, mouseY - 3, color2);
+                RenderUtils.drawRect(mouseX + 2, mouseY - 4, mouseX + 3, mouseY - 3, color1);
+                RenderUtils.drawRect(mouseX + 3, mouseY - 4, mouseX + 4, mouseY - 3, color2);
+                RenderUtils.drawRect(mouseX + 4, mouseY - 4, mouseX + 5, mouseY - 3, color1);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY - 3, mouseX - 4, mouseY - 2, color1);
+                RenderUtils.drawRect(mouseX - 4, mouseY - 3, mouseX - 3, mouseY - 2, color2);
+                RenderUtils.drawRect(mouseX - 3, mouseY - 3, mouseX - 2, mouseY - 2, color1);
+                RenderUtils.drawRect(mouseX - 2, mouseY - 3, mouseX - 1, mouseY - 2, color2);
+                RenderUtils.drawRect(mouseX - 1, mouseY - 3, mouseX - 0, mouseY - 2, color1);
+                RenderUtils.drawRect(mouseX - 0, mouseY - 3, mouseX + 1, mouseY - 2, color2);
+                RenderUtils.drawRect(mouseX + 1, mouseY - 3, mouseX + 2, mouseY - 2, color1);
+                RenderUtils.drawRect(mouseX + 2, mouseY - 3, mouseX + 3, mouseY - 2, color2);
+                RenderUtils.drawRect(mouseX + 3, mouseY - 3, mouseX + 4, mouseY - 2, color1);
+                RenderUtils.drawRect(mouseX + 4, mouseY - 3, mouseX + 5, mouseY - 2, color2);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY - 2, mouseX - 4, mouseY - 1, color2);
+                RenderUtils.drawRect(mouseX - 4, mouseY - 2, mouseX - 3, mouseY - 1, color1);
+                RenderUtils.drawRect(mouseX - 3, mouseY - 2, mouseX - 2, mouseY - 1, color2);
+                RenderUtils.drawRect(mouseX - 2, mouseY - 2, mouseX - 1, mouseY - 1, color1);
+                RenderUtils.drawRect(mouseX - 1, mouseY - 2, mouseX - 0, mouseY - 1, color2);
+                RenderUtils.drawRect(mouseX - 0, mouseY - 2, mouseX + 1, mouseY - 1, color1);
+                RenderUtils.drawRect(mouseX + 1, mouseY - 2, mouseX + 2, mouseY - 1, color2);
+                RenderUtils.drawRect(mouseX + 2, mouseY - 2, mouseX + 3, mouseY - 1, color1);
+                RenderUtils.drawRect(mouseX + 3, mouseY - 2, mouseX + 4, mouseY - 1, color2);
+                RenderUtils.drawRect(mouseX + 4, mouseY - 2, mouseX + 5, mouseY - 1, color1);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY - 1, mouseX - 4, mouseY - 0, color1);
+                RenderUtils.drawRect(mouseX - 4, mouseY - 1, mouseX - 3, mouseY - 0, color2);
+                RenderUtils.drawRect(mouseX - 3, mouseY - 1, mouseX - 2, mouseY - 0, color1);
+                RenderUtils.drawRect(mouseX - 2, mouseY - 1, mouseX - 1, mouseY - 0, color2);
+                RenderUtils.drawRect(mouseX - 1, mouseY - 1, mouseX - 0, mouseY - 0, color1);
+                RenderUtils.drawRect(mouseX - 0, mouseY - 1, mouseX + 1, mouseY - 0, color2);
+                RenderUtils.drawRect(mouseX + 1, mouseY - 1, mouseX + 2, mouseY - 0, color1);
+                RenderUtils.drawRect(mouseX + 2, mouseY - 1, mouseX + 3, mouseY - 0, color2);
+                RenderUtils.drawRect(mouseX + 3, mouseY - 1, mouseX + 4, mouseY - 0, color1);
+                RenderUtils.drawRect(mouseX + 4, mouseY - 1, mouseX + 5, mouseY - 0, color2);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY - 0, mouseX - 4, mouseY + 1, color2);
+                RenderUtils.drawRect(mouseX - 4, mouseY - 0, mouseX - 3, mouseY + 1, color1);
+                RenderUtils.drawRect(mouseX - 3, mouseY - 0, mouseX - 2, mouseY + 1, color2);
+                RenderUtils.drawRect(mouseX - 2, mouseY - 0, mouseX - 1, mouseY + 1, color1);
+                RenderUtils.drawRect(mouseX - 1, mouseY - 0, mouseX - 0, mouseY + 1, color2);
+                RenderUtils.drawRect(mouseX - 0, mouseY - 0, mouseX + 1, mouseY + 1, color1);
+                RenderUtils.drawRect(mouseX + 1, mouseY - 0, mouseX + 2, mouseY + 1, color2);
+                RenderUtils.drawRect(mouseX + 2, mouseY - 0, mouseX + 3, mouseY + 1, color1);
+                RenderUtils.drawRect(mouseX + 3, mouseY - 0, mouseX + 4, mouseY + 1, color2);
+                RenderUtils.drawRect(mouseX + 4, mouseY - 0, mouseX + 5, mouseY + 1, color1);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY + 1, mouseX - 4, mouseY + 2, color1);
+                RenderUtils.drawRect(mouseX - 4, mouseY + 1, mouseX - 3, mouseY + 2, color2);
+                RenderUtils.drawRect(mouseX - 3, mouseY + 1, mouseX - 2, mouseY + 2, color1);
+                RenderUtils.drawRect(mouseX - 2, mouseY + 1, mouseX - 1, mouseY + 2, color2);
+                RenderUtils.drawRect(mouseX - 1, mouseY + 1, mouseX - 0, mouseY + 2, color1);
+                RenderUtils.drawRect(mouseX - 0, mouseY + 1, mouseX + 1, mouseY + 2, color2);
+                RenderUtils.drawRect(mouseX + 1, mouseY + 1, mouseX + 2, mouseY + 2, color1);
+                RenderUtils.drawRect(mouseX + 2, mouseY + 1, mouseX + 3, mouseY + 2, color2);
+                RenderUtils.drawRect(mouseX + 3, mouseY + 1, mouseX + 4, mouseY + 2, color1);
+                RenderUtils.drawRect(mouseX + 4, mouseY + 1, mouseX + 5, mouseY + 2, color2);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY + 2, mouseX - 4, mouseY + 3, color2);
+                RenderUtils.drawRect(mouseX - 4, mouseY + 2, mouseX - 3, mouseY + 3, color1);
+                RenderUtils.drawRect(mouseX - 3, mouseY + 2, mouseX - 2, mouseY + 3, color2);
+                RenderUtils.drawRect(mouseX - 2, mouseY + 2, mouseX - 1, mouseY + 3, color1);
+                RenderUtils.drawRect(mouseX - 1, mouseY + 2, mouseX - 0, mouseY + 3, color2);
+                RenderUtils.drawRect(mouseX - 0, mouseY + 2, mouseX + 1, mouseY + 3, color1);
+                RenderUtils.drawRect(mouseX + 1, mouseY + 2, mouseX + 2, mouseY + 3, color2);
+                RenderUtils.drawRect(mouseX + 2, mouseY + 2, mouseX + 3, mouseY + 3, color1);
+                RenderUtils.drawRect(mouseX + 3, mouseY + 2, mouseX + 4, mouseY + 3, color2);
+                RenderUtils.drawRect(mouseX + 4, mouseY + 2, mouseX + 5, mouseY + 3, color1);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY + 3, mouseX - 4, mouseY + 4, color1);
+                RenderUtils.drawRect(mouseX - 4, mouseY + 3, mouseX - 3, mouseY + 4, color2);
+                RenderUtils.drawRect(mouseX - 3, mouseY + 3, mouseX - 2, mouseY + 4, color1);
+                RenderUtils.drawRect(mouseX - 2, mouseY + 3, mouseX - 1, mouseY + 4, color2);
+                RenderUtils.drawRect(mouseX - 1, mouseY + 3, mouseX - 0, mouseY + 4, color1);
+                RenderUtils.drawRect(mouseX - 0, mouseY + 3, mouseX + 1, mouseY + 4, color2);
+                RenderUtils.drawRect(mouseX + 1, mouseY + 3, mouseX + 2, mouseY + 4, color1);
+                RenderUtils.drawRect(mouseX + 2, mouseY + 3, mouseX + 3, mouseY + 4, color2);
+                RenderUtils.drawRect(mouseX + 3, mouseY + 3, mouseX + 4, mouseY + 4, color1);
+                RenderUtils.drawRect(mouseX + 4, mouseY + 3, mouseX + 5, mouseY + 4, color2);
+
+                RenderUtils.drawRect(mouseX - 5, mouseY + 4, mouseX - 4, mouseY + 5, color2);
+                RenderUtils.drawRect(mouseX - 4, mouseY + 4, mouseX - 3, mouseY + 5, color1);
+                RenderUtils.drawRect(mouseX - 3, mouseY + 4, mouseX - 2, mouseY + 5, color2);
+                RenderUtils.drawRect(mouseX - 2, mouseY + 4, mouseX - 1, mouseY + 5, color1);
+                RenderUtils.drawRect(mouseX - 1, mouseY + 4, mouseX - 0, mouseY + 5, color2);
+                RenderUtils.drawRect(mouseX - 0, mouseY + 4, mouseX + 1, mouseY + 5, color1);
+                RenderUtils.drawRect(mouseX + 1, mouseY + 4, mouseX + 2, mouseY + 5, color2);
+                RenderUtils.drawRect(mouseX + 2, mouseY + 4, mouseX + 3, mouseY + 5, color1);
+                RenderUtils.drawRect(mouseX + 3, mouseY + 4, mouseX + 4, mouseY + 5, color2);
+                RenderUtils.drawRect(mouseX + 4, mouseY + 4, mouseX + 5, mouseY + 5, color1);
             }
 
-            RenderUtils.drawRect(mouseX - 5, mouseY - 5, mouseX - 4, mouseY - 4, color1);
-            RenderUtils.drawRect(mouseX - 4, mouseY - 5, mouseX - 3, mouseY - 4, color2);
-            RenderUtils.drawRect(mouseX - 3, mouseY - 5, mouseX - 2, mouseY - 4, color1);
-            RenderUtils.drawRect(mouseX - 2, mouseY - 5, mouseX - 1, mouseY - 4, color2);
-            RenderUtils.drawRect(mouseX - 1, mouseY - 5, mouseX - 0, mouseY - 4, color1);
-            RenderUtils.drawRect(mouseX - 0, mouseY - 5, mouseX + 1, mouseY - 4, color2);
-            RenderUtils.drawRect(mouseX + 1, mouseY - 5, mouseX + 2, mouseY - 4, color1);
-            RenderUtils.drawRect(mouseX + 2, mouseY - 5, mouseX + 3, mouseY - 4, color2);
-            RenderUtils.drawRect(mouseX + 3, mouseY - 5, mouseX + 4, mouseY - 4, color1);
-            RenderUtils.drawRect(mouseX + 4, mouseY - 5, mouseX + 5, mouseY - 4, color2);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY - 4, mouseX - 4, mouseY - 3, color2);
-            RenderUtils.drawRect(mouseX - 4, mouseY - 4, mouseX - 3, mouseY - 3, color1);
-            RenderUtils.drawRect(mouseX - 3, mouseY - 4, mouseX - 2, mouseY - 3, color2);
-            RenderUtils.drawRect(mouseX - 2, mouseY - 4, mouseX - 1, mouseY - 3, color1);
-            RenderUtils.drawRect(mouseX - 1, mouseY - 4, mouseX - 0, mouseY - 3, color2);
-            RenderUtils.drawRect(mouseX - 0, mouseY - 4, mouseX + 1, mouseY - 3, color1);
-            RenderUtils.drawRect(mouseX + 1, mouseY - 4, mouseX + 2, mouseY - 3, color2);
-            RenderUtils.drawRect(mouseX + 2, mouseY - 4, mouseX + 3, mouseY - 3, color1);
-            RenderUtils.drawRect(mouseX + 3, mouseY - 4, mouseX + 4, mouseY - 3, color2);
-            RenderUtils.drawRect(mouseX + 4, mouseY - 4, mouseX + 5, mouseY - 3, color1);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY - 3, mouseX - 4, mouseY - 2, color1);
-            RenderUtils.drawRect(mouseX - 4, mouseY - 3, mouseX - 3, mouseY - 2, color2);
-            RenderUtils.drawRect(mouseX - 3, mouseY - 3, mouseX - 2, mouseY - 2, color1);
-            RenderUtils.drawRect(mouseX - 2, mouseY - 3, mouseX - 1, mouseY - 2, color2);
-            RenderUtils.drawRect(mouseX - 1, mouseY - 3, mouseX - 0, mouseY - 2, color1);
-            RenderUtils.drawRect(mouseX - 0, mouseY - 3, mouseX + 1, mouseY - 2, color2);
-            RenderUtils.drawRect(mouseX + 1, mouseY - 3, mouseX + 2, mouseY - 2, color1);
-            RenderUtils.drawRect(mouseX + 2, mouseY - 3, mouseX + 3, mouseY - 2, color2);
-            RenderUtils.drawRect(mouseX + 3, mouseY - 3, mouseX + 4, mouseY - 2, color1);
-            RenderUtils.drawRect(mouseX + 4, mouseY - 3, mouseX + 5, mouseY - 2, color2);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY - 2, mouseX - 4, mouseY - 1, color2);
-            RenderUtils.drawRect(mouseX - 4, mouseY - 2, mouseX - 3, mouseY - 1, color1);
-            RenderUtils.drawRect(mouseX - 3, mouseY - 2, mouseX - 2, mouseY - 1, color2);
-            RenderUtils.drawRect(mouseX - 2, mouseY - 2, mouseX - 1, mouseY - 1, color1);
-            RenderUtils.drawRect(mouseX - 1, mouseY - 2, mouseX - 0, mouseY - 1, color2);
-            RenderUtils.drawRect(mouseX - 0, mouseY - 2, mouseX + 1, mouseY - 1, color1);
-            RenderUtils.drawRect(mouseX + 1, mouseY - 2, mouseX + 2, mouseY - 1, color2);
-            RenderUtils.drawRect(mouseX + 2, mouseY - 2, mouseX + 3, mouseY - 1, color1);
-            RenderUtils.drawRect(mouseX + 3, mouseY - 2, mouseX + 4, mouseY - 1, color2);
-            RenderUtils.drawRect(mouseX + 4, mouseY - 2, mouseX + 5, mouseY - 1, color1);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY - 1, mouseX - 4, mouseY - 0, color1);
-            RenderUtils.drawRect(mouseX - 4, mouseY - 1, mouseX - 3, mouseY - 0, color2);
-            RenderUtils.drawRect(mouseX - 3, mouseY - 1, mouseX - 2, mouseY - 0, color1);
-            RenderUtils.drawRect(mouseX - 2, mouseY - 1, mouseX - 1, mouseY - 0, color2);
-            RenderUtils.drawRect(mouseX - 1, mouseY - 1, mouseX - 0, mouseY - 0, color1);
-            RenderUtils.drawRect(mouseX - 0, mouseY - 1, mouseX + 1, mouseY - 0, color2);
-            RenderUtils.drawRect(mouseX + 1, mouseY - 1, mouseX + 2, mouseY - 0, color1);
-            RenderUtils.drawRect(mouseX + 2, mouseY - 1, mouseX + 3, mouseY - 0, color2);
-            RenderUtils.drawRect(mouseX + 3, mouseY - 1, mouseX + 4, mouseY - 0, color1);
-            RenderUtils.drawRect(mouseX + 4, mouseY - 1, mouseX + 5, mouseY - 0, color2);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY - 0, mouseX - 4, mouseY + 1, color2);
-            RenderUtils.drawRect(mouseX - 4, mouseY - 0, mouseX - 3, mouseY + 1, color1);
-            RenderUtils.drawRect(mouseX - 3, mouseY - 0, mouseX - 2, mouseY + 1, color2);
-            RenderUtils.drawRect(mouseX - 2, mouseY - 0, mouseX - 1, mouseY + 1, color1);
-            RenderUtils.drawRect(mouseX - 1, mouseY - 0, mouseX - 0, mouseY + 1, color2);
-            RenderUtils.drawRect(mouseX - 0, mouseY - 0, mouseX + 1, mouseY + 1, color1);
-            RenderUtils.drawRect(mouseX + 1, mouseY - 0, mouseX + 2, mouseY + 1, color2);
-            RenderUtils.drawRect(mouseX + 2, mouseY - 0, mouseX + 3, mouseY + 1, color1);
-            RenderUtils.drawRect(mouseX + 3, mouseY - 0, mouseX + 4, mouseY + 1, color2);
-            RenderUtils.drawRect(mouseX + 4, mouseY - 0, mouseX + 5, mouseY + 1, color1);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY + 1, mouseX - 4, mouseY + 2, color1);
-            RenderUtils.drawRect(mouseX - 4, mouseY + 1, mouseX - 3, mouseY + 2, color2);
-            RenderUtils.drawRect(mouseX - 3, mouseY + 1, mouseX - 2, mouseY + 2, color1);
-            RenderUtils.drawRect(mouseX - 2, mouseY + 1, mouseX - 1, mouseY + 2, color2);
-            RenderUtils.drawRect(mouseX - 1, mouseY + 1, mouseX - 0, mouseY + 2, color1);
-            RenderUtils.drawRect(mouseX - 0, mouseY + 1, mouseX + 1, mouseY + 2, color2);
-            RenderUtils.drawRect(mouseX + 1, mouseY + 1, mouseX + 2, mouseY + 2, color1);
-            RenderUtils.drawRect(mouseX + 2, mouseY + 1, mouseX + 3, mouseY + 2, color2);
-            RenderUtils.drawRect(mouseX + 3, mouseY + 1, mouseX + 4, mouseY + 2, color1);
-            RenderUtils.drawRect(mouseX + 4, mouseY + 1, mouseX + 5, mouseY + 2, color2);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY + 2, mouseX - 4, mouseY + 3, color2);
-            RenderUtils.drawRect(mouseX - 4, mouseY + 2, mouseX - 3, mouseY + 3, color1);
-            RenderUtils.drawRect(mouseX - 3, mouseY + 2, mouseX - 2, mouseY + 3, color2);
-            RenderUtils.drawRect(mouseX - 2, mouseY + 2, mouseX - 1, mouseY + 3, color1);
-            RenderUtils.drawRect(mouseX - 1, mouseY + 2, mouseX - 0, mouseY + 3, color2);
-            RenderUtils.drawRect(mouseX - 0, mouseY + 2, mouseX + 1, mouseY + 3, color1);
-            RenderUtils.drawRect(mouseX + 1, mouseY + 2, mouseX + 2, mouseY + 3, color2);
-            RenderUtils.drawRect(mouseX + 2, mouseY + 2, mouseX + 3, mouseY + 3, color1);
-            RenderUtils.drawRect(mouseX + 3, mouseY + 2, mouseX + 4, mouseY + 3, color2);
-            RenderUtils.drawRect(mouseX + 4, mouseY + 2, mouseX + 5, mouseY + 3, color1);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY + 3, mouseX - 4, mouseY + 4, color1);
-            RenderUtils.drawRect(mouseX - 4, mouseY + 3, mouseX - 3, mouseY + 4, color2);
-            RenderUtils.drawRect(mouseX - 3, mouseY + 3, mouseX - 2, mouseY + 4, color1);
-            RenderUtils.drawRect(mouseX - 2, mouseY + 3, mouseX - 1, mouseY + 4, color2);
-            RenderUtils.drawRect(mouseX - 1, mouseY + 3, mouseX - 0, mouseY + 4, color1);
-            RenderUtils.drawRect(mouseX - 0, mouseY + 3, mouseX + 1, mouseY + 4, color2);
-            RenderUtils.drawRect(mouseX + 1, mouseY + 3, mouseX + 2, mouseY + 4, color1);
-            RenderUtils.drawRect(mouseX + 2, mouseY + 3, mouseX + 3, mouseY + 4, color2);
-            RenderUtils.drawRect(mouseX + 3, mouseY + 3, mouseX + 4, mouseY + 4, color1);
-            RenderUtils.drawRect(mouseX + 4, mouseY + 3, mouseX + 5, mouseY + 4, color2);
-
-            RenderUtils.drawRect(mouseX - 5, mouseY + 4, mouseX - 4, mouseY + 5, color2);
-            RenderUtils.drawRect(mouseX - 4, mouseY + 4, mouseX - 3, mouseY + 5, color1);
-            RenderUtils.drawRect(mouseX - 3, mouseY + 4, mouseX - 2, mouseY + 5, color2);
-            RenderUtils.drawRect(mouseX - 2, mouseY + 4, mouseX - 1, mouseY + 5, color1);
-            RenderUtils.drawRect(mouseX - 1, mouseY + 4, mouseX - 0, mouseY + 5, color2);
-            RenderUtils.drawRect(mouseX - 0, mouseY + 4, mouseX + 1, mouseY + 5, color1);
-            RenderUtils.drawRect(mouseX + 1, mouseY + 4, mouseX + 2, mouseY + 5, color2);
-            RenderUtils.drawRect(mouseX + 2, mouseY + 4, mouseX + 3, mouseY + 5, color1);
-            RenderUtils.drawRect(mouseX + 3, mouseY + 4, mouseX + 4, mouseY + 5, color2);
-            RenderUtils.drawRect(mouseX + 4, mouseY + 4, mouseX + 5, mouseY + 5, color1);
-
             this.drawString(this.fontRendererObj, String.valueOf(Minecraft.getDebugFPS()), 0, 0, -1);
+            this.drawString(this.fontRendererObj, String.valueOf(RenderUtils.fps), 0, mc.fontRendererObj.FONT_HEIGHT, -1);
+            this.drawString(this.fontRendererObj, RenderUtils.ms + "ms", 0, 2 * mc.fontRendererObj.FONT_HEIGHT, -1);
 
         } else {
             if (l != 0 || i1 != 0) {
