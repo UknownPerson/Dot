@@ -1,6 +1,5 @@
 package net.minecraft.client.gui;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import net.minecraft.block.material.Material;
@@ -14,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -33,18 +33,25 @@ import net.minecraft.src.Config;
 import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
-import xyz.Dot.Client;
+import org.lwjgl.opengl.EXTPackedDepthStencil;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Client.CustomColor;
+import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.shader.BloomUtil;
+import xyz.Dot.utils.shader.GaussianBlur;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
+import static org.lwjgl.opengl.EXTFramebufferObject.*;
+import static org.lwjgl.opengl.EXTFramebufferObject.GL_RENDERBUFFER_EXT;
+import static org.lwjgl.opengl.GL11.*;
 
 public class GuiIngame extends Gui
 {
@@ -130,6 +137,7 @@ public class GuiIngame extends Gui
         this.titleDisplayTime = 70;
         this.titleFadeOut = 20;
     }
+    private Framebuffer bloomFramebuffer = new Framebuffer(1, 1, false);
 
     public void renderGameOverlay(float partialTicks)
     {
@@ -360,7 +368,38 @@ public class GuiIngame extends Gui
         } else {
             this.overlayPlayerList.updatePlayerList(false);
         }
+        if(HUD.blur.isToggle()){
+            mc.getFramebuffer().bindFramebuffer(false);
+            checkSetupFBO(mc.getFramebuffer());
+            glClear(GL_STENCIL_BUFFER_BIT);
+            glEnable(GL_STENCIL_TEST);
 
+            glStencilFunc(GL_ALWAYS, 1, 1);
+            glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+            glColorMask(false, false, false, false);
+            for(Runnable runnable : GaussianBlur.getTasks()){
+                runnable.run();
+            }
+            glColorMask(true, true, true, true);
+            glStencilFunc(GL_EQUAL, 1, 1);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+            GaussianBlur.renderBlur(8);
+            glDisable(GL_STENCIL_TEST);
+
+        }
+        if(HUD.shadow.isToggle()){
+            bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
+            bloomFramebuffer.framebufferClear();
+            bloomFramebuffer.bindFramebuffer(true);
+            for(Runnable runnable : GaussianBlur.getTasks()){
+                runnable.run();
+            }
+            bloomFramebuffer.unbindFramebuffer();
+            BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
+
+
+        }
+        GaussianBlur.getTasks().clear();
         EventBus.getInstance().call(new EventRender2D(partialTicks));
 
         if (ModuleManager.getModuleByName("Notifications").isToggle()) {
@@ -371,6 +410,25 @@ public class GuiIngame extends Gui
         GlStateManager.disableLighting();
         GlStateManager.enableAlpha();
     }
+
+    public static void checkSetupFBO(Framebuffer framebuffer) {
+        if (framebuffer != null) {
+            if (framebuffer.depthBuffer > -1) {
+                setupFBO(framebuffer);
+                framebuffer.depthBuffer = -1;
+            }
+        }
+    }
+
+    public static void setupFBO(Framebuffer framebuffer) {
+        glDeleteRenderbuffersEXT(framebuffer.depthBuffer);
+        final int stencilDepthBufferID = glGenRenderbuffersEXT();
+        glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, stencilDepthBufferID);
+        glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, EXTPackedDepthStencil.GL_DEPTH_STENCIL_EXT, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+        glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, stencilDepthBufferID);
+        glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, stencilDepthBufferID);
+    }
+
 
     protected void renderTooltip(ScaledResolution sr, float partialTicks)
     {
@@ -594,9 +652,7 @@ public class GuiIngame extends Gui
 
     private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
         if (ModuleManager.getModuleByName("BetterScoreboard").isToggle()) {
-
             Custom.drawScoreboard(objective, scaledRes);
-
         } else {
 
             Scoreboard scoreboard = objective.getScoreboard();

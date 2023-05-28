@@ -98,6 +98,7 @@ import org.lwjgl.util.glu.GLU;
 import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.misc.EventKey;
+import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.utils.RenderUtils;
 
@@ -1070,6 +1071,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.entityRenderer.renderStreamIndicator(this.timer.renderPartialTicks);
         GlStateManager.popMatrix();
         this.mcProfiler.startSection("root");
+         EventBus.getInstance().call(new EventFrame());
         this.updateDisplay();
         Thread.yield();
         this.mcProfiler.startSection("stream");

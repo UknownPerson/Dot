@@ -1,15 +1,6 @@
 package xyz.Dot.module.Client;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
-import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
@@ -25,10 +16,10 @@ import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.TimerUtil;
+import xyz.Dot.utils.shader.GaussianBlur;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class HUD extends Module {
     public static Setting dotx = new Setting(ModuleManager.getModuleByName("HUD"), "Dot_X", 20.0d, 0.0d, 1.0d, 1.0d);
@@ -38,10 +29,12 @@ public class HUD extends Module {
     public static Setting dotbox = new Setting(ModuleManager.getModuleByName("HUD"), "Dot", true);
     public static Setting bpsavg = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG", true);
     public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
+    public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", true);
+    public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shaow", true);
 
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
-        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist);
+        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist,blur, shadow);
     }
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;
@@ -168,6 +161,17 @@ public class HUD extends Module {
             }
 
             float yadd = m.getAnimY();
+
+            if(HUD.blur.isToggle()){
+                float finalY = y;
+                GaussianBlur.addBlurTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        RenderUtils.drawRect((int) x - 3, (int) finalY, (int) (endx + 3), (int) (finalY + yadd), new Color(0, 0, 0, 64).getRGB());
+                    }
+                });
+            }
+
             RenderUtils.drawRect((int) x - 3, (int) y, (int) (endx + 3), (int) (y + yadd), new Color(0, 0, 0, 64).getRGB());
             //RenderUtils.drawRect((int) (endx + 2), (int) y, (int) (endx + 2 + 1), (int) (y + yadd), rainbow.getRGB());
             if (yadd > font1.getStringHeight(m.getName())) {

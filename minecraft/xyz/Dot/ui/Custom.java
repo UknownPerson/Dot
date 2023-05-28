@@ -3,6 +3,7 @@ package xyz.Dot.ui;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.GameSettings;
@@ -18,6 +19,7 @@ import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Misc.KeyStrokes;
 import xyz.Dot.module.Render.BetterScoreboard;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.shader.GaussianBlur;
 
 import java.awt.*;
 import java.io.IOException;
@@ -25,6 +27,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_STENCIL_TEST;
 
 public class Custom extends GuiScreen {
 
@@ -195,8 +200,24 @@ public class Custom extends GuiScreen {
             for (Score score1 : collection) {
                 ++j0;
             }
-            RenderUtils.drawRoundRect(x, y, x + i, y + (j0 + 1) * mc.fontRendererObj.FONT_HEIGHT + 12, 4,new Color(0,0,0,64));
+            int finalI = i;
+            int finalJ = j0;
+            int finalY = y;
+            int finalY1 = y;
+            GuiIngame.checkSetupFBO(mc.getFramebuffer());
+            glClear(GL_STENCIL_BUFFER_BIT);
+            glEnable(GL_STENCIL_TEST);
 
+            glStencilFunc(GL_ALWAYS, 1, 1);
+            glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+            glColorMask(false, false, false, false);
+            RenderUtils.drawRoundRect(x, finalY, x + finalI, finalY1 + (finalJ + 1) * mc.fontRendererObj.FONT_HEIGHT + 12, 4,new Color(0,0,0,64));
+
+            glColorMask(true, true, true, true);
+            glStencilFunc(GL_EQUAL, 1, 1);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+            GaussianBlur.renderBlur(8);
+            glDisable(GL_STENCIL_TEST);
             y += 4;
             int j = 0;
             //RenderUtils.drawRect(x, y + mc.fontRendererObj.FONT_HEIGHT + 3, x + i, y + mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
@@ -225,7 +246,17 @@ public class Custom extends GuiScreen {
 
         int StartX = (int) HUD.dotx.getCurrentValue();
         int StartY = (int) HUD.doty.getCurrentValue();
-        RenderUtils.drawRoundRect(StartX, StartY, StartX + 64, StartY + 56,4, new Color(0, 0, 0, 64));
+        int finalStartY = StartY;
+        int finalStartY1 = StartY;
+        GaussianBlur.addBlurTask(new Runnable() {
+            @Override
+            public void run() {
+                RenderUtils.drawRoundRect(StartX, finalStartY, StartX + 64, finalStartY1 + 56,4, new Color(0, 0, 0, 64));
+
+            }
+        });
+        RenderUtils.drawRoundRect(StartX, finalStartY, StartX + 64, finalStartY1 + 56,4, new Color(0, 0, 0, 64));
+
         RenderUtils.drawHalfRoundRect(StartX, StartY, StartX + 64, StartY + 12, 4, CustomColor.getColor());
 
         RenderUtils.drawFilledCircle(StartX + 6, StartY + 6, 3, new Color(255, 0, 0, 32));
@@ -258,7 +289,14 @@ public class Custom extends GuiScreen {
     public static void drawBPSAVG() {
         int StartXspeed = (int) HUD.bpsx.getCurrentValue();
         int StartYspeed = (int) HUD.bpsy.getCurrentValue();
+        GaussianBlur.addBlurTask(new Runnable() {
+            @Override
+            public void run() {
+                RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
+            }
+        });
         RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
+
         RenderUtils.drawHalfRoundRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, 4, CustomColor.getColor());
         int numsm = HUD.nums - 1;
         float xnum = 0.5f;

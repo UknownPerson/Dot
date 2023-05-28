@@ -56,6 +56,7 @@ public class ModuleManager {
         this.addModule(new NoHurtCamera());
         this.addModule(new OldBlockRender());
         this.addModule(new SmoothZoom());
+        this.addModule(new MotionBlur());
     }
 
     private void addModule(Module m){
