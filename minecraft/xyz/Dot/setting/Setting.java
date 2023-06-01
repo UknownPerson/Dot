@@ -2,12 +2,14 @@ package xyz.Dot.setting;
 
 import xyz.Dot.module.Module;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Setting {
     private Module module;
     private String name;
     private boolean toggle;
+    private Color color;
     private double currentValue,minValue,maxValue,incValue;
     private String currentMode;
     private ArrayList<String> Modes;
@@ -30,7 +32,8 @@ public class Setting {
     public enum Category{
         BOOLEAN,
         VALUE,
-        MODE
+        MODE,
+        COLOR
     }
 
     public float getSettingXY() {
@@ -72,6 +75,13 @@ public class Setting {
         category = Category.BOOLEAN;
     }
 
+    public Setting(Module module, String name, Color color) {
+        this.module = module;
+        this.name = name;
+        this.color = color;
+        category = Category.COLOR;
+    }
+
     public Setting(Module module, String name, double currentValue, double minValue, double maxValue, double incValue) {
         this.module = module;
         this.name = name;
@@ -88,6 +98,18 @@ public class Setting {
         this.currentMode = currentMode;
         Modes = modes;
         category = Category.MODE;
+    }
+
+    public int getRGB(){
+        return this.color.getRGB();
+    }
+
+    public Color getColor(){
+        return color;
+    }
+
+    public void setColor(Color color){
+        this.color = color;
     }
 
     public Module getModule() {
@@ -182,4 +204,7 @@ public class Setting {
         return this.category.equals(Category.MODE);
     }
 
+    public boolean isColor(){
+        return this.category.equals(Category.COLOR);
+    }
 }

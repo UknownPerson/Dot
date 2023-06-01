@@ -29,12 +29,13 @@ public class HUD extends Module {
     public static Setting dotbox = new Setting(ModuleManager.getModuleByName("HUD"), "Dot", true);
     public static Setting bpsavg = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG", true);
     public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
+    public static Setting arraylistColor = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList Color",new Color(-1));
     public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", true);
     public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shaow", true);
 
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
-        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist,blur, shadow);
+        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist,arraylistColor,blur, shadow);
     }
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;
@@ -182,7 +183,7 @@ public class HUD extends Module {
                     alpha = 255;
                 }
 
-                font1.drawString(m.getName(), x, (float) (y + yadd * (1 - 0.618)), new Color(255, 255, 255, alpha).getRGB());
+                font1.drawString(m.getName(), x, (float) (y + yadd * (1 - 0.618)), new Color(arraylistColor.getColor().getRed(),arraylistColor.getColor().getGreen(),arraylistColor.getColor().getBlue(), alpha).getRGB());
                 //font1.drawString(m.getName(), x, y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(rainbow.getRed(), rainbow.getGreen(), rainbow.getBlue(), alpha).getRGB());
             }
             y += yadd;

@@ -10,6 +10,7 @@ import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -66,8 +67,10 @@ public class ModulesFile extends CustomFile {
                                 setting.setToggle(jsonElement.getAsJsonObject().get(setting.getName()).getAsBoolean());
                             } else if (setting.isValue()) {
                                 setting.setCurrentValue(jsonElement.getAsJsonObject().get(setting.getName()).getAsDouble());
-                            } else {
+                            } else if(setting.isMode()) {
                                 setting.setCurrentMode(jsonElement.getAsJsonObject().get(setting.getName()).getAsString());
+                            } else if (setting.isColor()) {
+                                setting.setColor(new Color(jsonElement.getAsJsonObject().get(setting.getName()).getAsInt()));
                             }
 
                         }));
@@ -115,8 +118,10 @@ public class ModulesFile extends CustomFile {
                         jsonObject1.addProperty(setting.getName(), setting.isToggle());
                     else if (setting.isValue())
                         jsonObject1.addProperty(setting.getName(), setting.getCurrentValue());
-                    else
+                    else if(setting.isMode())
                         jsonObject1.addProperty(setting.getName(), setting.getCurrentMode());
+                    else if(setting.isColor())
+                        jsonObject1.addProperty(setting.getName(),setting.getColor().getRGB());
                 });
 
                 jsonArray.add(jsonObject1);

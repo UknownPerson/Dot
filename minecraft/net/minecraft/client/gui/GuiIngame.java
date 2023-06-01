@@ -433,9 +433,9 @@ public class GuiIngame extends Gui
     protected void renderTooltip(ScaledResolution sr, float partialTicks)
     {
         if (ModuleManager.getModuleByName("CustomColor").isToggle()) {
-            CustomColor.realred = RenderUtils.toanim(CustomColor.realred,(int)CustomColor.r.getCurrentValue(),16,1f);
-            CustomColor.realgreen = RenderUtils.toanim(CustomColor.realgreen,(int)CustomColor.g.getCurrentValue(),16,1f);
-            CustomColor.realblue = RenderUtils.toanim(CustomColor.realblue,(int)CustomColor.b.getCurrentValue(),16,1f);
+            CustomColor.realred = RenderUtils.toanim(CustomColor.realred,CustomColor.color.getColor().getRed(),16,1f);
+            CustomColor.realgreen = RenderUtils.toanim(CustomColor.realgreen,CustomColor.color.getColor().getGreen(),16,1f);
+            CustomColor.realblue = RenderUtils.toanim(CustomColor.realblue,CustomColor.color.getColor().getBlue(),16,1f);
         }else{
             CustomColor.realred = RenderUtils.toanim(CustomColor.realred,64,16,1f);
             CustomColor.realgreen = RenderUtils.toanim(CustomColor.realgreen,128,16,1f);
