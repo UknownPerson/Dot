@@ -100,7 +100,12 @@ import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.event.events.world.EventTick;
+import xyz.Dot.module.ModuleManager;
+import xyz.Dot.ui.ImageLoader;
+import xyz.Dot.ui.LoginUI;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.SystemUtils;
+import xyz.Dot.utils.WebUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -111,6 +116,7 @@ import java.net.Proxy;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -437,6 +443,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public void run() {
+        check();
         this.running = true;
 
         try {
@@ -533,13 +540,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcResourceManager.registerReloadListener(this.standardGalacticFontRenderer);
         this.mcResourceManager.registerReloadListener(new GrassColorReloadListener());
         this.mcResourceManager.registerReloadListener(new FoliageColorReloadListener());
-        AchievementList.openInventory.setStatStringFormatter(new IStatStringFormat() {
-            public String formatString(String str) {
-                try {
-                    return String.format(str, new Object[]{GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindUseItem.getKeyCode())});
-                } catch (Exception exception) {
-                    return "Error: " + exception.getLocalizedMessage();
-                }
+
+        AchievementList.openInventory.setStatStringFormatter(str -> {
+            try {
+                return String.format(str, new Object[]{GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindUseItem.getKeyCode())});
+            } catch (Exception exception) {
+                return "Error: " + exception.getLocalizedMessage();
             }
         });
         this.mouseHelper = new MouseHelper();
@@ -578,11 +584,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
         this.checkGLError("Post startup");
         this.ingameGUI = new GuiIngame(this);
-
+        ImageLoader.init();
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
         } else {
-            this.displayGuiScreen(new GuiMainMenu());
+            this.displayGuiScreen(new LoginUI());
+            if(ModuleManager.name == null){
+               // this.displayGuiScreen(new LoginUI());
+            }else{
+               // this.displayGuiScreen(new GuiMainMenu());
+            }
         }
 
         this.renderEngine.deleteTexture(this.mojangLogo);
@@ -822,7 +833,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     public int getLimitFramerate() {
         //return this.theWorld == null && this.currentScreen != null ? 3 : this.gameSettings.limitFramerate;
-        return this.theWorld == null && this.currentScreen != null ? Integer.MAX_VALUE : this.gameSettings.limitFramerate;
+        return this.gameSettings.limitFramerate;
         //fuck
     }
 
@@ -2743,4 +2754,47 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public void setConnectedToRealms(boolean isConnected) {
         this.connectedToRealms = isConnected;
     }
+
+    public boolean check(){
+        try {
+            String get = WebUtils.get("https://gitee.com/UknownPerson/dot-login-check/raw/master/check");
+            String hwid = SystemUtils.getHWID();
+            ModuleManager.ver = Double.parseDouble(getSubString(get,"ver","ver"));
+            System.out.println(get);
+            if(!get.contains(hwid)){
+                return false;
+            }else{
+                String s = getSubString(get,hwid,hwid);
+                ModuleManager.name = getSubString(s,"name","name");
+                ModuleManager.prefix = getSubString(s,"prefix","prefix");
+                ModuleManager.SigmaMode = getSubString(s, "mode", "mode").equals("sigma");
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+    }
+
+    public static String getSubString(String text, String left, String right) {
+        String result = "";
+        int zLen;
+        if (left == null || left.isEmpty()) {
+            zLen = 0;
+        } else {
+            zLen = text.indexOf(left);
+            if (zLen > -1) {
+                zLen += left.length();
+            } else {
+                zLen = 0;
+            }
+        }
+        int yLen = text.indexOf(right, zLen);
+        if (yLen < 0 || right == null || right.isEmpty()) {
+            yLen = text.length();
+        }
+        result = text.substring(zLen, yLen);
+        return result;
+    }
+
 }

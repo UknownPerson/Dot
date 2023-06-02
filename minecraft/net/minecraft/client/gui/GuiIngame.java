@@ -45,6 +45,7 @@ import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.shader.BloomUtil;
 import xyz.Dot.utils.shader.GaussianBlur;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;

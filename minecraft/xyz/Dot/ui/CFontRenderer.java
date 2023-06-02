@@ -71,7 +71,6 @@ extends CFont {
         }
         CharData[] currentData = this.charData;
         float alpha = (float)(color >> 24 & 255) / 255.0f;
-        boolean randomCase = false;
         boolean bold = false;
         boolean italic = false;
         boolean strikethrough = false;
@@ -103,7 +102,6 @@ extends CFont {
                     if (colorIndex < 16) {
                         bold = false;
                         italic = false;
-                        randomCase = false;
                         underline = false;
                         strikethrough = false;
                         GlStateManager.bindTexture(this.tex.getGlTextureId());
@@ -117,7 +115,6 @@ extends CFont {
                         int colorcode = this.colorCode[colorIndex];
                         GlStateManager.color((float)(colorcode >> 16 & 255) / 255.0f, (float)(colorcode >> 8 & 255) / 255.0f, (float)(colorcode & 255) / 255.0f, alpha);
                     } else if (colorIndex == 16) {
-                        randomCase = true;
                     } else if (colorIndex == 17) {
                         bold = true;
                         if (italic) {
@@ -143,7 +140,6 @@ extends CFont {
                     } else if (colorIndex == 21) {
                         bold = false;
                         italic = false;
-                        randomCase = false;
                         underline = false;
                         strikethrough = false;
                         GlStateManager.color((float)(color >> 16 & 255) / 255.0f, (float)(color >> 8 & 255) / 255.0f, (float)(color & 255) / 255.0f, alpha);

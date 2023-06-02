@@ -22,14 +22,14 @@ public class HitBox extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        if(!Client.instance.SigmaMode){
+        if(!ModuleManager.SigmaMode){
             Notification.sendClientMessage("You are not a Sigma user.You can't enable it.", Notification.Type.WARNING);
         }
     }
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-        if(!Client.instance.SigmaMode){
+        if(!ModuleManager.SigmaMode){
             this.setToggle(false);
         }
     }

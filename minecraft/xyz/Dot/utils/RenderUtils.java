@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.ui.ImageLoader;
 
 
 import java.awt.*;
@@ -127,10 +128,10 @@ public class RenderUtils {
             Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
             Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
             Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
-            drawImage(new ResourceLocation("dot/circle_leftup.png"), x1, y1, roundsize, roundsize, color);
-            drawImage(new ResourceLocation("dot/circle_leftdown.png"), x1, y2-roundsize, roundsize, roundsize, color);
-            drawImage(new ResourceLocation("dot/circle_rightup.png"), x2-roundsize, y1, roundsize, roundsize, color);
-            drawImage(new ResourceLocation("dot/circle_rightdown.png"), x2-roundsize, y2-roundsize, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_leftup, x1, y1, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_leftdown, x1, y2-roundsize, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_rightup, x2-roundsize, y1, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_rightdown, x2-roundsize, y2-roundsize, roundsize, roundsize, color);
 
         }
     }
@@ -143,8 +144,8 @@ public class RenderUtils {
         if (x1 != x2 && y1 != y2) {
             Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
             Gui.drawRect(x1, y1t, x2, y2, color.getRGB());
-            drawImage(new ResourceLocation("dot/circle_leftup.png"), x1, y1, roundsize, roundsize, color);
-            drawImage(new ResourceLocation("dot/circle_rightup.png"), x2-roundsize, y1, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_leftup, x1, y1, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_rightup, x2-roundsize, y1, roundsize, roundsize, color);
         }
     }
 
@@ -173,7 +174,7 @@ public class RenderUtils {
     }
 
     public static void drawFilledCircle(int x, int y, int round, Color color) {
-        drawImage(new ResourceLocation("dot/circle.png"), x - round, y - round, round * 2, round * 2, color);
+        drawImage(ImageLoader.circle, x - round, y - round, round * 2, round * 2, color);
     }
 
     public static void drawImage(ResourceLocation image, int x, int y, int width, int height) {
@@ -232,7 +233,7 @@ public class RenderUtils {
     }
 
     public static float toanim1(float now, float start, float end, float multiplier, float min) {
-        float beterspeedinfps = 120.0f / Minecraft.getDebugFPS();
+        float beterspeedinfps = 120.0f / fps;
         if ((now < start && now < end) || (now > start && now > end)) {
             now = start;
         }

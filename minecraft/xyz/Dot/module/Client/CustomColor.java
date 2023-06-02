@@ -21,6 +21,6 @@ public class CustomColor extends Module {
         this.addValues(color);
     }
     public static Color getColor(){
-        return new Color(color.getRGB());
+        return new Color((int)realred,(int)realgreen,(int)realblue);
     }
 }

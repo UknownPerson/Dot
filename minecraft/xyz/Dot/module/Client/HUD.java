@@ -30,8 +30,8 @@ public class HUD extends Module {
     public static Setting bpsavg = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG", true);
     public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
     public static Setting arraylistColor = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList Color",new Color(-1));
-    public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", true);
-    public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shaow", true);
+    public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", false);
+    public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shaow", false);
 
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
@@ -111,7 +111,7 @@ public class HUD extends Module {
             return;
         }
 
-        if (Client.instance.inDevelopment && true) {
+        if (Client.instance.inDevelopment && false) {
             FontLoaders.normalfont16.drawString(t + "Tick/S", 100, 50, new Color(255, 255, 255).getRGB());
             FontLoaders.normalfont16.drawString(RenderUtils.ms + "ms", 100, 60, new Color(255, 255, 255).getRGB());
         }

@@ -204,20 +204,22 @@ public class Custom extends GuiScreen {
             int finalJ = j0;
             int finalY = y;
             int finalY1 = y;
-            GuiIngame.checkSetupFBO(mc.getFramebuffer());
-            glClear(GL_STENCIL_BUFFER_BIT);
-            glEnable(GL_STENCIL_TEST);
 
-            glStencilFunc(GL_ALWAYS, 1, 1);
-            glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-            glColorMask(false, false, false, false);
+            //GuiIngame.checkSetupFBO(mc.getFramebuffer());
+            //glClear(GL_STENCIL_BUFFER_BIT);
+            //glEnable(GL_STENCIL_TEST);
+
+            //glStencilFunc(GL_ALWAYS, 1, 1);
+            //glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+            //glColorMask(false, false, false, false);
             RenderUtils.drawRoundRect(x, finalY, x + finalI, finalY1 + (finalJ + 1) * mc.fontRendererObj.FONT_HEIGHT + 12, 4,new Color(0,0,0,64));
 
-            glColorMask(true, true, true, true);
-            glStencilFunc(GL_EQUAL, 1, 1);
-            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-            GaussianBlur.renderBlur(8);
-            glDisable(GL_STENCIL_TEST);
+            //glColorMask(true, true, true, true);
+            //glStencilFunc(GL_EQUAL, 1, 1);
+            //glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+            //GaussianBlur.renderBlur(8);
+            //glDisable(GL_STENCIL_TEST);
+
             y += 4;
             int j = 0;
             //RenderUtils.drawRect(x, y + mc.fontRendererObj.FONT_HEIGHT + 3, x + i, y + mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
