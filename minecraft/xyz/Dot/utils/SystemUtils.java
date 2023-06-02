@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class SystemUtils {
 
     public static String getHWID(){
-        Scanner sc = null;
         try {
             // linux，windows命令
             String[] linux = {"dmidecode", "-t", "processor", "|", "grep", "'ID'"};
@@ -31,28 +30,29 @@ public class SystemUtils {
                 }
                 return hashed;
             }
-            Process process = Runtime.getRuntime().exec(property.contains("Window") ? windows : linux);
+            Process process = Runtime.getRuntime().exec(new String[] { "wmic", "cpu", "get", "ProcessorId" });
             process.getOutputStream().close();
-            sc = new Scanner(process.getInputStream(), "utf-8");
+            Scanner sc = new Scanner(process.getInputStream());
+            if (sc != null) {
+                String hashed = "null";
+                sc.next();
+                String s = sc.next();
+                try {
+                    MessageDigest md = MessageDigest.getInstance("MD5");
+                    md.update(s.getBytes());
+                    hashed = new BigInteger(1, md.digest()).toString(16);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(hashed);
+                return hashed;
+            }else{
+                return "null";
+            }
         } catch (IOException e) {
             // 处理异常
             e.printStackTrace();
         }
-
-        if (sc != null) {
-            String hashed = "null";
-            String s = sc.next();
-            try {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(s.getBytes());
-                hashed = new BigInteger(1, md.digest()).toString(16);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-
-            return hashed;
-        }else{
-            return "null";
-        }
+        return "null";
     }
 }
