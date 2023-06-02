@@ -588,11 +588,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
         } else {
-            this.displayGuiScreen(new LoginUI());
             if(ModuleManager.name == null){
-               // this.displayGuiScreen(new LoginUI());
+                this.displayGuiScreen(new LoginUI());
             }else{
-               // this.displayGuiScreen(new GuiMainMenu());
+                this.displayGuiScreen(new GuiMainMenu());
             }
         }
 
