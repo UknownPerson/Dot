@@ -341,11 +341,11 @@ public class ClickUI extends GuiScreen {
                 if (s.isColor()) {
                     //RenderUtils.drawRect((int) (userxendanim + 18), (int) thisry - 2 - 4  , (int) (userxendanim + 145 -10), (int) thisry + 8 - 2 + 4,new Color(0,0,0).getRGB());
                     font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
-                    bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
-                    bloomFramebuffer.framebufferClear();
-                    bloomFramebuffer.bindFramebuffer(true);
+                    //bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
+                    //bloomFramebuffer.framebufferClear();
+                    //bloomFramebuffer.bindFramebuffer(true);
                     RenderUtils.drawRoundRect((int) (userxendanim + 130 - 10), (int) thisry - 2, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2, 4, s.getColor());
-                    BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
+                    //BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
 
                     RenderUtils.drawRoundRect((int) (userxendanim + 130 - 10), (int) thisry - 2, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2, 4, s.getColor());
 
