@@ -19,7 +19,7 @@ public class SystemUtils {
             // 获取系统信息
             String property = System.getProperty("os.name");
             boolean iswindows = property.toLowerCase().contains("windows");
-            if(iswindows){
+            if(!iswindows){
                 String hashed = "null";
                 String s = InetAddress.getLocalHost().getHostName();
                 try {
