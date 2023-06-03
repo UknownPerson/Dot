@@ -134,7 +134,7 @@ public class GuiPlayerTabOverlay extends Gui {
         if (!this.mc.gameSettings.keyBindCommand.isKeyDown() && end) {
             return;
         }
-        if (this.header != null && bool && BetterTabList.header.isToggle()) {
+        if (this.header != null && !bool && BetterTabList.header.isToggle()) {
             list1 = this.mc.fontRendererObj.listFormattedStringToWidth(this.header.getFormattedText(), width - 50);
 
             for (String s : list1) {
@@ -142,7 +142,7 @@ public class GuiPlayerTabOverlay extends Gui {
             }
         }
 
-        if (this.footer != null && bool && BetterTabList.footer.isToggle()) {
+        if (this.footer != null && !bool && BetterTabList.footer.isToggle()) {
             list2 = this.mc.fontRendererObj.listFormattedStringToWidth(this.footer.getFormattedText(), width - 50);
 
             for (String s2 : list2) {

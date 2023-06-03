@@ -23,6 +23,6 @@ public class ClickGui extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        this.mc.displayGuiScreen(new ClickUI());
+        mc.displayGuiScreen(new ClickUI());
     }
 }

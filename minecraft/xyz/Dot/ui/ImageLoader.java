@@ -14,6 +14,7 @@ public class ImageLoader {
     public static ResourceLocation circle_rightdown;
     public static ResourceLocation tohru0;
     public static ResourceLocation tohru1;
+    public static ResourceLocation tohru0round;
     public static long starttime;
     public static float time;
 
@@ -59,5 +60,11 @@ public class ImageLoader {
         Minecraft.getMinecraft().getTextureManager().bindTexture(tohru1);
         time = ((System.nanoTime() - starttime) / 1000000f);
         logger.info("[Dot] load dot/tohru1.png " + time + "ms");
+
+        starttime = System.nanoTime();
+        tohru0round = new ResourceLocation("dot/tohru0round.png");
+        Minecraft.getMinecraft().getTextureManager().bindTexture(tohru0round);
+        time = ((System.nanoTime() - starttime) / 1000000f);
+        logger.info("[Dot] load dot/tohru0round.png " + time + "ms");
     }
 }

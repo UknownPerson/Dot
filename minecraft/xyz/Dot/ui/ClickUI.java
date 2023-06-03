@@ -61,7 +61,7 @@ public class ClickUI extends GuiScreen {
     public void onGuiClosed() {
         //toclose = true;
         picker = null;
-        Client.instance.modulemanager.getModuleByName("ClickGui").setToggle(false);
+        ModuleManager.getModuleByName("ClickGui").setToggle(false);
 
     }
 

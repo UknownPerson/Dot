@@ -36,6 +36,7 @@ public class ModuleManager {
         this.addModule(new CustomColor());
         this.addModule(new NoCommand());
         this.addModule(new HUD());
+        this.addModule(new MusicPlayer());
         this.addModule(new Notifications());
         if(Client.instance.inDevelopment){
             this.addModule(new TestModule());
@@ -55,12 +56,12 @@ public class ModuleManager {
         this.addModule(new EveryThingBlock());
         this.addModule(new FullBright());
         this.addModule(new HUDPP());
+        this.addModule(new MotionBlur());
         this.addModule(new NameTag());
         this.addModule(new NoBossBar());
         this.addModule(new NoHurtCamera());
         this.addModule(new OldBlockRender());
         this.addModule(new SmoothZoom());
-        this.addModule(new MotionBlur());
     }
 
     private void addModule(Module m){

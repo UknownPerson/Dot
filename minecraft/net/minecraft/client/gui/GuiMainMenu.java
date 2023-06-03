@@ -29,6 +29,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 import xyz.Dot.Client;
+import xyz.Dot.module.ModuleManager;
+import xyz.Dot.ui.CFontRenderer;
+import xyz.Dot.ui.FontLoaders;
+import xyz.Dot.ui.ImageLoader;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -248,10 +252,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
 
         if (Reflector.GuiModList_Constructor.exists()) {
-            this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 + 2, p_73969_1_ + p_73969_2_ * 2, 98, 20, I18n.format("menu.online", new Object[0]).replace("Minecraft", "").trim()));
+            //this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 + 2, p_73969_1_ + p_73969_2_ * 2, 98, 20, I18n.format("menu.online", new Object[0]).replace("Minecraft", "").trim()));
             this.buttonList.add(this.modButton = new GuiButton(6, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, 98, 20, I18n.format("fml.menu.mods", new Object[0])));
         } else {
-            this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
+            //this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
         }
     }
 
@@ -537,7 +541,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             RenderUtils.drawRect(0, mouseY, mouseX, RenderUtils.height(), new Color(50, 50, 150).getRGB());
             RenderUtils.drawRect(mouseX, mouseY, RenderUtils.width(), RenderUtils.height(), new Color(150, 150, 50).getRGB());
 
-            if(false){
+            if (false) {
                 int color1;
                 int color2;
                 if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) {
@@ -698,6 +702,19 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         if (this.mc.isDemo()) {
             s = s + " Demo";
         }
+
+        CFontRenderer font = FontLoaders.normalfont16;
+        String name = ModuleManager.name;
+        if (name != null) {
+            String text = "Welcome " + name + "!";
+            font.drawString(text, RenderUtils.width() - font.getStringWidth(text) - 25, 10, new Color(255, 255, 255).getRGB());
+            RenderUtils.drawImage(ImageLoader.tohru0round, RenderUtils.width() - 20, 5, 15, 15);
+        }else{
+            String text = "Welcome " + "!";
+            font.drawString(text, RenderUtils.width() - font.getStringWidth(text) - 25, 10, new Color(255, 255, 255).getRGB());
+            RenderUtils.drawImage(ImageLoader.tohru0round, RenderUtils.width() - 20, 5, 15, 15);
+        }
+
 
         if (Reflector.FMLCommonHandler_getBrandings.exists()) {
             Object object = Reflector.call(Reflector.FMLCommonHandler_instance, new Object[0]);
