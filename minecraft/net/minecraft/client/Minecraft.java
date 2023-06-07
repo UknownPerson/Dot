@@ -101,6 +101,7 @@ import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.ImageLoader;
 import xyz.Dot.ui.LoginUI;
 import xyz.Dot.utils.RenderUtils;
@@ -588,9 +589,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
         } else {
-            if(ModuleManager.name == null){
+            if (ModuleManager.name == null) {
                 this.displayGuiScreen(new LoginUI());
-            }else{
+            } else {
                 this.displayGuiScreen(new GuiMainMenu());
             }
         }
@@ -921,6 +922,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Sets the argument GuiScreen as the main (topmost visible) screen.
      */
     public void displayGuiScreen(GuiScreen guiScreenIn) {
+        logger.info("[Dot] LoadUI: " + guiScreenIn);
         if (this.currentScreen != null) {
             this.currentScreen.onGuiClosed();
         }
@@ -1081,7 +1083,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.entityRenderer.renderStreamIndicator(this.timer.renderPartialTicks);
         GlStateManager.popMatrix();
         this.mcProfiler.startSection("root");
-         EventBus.getInstance().call(new EventFrame());
+        EventBus.getInstance().call(new EventFrame());
         this.updateDisplay();
         Thread.yield();
         this.mcProfiler.startSection("stream");
@@ -1862,10 +1864,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 }
             } else {
                 while (this.gameSettings.keyBindPickBlock.isPressed()) {
+                    Custom.cpsl.add(System.nanoTime());
                     this.clickMouse();
                 }
 
                 while (this.gameSettings.keyBindDrop.isPressed()) {
+                    Custom.cpsr.add(System.nanoTime());
                     this.rightClickMouse();
                 }
 
@@ -2754,19 +2758,25 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.connectedToRealms = isConnected;
     }
 
-    public boolean check(){
+    public boolean check() {
         try {
             String get = WebUtils.get("https://gitee.com/UknownPerson/dot-login-check/raw/master/check");
             String hwid = SystemUtils.getHWID();
-            ModuleManager.ver = Double.parseDouble(getSubString(get,"ver","ver"));
-            System.out.println(get);
-            if(!get.contains(hwid)){
+            ModuleManager.ver = Double.parseDouble(getSubString(get, "ver", "ver"));
+            logger.info("[Dot] " + get);
+            logger.info("[Dot] HWID:" + hwid);
+            if (!get.contains(hwid)) {
+                logger.info("[Dot] Login failed!");
                 return false;
-            }else{
-                String s = getSubString(get,hwid,hwid);
-                ModuleManager.name = getSubString(s,"name","name");
-                ModuleManager.prefix = getSubString(s,"prefix","prefix");
+            } else {
+                String s = getSubString(get, hwid, hwid);
+                ModuleManager.name = getSubString(s, "name", "name");
+                ModuleManager.prefix = getSubString(s, "prefix", "prefix");
                 ModuleManager.SigmaMode = getSubString(s, "mode", "mode").equals("sigma");
+                logger.info("[Dot] Login successful!");
+                logger.info("[Dot] Name: " + ModuleManager.name);
+                logger.info("[Dot] Prefix: " + ModuleManager.prefix);
+                logger.info("[Dot] SigmaMode: " + ModuleManager.SigmaMode);
                 return true;
             }
         } catch (NumberFormatException e) {

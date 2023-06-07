@@ -397,8 +397,6 @@ public class GuiIngame extends Gui
             }
             bloomFramebuffer.unbindFramebuffer();
             BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
-
-
         }
         GaussianBlur.getTasks().clear();
         EventBus.getInstance().call(new EventRender2D(partialTicks));

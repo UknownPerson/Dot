@@ -29,10 +29,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 import xyz.Dot.Client;
+import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
+import xyz.Dot.ui.LoginUI;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -109,6 +111,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     private GuiScreen M;
     private GuiButton modButton;
     private GuiScreen modUpdateNotification;
+    float red = 0;
+    float green = 0;
+    float blue = 0;
+    float alpha = 0;
 
     public GuiMainMenu() {
         this.openGLWarning2 = field_96138_a;
@@ -210,15 +216,17 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         int i = 24;
         int j = this.height / 4 + 48;
 
+
         if (this.mc.isDemo()) {
             this.addDemoButtons(j, 24);
         } else {
             this.addSingleplayerMultiplayerButtons(j, 24);
         }
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
-        this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
+
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 48, 98, 20, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 48, 98, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 48));
 
         synchronized (this.threadLock) {
             this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
@@ -244,13 +252,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         }
     }
 
+
     /**
      * Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
      */
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_) {
+        this.buttonList.add(this.realmsButton = new GuiButton(14, RenderUtils.width(), RenderUtils.height(), I18n.format("menu.online", new Object[0])));
+
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
-
         if (Reflector.GuiModList_Constructor.exists()) {
             //this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 + 2, p_73969_1_ + p_73969_2_ * 2, 98, 20, I18n.format("menu.online", new Object[0]).replace("Minecraft", "").trim()));
             this.buttonList.add(this.modButton = new GuiButton(6, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, 98, 20, I18n.format("fml.menu.mods", new Object[0])));
@@ -480,223 +490,41 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     /**
-     * Renders the skybox in the main menu
-     */
-    private void renderSkybox(int p_73971_1_, int p_73971_2_, float p_73971_3_) {
-        this.mc.getFramebuffer().unbindFramebuffer();
-        GlStateManager.viewport(0, 0, 256, 256);
-        this.drawPanorama(p_73971_1_, p_73971_2_, p_73971_3_);
-        this.rotateAndBlurSkybox(p_73971_3_);
-        int i = 3;
-        CustomPanoramaProperties custompanoramaproperties = CustomPanorama.getCustomPanoramaProperties();
-
-        if (custompanoramaproperties != null) {
-            i = custompanoramaproperties.getBlur3();
-        }
-
-        for (int j = 0; j < i; ++j) {
-            this.rotateAndBlurSkybox(p_73971_3_);
-            this.rotateAndBlurSkybox(p_73971_3_);
-        }
-
-        this.mc.getFramebuffer().bindFramebuffer(true);
-        GlStateManager.viewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
-        float f2 = this.width > this.height ? 120.0F / (float) this.width : 120.0F / (float) this.height;
-        float f = (float) this.height * f2 / 256.0F;
-        float f1 = (float) this.width * f2 / 256.0F;
-        int k = this.width;
-        int l = this.height;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        worldrenderer.pos(0.0D, (double) l, (double) this.zLevel).tex((double) (0.5F - f), (double) (0.5F + f1)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
-        worldrenderer.pos((double) k, (double) l, (double) this.zLevel).tex((double) (0.5F - f), (double) (0.5F - f1)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
-        worldrenderer.pos((double) k, 0.0D, (double) this.zLevel).tex((double) (0.5F + f), (double) (0.5F - f1)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
-        worldrenderer.pos(0.0D, 0.0D, (double) this.zLevel).tex((double) (0.5F + f), (double) (0.5F + f1)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
-        tessellator.draw();
-    }
-
-    /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
-        if (!Client.instance.inDevelopment) {
-            GlStateManager.disableAlpha();
-            this.renderSkybox(mouseX, mouseY, partialTicks);
-            GlStateManager.enableAlpha();
+        if (!CustomColor.getColor().equals(CustomColor.color.getColor())) {
+            CustomColor.realred = CustomColor.color.getColor().getRed();
+            CustomColor.realgreen = CustomColor.color.getColor().getGreen();
+            CustomColor.realblue = CustomColor.color.getColor().getBlue();
         }
 
-        int i = 274;
-        int j = this.width / 2 - i / 2;
-        int k = 30;
-        int l = -2130706433;
-        int i1 = 16777215;
-        int j1 = 0;
-        int k1 = Integer.MIN_VALUE;
+        int imagex = 3200;
+        int imagey = 1875;
 
-        if (Client.instance.inDevelopment) {
-            RenderUtils.drawRect(0, 0, mouseX, mouseY, new Color(150, 50, 50).getRGB());
-            RenderUtils.drawRect(mouseX, 0, RenderUtils.width(), mouseY, new Color(50, 150, 50).getRGB());
-            RenderUtils.drawRect(0, mouseY, mouseX, RenderUtils.height(), new Color(50, 50, 150).getRGB());
-            RenderUtils.drawRect(mouseX, mouseY, RenderUtils.width(), RenderUtils.height(), new Color(150, 150, 50).getRGB());
+        int x1 = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? (RenderUtils.width() - (imagex * RenderUtils.height() / imagey)) / 2 : 0;
+        int twidth = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? imagex * RenderUtils.height() / imagey : RenderUtils.width();
 
-            if (false) {
-                int color1;
-                int color2;
-                if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)) {
-                    color1 = new Color(255, 255, 255, 128).getRGB();
-                    color2 = new Color(0, 0, 0, 128).getRGB();
-                } else {
-                    color1 = new Color(0, 0, 0, 128).getRGB();
-                    color2 = new Color(255, 255, 255, 128).getRGB();
-                }
+        int y1 = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? 0 : (RenderUtils.height() - (imagey * RenderUtils.width() / imagex)) / 2;
+        int theight = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? RenderUtils.height() : imagey * RenderUtils.width() / imagex;
 
-                RenderUtils.drawRect(mouseX - 5, mouseY - 5, mouseX - 4, mouseY - 4, color1);
-                RenderUtils.drawRect(mouseX - 4, mouseY - 5, mouseX - 3, mouseY - 4, color2);
-                RenderUtils.drawRect(mouseX - 3, mouseY - 5, mouseX - 2, mouseY - 4, color1);
-                RenderUtils.drawRect(mouseX - 2, mouseY - 5, mouseX - 1, mouseY - 4, color2);
-                RenderUtils.drawRect(mouseX - 1, mouseY - 5, mouseX - 0, mouseY - 4, color1);
-                RenderUtils.drawRect(mouseX - 0, mouseY - 5, mouseX + 1, mouseY - 4, color2);
-                RenderUtils.drawRect(mouseX + 1, mouseY - 5, mouseX + 2, mouseY - 4, color1);
-                RenderUtils.drawRect(mouseX + 2, mouseY - 5, mouseX + 3, mouseY - 4, color2);
-                RenderUtils.drawRect(mouseX + 3, mouseY - 5, mouseX + 4, mouseY - 4, color1);
-                RenderUtils.drawRect(mouseX + 4, mouseY - 5, mouseX + 5, mouseY - 4, color2);
+        RenderUtils.drawImage(ImageLoader.background, x1, y1, twidth, theight);
 
-                RenderUtils.drawRect(mouseX - 5, mouseY - 4, mouseX - 4, mouseY - 3, color2);
-                RenderUtils.drawRect(mouseX - 4, mouseY - 4, mouseX - 3, mouseY - 3, color1);
-                RenderUtils.drawRect(mouseX - 3, mouseY - 4, mouseX - 2, mouseY - 3, color2);
-                RenderUtils.drawRect(mouseX - 2, mouseY - 4, mouseX - 1, mouseY - 3, color1);
-                RenderUtils.drawRect(mouseX - 1, mouseY - 4, mouseX - 0, mouseY - 3, color2);
-                RenderUtils.drawRect(mouseX - 0, mouseY - 4, mouseX + 1, mouseY - 3, color1);
-                RenderUtils.drawRect(mouseX + 1, mouseY - 4, mouseX + 2, mouseY - 3, color2);
-                RenderUtils.drawRect(mouseX + 2, mouseY - 4, mouseX + 3, mouseY - 3, color1);
-                RenderUtils.drawRect(mouseX + 3, mouseY - 4, mouseX + 4, mouseY - 3, color2);
-                RenderUtils.drawRect(mouseX + 4, mouseY - 4, mouseX + 5, mouseY - 3, color1);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY - 3, mouseX - 4, mouseY - 2, color1);
-                RenderUtils.drawRect(mouseX - 4, mouseY - 3, mouseX - 3, mouseY - 2, color2);
-                RenderUtils.drawRect(mouseX - 3, mouseY - 3, mouseX - 2, mouseY - 2, color1);
-                RenderUtils.drawRect(mouseX - 2, mouseY - 3, mouseX - 1, mouseY - 2, color2);
-                RenderUtils.drawRect(mouseX - 1, mouseY - 3, mouseX - 0, mouseY - 2, color1);
-                RenderUtils.drawRect(mouseX - 0, mouseY - 3, mouseX + 1, mouseY - 2, color2);
-                RenderUtils.drawRect(mouseX + 1, mouseY - 3, mouseX + 2, mouseY - 2, color1);
-                RenderUtils.drawRect(mouseX + 2, mouseY - 3, mouseX + 3, mouseY - 2, color2);
-                RenderUtils.drawRect(mouseX + 3, mouseY - 3, mouseX + 4, mouseY - 2, color1);
-                RenderUtils.drawRect(mouseX + 4, mouseY - 3, mouseX + 5, mouseY - 2, color2);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY - 2, mouseX - 4, mouseY - 1, color2);
-                RenderUtils.drawRect(mouseX - 4, mouseY - 2, mouseX - 3, mouseY - 1, color1);
-                RenderUtils.drawRect(mouseX - 3, mouseY - 2, mouseX - 2, mouseY - 1, color2);
-                RenderUtils.drawRect(mouseX - 2, mouseY - 2, mouseX - 1, mouseY - 1, color1);
-                RenderUtils.drawRect(mouseX - 1, mouseY - 2, mouseX - 0, mouseY - 1, color2);
-                RenderUtils.drawRect(mouseX - 0, mouseY - 2, mouseX + 1, mouseY - 1, color1);
-                RenderUtils.drawRect(mouseX + 1, mouseY - 2, mouseX + 2, mouseY - 1, color2);
-                RenderUtils.drawRect(mouseX + 2, mouseY - 2, mouseX + 3, mouseY - 1, color1);
-                RenderUtils.drawRect(mouseX + 3, mouseY - 2, mouseX + 4, mouseY - 1, color2);
-                RenderUtils.drawRect(mouseX + 4, mouseY - 2, mouseX + 5, mouseY - 1, color1);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY - 1, mouseX - 4, mouseY - 0, color1);
-                RenderUtils.drawRect(mouseX - 4, mouseY - 1, mouseX - 3, mouseY - 0, color2);
-                RenderUtils.drawRect(mouseX - 3, mouseY - 1, mouseX - 2, mouseY - 0, color1);
-                RenderUtils.drawRect(mouseX - 2, mouseY - 1, mouseX - 1, mouseY - 0, color2);
-                RenderUtils.drawRect(mouseX - 1, mouseY - 1, mouseX - 0, mouseY - 0, color1);
-                RenderUtils.drawRect(mouseX - 0, mouseY - 1, mouseX + 1, mouseY - 0, color2);
-                RenderUtils.drawRect(mouseX + 1, mouseY - 1, mouseX + 2, mouseY - 0, color1);
-                RenderUtils.drawRect(mouseX + 2, mouseY - 1, mouseX + 3, mouseY - 0, color2);
-                RenderUtils.drawRect(mouseX + 3, mouseY - 1, mouseX + 4, mouseY - 0, color1);
-                RenderUtils.drawRect(mouseX + 4, mouseY - 1, mouseX + 5, mouseY - 0, color2);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY - 0, mouseX - 4, mouseY + 1, color2);
-                RenderUtils.drawRect(mouseX - 4, mouseY - 0, mouseX - 3, mouseY + 1, color1);
-                RenderUtils.drawRect(mouseX - 3, mouseY - 0, mouseX - 2, mouseY + 1, color2);
-                RenderUtils.drawRect(mouseX - 2, mouseY - 0, mouseX - 1, mouseY + 1, color1);
-                RenderUtils.drawRect(mouseX - 1, mouseY - 0, mouseX - 0, mouseY + 1, color2);
-                RenderUtils.drawRect(mouseX - 0, mouseY - 0, mouseX + 1, mouseY + 1, color1);
-                RenderUtils.drawRect(mouseX + 1, mouseY - 0, mouseX + 2, mouseY + 1, color2);
-                RenderUtils.drawRect(mouseX + 2, mouseY - 0, mouseX + 3, mouseY + 1, color1);
-                RenderUtils.drawRect(mouseX + 3, mouseY - 0, mouseX + 4, mouseY + 1, color2);
-                RenderUtils.drawRect(mouseX + 4, mouseY - 0, mouseX + 5, mouseY + 1, color1);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY + 1, mouseX - 4, mouseY + 2, color1);
-                RenderUtils.drawRect(mouseX - 4, mouseY + 1, mouseX - 3, mouseY + 2, color2);
-                RenderUtils.drawRect(mouseX - 3, mouseY + 1, mouseX - 2, mouseY + 2, color1);
-                RenderUtils.drawRect(mouseX - 2, mouseY + 1, mouseX - 1, mouseY + 2, color2);
-                RenderUtils.drawRect(mouseX - 1, mouseY + 1, mouseX - 0, mouseY + 2, color1);
-                RenderUtils.drawRect(mouseX - 0, mouseY + 1, mouseX + 1, mouseY + 2, color2);
-                RenderUtils.drawRect(mouseX + 1, mouseY + 1, mouseX + 2, mouseY + 2, color1);
-                RenderUtils.drawRect(mouseX + 2, mouseY + 1, mouseX + 3, mouseY + 2, color2);
-                RenderUtils.drawRect(mouseX + 3, mouseY + 1, mouseX + 4, mouseY + 2, color1);
-                RenderUtils.drawRect(mouseX + 4, mouseY + 1, mouseX + 5, mouseY + 2, color2);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY + 2, mouseX - 4, mouseY + 3, color2);
-                RenderUtils.drawRect(mouseX - 4, mouseY + 2, mouseX - 3, mouseY + 3, color1);
-                RenderUtils.drawRect(mouseX - 3, mouseY + 2, mouseX - 2, mouseY + 3, color2);
-                RenderUtils.drawRect(mouseX - 2, mouseY + 2, mouseX - 1, mouseY + 3, color1);
-                RenderUtils.drawRect(mouseX - 1, mouseY + 2, mouseX - 0, mouseY + 3, color2);
-                RenderUtils.drawRect(mouseX - 0, mouseY + 2, mouseX + 1, mouseY + 3, color1);
-                RenderUtils.drawRect(mouseX + 1, mouseY + 2, mouseX + 2, mouseY + 3, color2);
-                RenderUtils.drawRect(mouseX + 2, mouseY + 2, mouseX + 3, mouseY + 3, color1);
-                RenderUtils.drawRect(mouseX + 3, mouseY + 2, mouseX + 4, mouseY + 3, color2);
-                RenderUtils.drawRect(mouseX + 4, mouseY + 2, mouseX + 5, mouseY + 3, color1);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY + 3, mouseX - 4, mouseY + 4, color1);
-                RenderUtils.drawRect(mouseX - 4, mouseY + 3, mouseX - 3, mouseY + 4, color2);
-                RenderUtils.drawRect(mouseX - 3, mouseY + 3, mouseX - 2, mouseY + 4, color1);
-                RenderUtils.drawRect(mouseX - 2, mouseY + 3, mouseX - 1, mouseY + 4, color2);
-                RenderUtils.drawRect(mouseX - 1, mouseY + 3, mouseX - 0, mouseY + 4, color1);
-                RenderUtils.drawRect(mouseX - 0, mouseY + 3, mouseX + 1, mouseY + 4, color2);
-                RenderUtils.drawRect(mouseX + 1, mouseY + 3, mouseX + 2, mouseY + 4, color1);
-                RenderUtils.drawRect(mouseX + 2, mouseY + 3, mouseX + 3, mouseY + 4, color2);
-                RenderUtils.drawRect(mouseX + 3, mouseY + 3, mouseX + 4, mouseY + 4, color1);
-                RenderUtils.drawRect(mouseX + 4, mouseY + 3, mouseX + 5, mouseY + 4, color2);
-
-                RenderUtils.drawRect(mouseX - 5, mouseY + 4, mouseX - 4, mouseY + 5, color2);
-                RenderUtils.drawRect(mouseX - 4, mouseY + 4, mouseX - 3, mouseY + 5, color1);
-                RenderUtils.drawRect(mouseX - 3, mouseY + 4, mouseX - 2, mouseY + 5, color2);
-                RenderUtils.drawRect(mouseX - 2, mouseY + 4, mouseX - 1, mouseY + 5, color1);
-                RenderUtils.drawRect(mouseX - 1, mouseY + 4, mouseX - 0, mouseY + 5, color2);
-                RenderUtils.drawRect(mouseX - 0, mouseY + 4, mouseX + 1, mouseY + 5, color1);
-                RenderUtils.drawRect(mouseX + 1, mouseY + 4, mouseX + 2, mouseY + 5, color2);
-                RenderUtils.drawRect(mouseX + 2, mouseY + 4, mouseX + 3, mouseY + 5, color1);
-                RenderUtils.drawRect(mouseX + 3, mouseY + 4, mouseX + 4, mouseY + 5, color2);
-                RenderUtils.drawRect(mouseX + 4, mouseY + 4, mouseX + 5, mouseY + 5, color1);
-            }
-
-            this.drawString(this.fontRendererObj, String.valueOf(Minecraft.getDebugFPS()), 0, 0, -1);
-            this.drawString(this.fontRendererObj, String.valueOf(RenderUtils.fps), 0, mc.fontRendererObj.FONT_HEIGHT, -1);
-            this.drawString(this.fontRendererObj, RenderUtils.ms + "ms", 0, 2 * mc.fontRendererObj.FONT_HEIGHT, -1);
-
+        if (isHovered(this.width / 2 - 124, this.height / 4 + 48 + 48, this.width / 2 - 124 + 20, this.height / 4 + 48 + 48 + 20,mouseX,mouseY)) {
+            red = RenderUtils.toanim(red, CustomColor.getColor().getRed(), 4, 0.1f);
+            green = RenderUtils.toanim(green, CustomColor.getColor().getGreen(), 4, 0.1f);
+            blue = RenderUtils.toanim(blue, CustomColor.getColor().getBlue(), 4, 0.1f);
+            alpha = RenderUtils.toanim(alpha, 128, 4, 0.1f);
         } else {
-            if (l != 0 || i1 != 0) {
-                this.drawGradientRect(0, 0, this.width, this.height, l, i1);
-            }
-
-            if (j1 != 0 || k1 != 0) {
-                this.drawGradientRect(0, 0, this.width, this.height, j1, k1);
-            }
-            this.mc.getTextureManager().bindTexture(minecraftTitleTextures);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-            if ((double) this.updateCounter < 1.0E-4D) {
-                this.drawTexturedModalRect(j + 0, k + 0, 0, 0, 99, 44);
-                this.drawTexturedModalRect(j + 99, k + 0, 129, 0, 27, 44);
-                this.drawTexturedModalRect(j + 99 + 26, k + 0, 126, 0, 3, 44);
-                this.drawTexturedModalRect(j + 99 + 26 + 3, k + 0, 99, 0, 26, 44);
-                this.drawTexturedModalRect(j + 155, k + 0, 0, 45, 155, 44);
-            } else {
-                this.drawTexturedModalRect(j + 0, k + 0, 0, 0, 155, 44);
-                this.drawTexturedModalRect(j + 155, k + 0, 0, 45, 155, 44);
-            }
-            GlStateManager.pushMatrix();
-            GlStateManager.translate((float) (this.width / 2 + 90), 70.0F, 0.0F);
-            GlStateManager.rotate(-20.0F, 0.0F, 0.0F, 1.0F);
-            float f = 1.8F - MathHelper.abs(MathHelper.sin((float) (Minecraft.getSystemTime() % 1000L) / 1000.0F * (float) Math.PI * 2.0F) * 0.1F);
-            f = f * 100.0F / (float) (this.fontRendererObj.getStringWidth(this.splashText) + 32);
-            GlStateManager.scale(f, f, f);
-            this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
-            GlStateManager.popMatrix();
+            red = RenderUtils.toanim(red, 0, 4, 0.1f);
+            green = RenderUtils.toanim(green, 0, 4, 0.1f);
+            blue = RenderUtils.toanim(blue, 0, 4, 0.1f);
+            alpha = RenderUtils.toanim(alpha, 64, 4, 0.1f);
         }
+
+        RenderUtils.drawRoundRect(this.width / 2 - 124, this.height / 4 + 48 + 48, this.width / 2 - 124 + 20, this.height / 4 + 48 + 48 + 20, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
+        RenderUtils.drawImage(ImageLoader.language, this.width / 2 - 124, this.height / 4 + 48 + 48, 20, 20);
 
         String s = "Minecraft 1.8.9";
         if (this.mc.isDemo()) {
@@ -705,12 +533,19 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         CFontRenderer font = FontLoaders.normalfont16;
         String name = ModuleManager.name;
+        String prefix = ModuleManager.prefix;
+        String text;
         if (name != null) {
-            String text = "Welcome " + name + "!";
+            if (prefix != null) {
+                text = "Welcome " + "[" + prefix + "]" + name + "!";
+            } else {
+                text = "Welcome " + name + "!";
+            }
+
             font.drawString(text, RenderUtils.width() - font.getStringWidth(text) - 25, 10, new Color(255, 255, 255).getRGB());
             RenderUtils.drawImage(ImageLoader.tohru0round, RenderUtils.width() - 20, 5, 15, 15);
-        }else{
-            String text = "Welcome " + "!";
+        } else {
+            text = "Welcome " + "!";
             font.drawString(text, RenderUtils.width() - font.getStringWidth(text) - 25, 10, new Color(255, 255, 255).getRGB());
             RenderUtils.drawImage(ImageLoader.tohru0round, RenderUtils.width() - 20, 5, 15, 15);
         }
@@ -756,6 +591,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         if (this.modUpdateNotification != null) {
             this.modUpdateNotification.drawScreen(mouseX, mouseY, partialTicks);
         }
+
+        if (Client.instance.inDevelopment) {
+            this.drawString(this.fontRendererObj, String.valueOf(Minecraft.getDebugFPS()), 0, 0, -1);
+            this.drawString(this.fontRendererObj, String.valueOf(RenderUtils.fps), 0, mc.fontRendererObj.FONT_HEIGHT, -1);
+            this.drawString(this.fontRendererObj, RenderUtils.ms + "ms", 0, 2 * mc.fontRendererObj.FONT_HEIGHT, -1);
+        }
     }
 
     /**
@@ -784,5 +625,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         if (this.M != null) {
             this.M.onGuiClosed();
         }
+    }
+
+    public static boolean isHovered(float x, float y, float x2, float y2, int mouseX, int mouseY) {
+        return mouseX >= x && mouseX <= x2 && mouseY >= y && mouseY <= y2;
     }
 }

@@ -28,8 +28,6 @@ public enum Client {
     public FontLoaders fontloaders;
 
     public void run(){
-
-        //Log_Dot.info("Client Start");
         eventmanger = new EventBus();
         modulemanager = new ModuleManager();
         settingmanager = new SettingManager();
@@ -52,14 +50,11 @@ public enum Client {
 
         save();
         mc.gameSettings.saturation = FullBright.old;
-        //Log_Dot.sava_Log();
-        //Log_Dot.info("Client Close");
 
     }
 
     public void save(){
 
-        //Log_Dot.info("Client Save");
         customfilemanager.saveFiles();
 
     }
