@@ -1,25 +1,22 @@
 package xyz.Dot.module.Render;
 
 
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-
-import java.awt.*;
-
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.*;
-import net.minecraft.block.*;
-import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
 import xyz.Dot.event.EventHandler;
-import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.event.events.rendering.EventRender3D;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
-import xyz.Dot.ui.Custom;
 import xyz.Dot.utils.RenderUtils;
 
 
@@ -49,7 +46,7 @@ public class BlockOverlay extends Module {
     public void onRender3D(final EventRender3D event) {
         if (BlockOverlay.mc.objectMouseOver != null && BlockOverlay.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
             final BlockPos pos = BlockOverlay.mc.objectMouseOver.getBlockPos();
-            final Block block = Minecraft.theWorld.getBlockState(pos).getBlock();
+            final Block block = Minecraft.getMinecraft().theWorld.getBlockState(pos).getBlock();
             BlockOverlay.mc.getRenderManager();
             final double n = pos.getX();
             BlockOverlay.mc.getRenderManager();

@@ -3,7 +3,6 @@ package xyz.Dot.ui;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.GameSettings;
@@ -27,9 +26,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_TEST;
 
 public class Custom extends GuiScreen {
 
@@ -274,17 +270,21 @@ public class Custom extends GuiScreen {
         // 0,128));
         RenderUtils.drawFilledCircle(StartX + 9, StartY + 6, 3, new Color(0, 0, 255, 128));
 
-        font.drawString(CName, StartX + 14, StartY + 4, new Color(255, 255, 255).getRGB());
-        StartY += 20;
-        font.drawString("FPS: " + mc.getDebugFPS(), StartX + 5, StartY, new Color(255, 255, 255).getRGB());
-        StartY += 12;
-        String ping = String.valueOf(mc.getNetHandler().getPlayerInfo(Minecraft.thePlayer.getUniqueID()).getResponseTime());
-        if (ping.equals("0")) {
-            ping = "Failed";
+        try {
+            font.drawString(CName, StartX + 14, StartY + 4, new Color(255, 255, 255).getRGB());
+            StartY += 20;
+            font.drawString("FPS: " + mc.getDebugFPS(), StartX + 5, StartY, new Color(255, 255, 255).getRGB());
+            StartY += 12;
+            String ping = String.valueOf(mc.getNetHandler().getPlayerInfo(Minecraft.getMinecraft().thePlayer.getUniqueID()).getResponseTime());
+            if (ping.equals("0")) {
+                ping = "Failed";
+            }
+            font.drawString("PING: " + ping, StartX + 5, StartY, new Color(255, 255, 255).getRGB());
+            StartY += 12;
+            font.drawString("BPS: " + HUD.movespeed, StartX + 5, StartY, new Color(255, 255, 255).getRGB());
+        }catch (Exception e){
+
         }
-        font.drawString("PING: " + ping, StartX + 5, StartY, new Color(255, 255, 255).getRGB());
-        StartY += 12;
-        font.drawString("BPS: " + HUD.movespeed, StartX + 5, StartY, new Color(255, 255, 255).getRGB());
 
     }
 

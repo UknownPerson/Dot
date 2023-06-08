@@ -33,7 +33,6 @@ import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.module.Render.OldBlockRender;
-import xyz.Dot.setting.Setting;
 
 public class ItemRenderer {
     private static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");
@@ -382,8 +381,11 @@ public class ItemRenderer {
 
                         case BLOCK:
                             if (ModuleManager.getModuleByName("OldBlockRender").isToggle()) {
-                                this.transformFirstPersonItem(f, f1);
-                                this.doBlockTransformations();
+                                transformFirstPersonItem(-0.1f, f1);
+                                GlStateManager.translate(-0.5F, 0.2f, 0.0F);
+                                GlStateManager.rotate(30.0F, 0.0F, 1.0F, 0.0F);
+                                GlStateManager.rotate(-80.0F, 1.0F, 0.0F, 0.0F);
+                                GlStateManager.rotate(60.0F, 0.0F, 1.0F, 0.0F);
                             } else {
                                 this.transformFirstPersonItem(f, 0.0F);
                                 this.doBlockTransformations();

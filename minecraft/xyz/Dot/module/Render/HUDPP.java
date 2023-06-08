@@ -1,7 +1,6 @@
 package xyz.Dot.module.Render;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -23,7 +22,7 @@ public class HUDPP extends Module {
     @EventHandler
     public void renderHud(EventRender2D event) {
         int y = 0;
-        for (PotionEffect effect : Minecraft.thePlayer.getActivePotionEffects()) {
+        for (PotionEffect effect : Minecraft.getMinecraft().thePlayer.getActivePotionEffects()) {
             int ychat;
             Potion potion = Potion.potionTypes[effect.getPotionID()];
             String PType = I18n.format(potion.getName());

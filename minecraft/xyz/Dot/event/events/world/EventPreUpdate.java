@@ -37,7 +37,7 @@ extends Event {
 
     public void setPitch(float pitch) {
     	//Helper.mc.thePlayer.rotationPitchHead = pitch;
-        Minecraft.thePlayer.rotationPitch = pitch;
+        Minecraft.getMinecraft().thePlayer.rotationPitch = pitch;
         this.pitch = pitch;
     }
 

@@ -21,7 +21,7 @@ public class MotionBlur extends Module {
 
     @EventHandler
     public void onRenderFrame(EventFrame event) {
-        if (Minecraft.thePlayer == null) return;
+        if (Minecraft.getMinecraft().thePlayer == null) return;
 
         final float normalizeValue = (float) Math.min(amount.getCurrentValue(), .95F);
         GL11.glAccum(GL11.GL_MULT, normalizeValue);
