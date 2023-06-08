@@ -1403,7 +1403,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                     case MISS:
                     default:
                         if (this.playerController.isNotCreative()) {
-                            this.leftClickCounter = 10;
+                            this.leftClickCounter = 0;
                         }
                 }
             }

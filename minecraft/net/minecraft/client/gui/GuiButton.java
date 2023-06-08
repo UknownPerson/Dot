@@ -3,11 +3,9 @@ package net.minecraft.client.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import xyz.Dot.module.Client.CustomColor;
-import xyz.Dot.ui.ImageLoader;
+import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -118,7 +116,7 @@ public class GuiButton extends Gui {
                 j = new Color(255, 255, 160).getRGB();
             }
 
-            this.drawCenteredString(mc.fontRendererObj, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, j);
+            FontLoaders.normalfont16.drawCenteredString(this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 4) / 2, j);
         }
     }
 

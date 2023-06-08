@@ -13,13 +13,13 @@ import java.util.Map;
 
 public class FontLoaders {
     private static HashMap fonts = new HashMap();
-    public static CFontRenderer normalfont10 = new CFontRenderer(FontLoaders.getNormalFont(10), true, true);
-    public static CFontRenderer normalfont12 = new CFontRenderer(FontLoaders.getNormalFont(12), true, true);
-    public static CFontRenderer normalfont16 = new CFontRenderer(FontLoaders.getNormalFont(16), true, true);
-    public static CFontRenderer normalfont20 = new CFontRenderer(FontLoaders.getNormalFont(20), true, true);
-    public static CFontRenderer normalfont36 = new CFontRenderer(FontLoaders.getNormalFont(36), true, true);
+    public static CFontRenderer normalfont10 = new CFontRenderer(FontLoaders.getNormalFont(10),65535);
+    public static CFontRenderer normalfont12 = new CFontRenderer(FontLoaders.getNormalFont(12),65535);
+    public static CFontRenderer normalfont16 = new CFontRenderer(FontLoaders.getNormalFont(16),65535);
+    public static CFontRenderer normalfont20 = new CFontRenderer(FontLoaders.getNormalFont(20),65535);
+    public static CFontRenderer normalfont36 = new CFontRenderer(FontLoaders.getNormalFont(36),65535);
 
-    public static CFontRenderer comfortaafont16 = new CFontRenderer(FontLoaders.getComfortaaFont(16), true, true);
+    public static CFontRenderer comfortaafont16 = new CFontRenderer(FontLoaders.getComfortaaFont(16));
 
 /*    public FontLoaders(){
         normalfont16un = getUniFont("verdana", 18.0F, false);

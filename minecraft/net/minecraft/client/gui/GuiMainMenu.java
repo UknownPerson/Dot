@@ -24,7 +24,6 @@ import net.optifine.reflect.Reflector;
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
@@ -34,7 +33,6 @@ import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
-import xyz.Dot.ui.LoginUI;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -567,14 +565,14 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
                 Reflector.call(Reflector.ForgeHooksClient_renderMainMenu, new Object[]{this, this.fontRendererObj, Integer.valueOf(this.width), Integer.valueOf(this.height)});
             }
         } else {
-            this.drawString(this.fontRendererObj, s, 2, this.height - 10, -1);
+            FontLoaders.normalfont16.drawString(s, 2, this.height - 10, -1);
         }
 
         String s2 = "Copyright Mojang AB. Do not distribute!";
-        this.drawString(this.fontRendererObj, s2, this.width - this.fontRendererObj.getStringWidth(s2) - 2, this.height - 10, -1);
+        FontLoaders.normalfont16.drawString(s2, this.width - FontLoaders.normalfont16.getStringWidth(s2) - 2, this.height - 10, -1);
 
         String dev = "Code by \u6781\u54c1\u8304\u5b50\u7684\u7164\u77ff Dev Team.";
-        this.drawString(this.fontRendererObj, dev, this.width - this.fontRendererObj.getStringWidth(dev) - 2, this.height - 20, -1);
+        FontLoaders.normalfont16.drawString( dev, this.width - FontLoaders.normalfont16.getStringWidth(dev) - 2, this.height - 20, -1);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0) {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
