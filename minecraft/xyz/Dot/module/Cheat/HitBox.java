@@ -1,11 +1,8 @@
 package xyz.Dot.module.Cheat;
 
 import org.lwjgl.input.Keyboard;
-import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
-import xyz.Dot.event.events.world.EventLivingUpdate;
-import xyz.Dot.event.events.world.EventPreUpdate;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;

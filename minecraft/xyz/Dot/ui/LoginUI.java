@@ -56,17 +56,21 @@ public class LoginUI extends GuiScreen {
         if (dotsizetobigok) {
             RenderUtils.drawRect(0, 0, RenderUtils.width(), RenderUtils.height(), new Color(255, 255, 255).getRGB());
 
-            int x1 = RenderUtils.width() * 1080 <= RenderUtils.height() * 1920 ? (int) ((RenderUtils.width() - (7620 * RenderUtils.height() / 4320f)) / 2) : 0;
-            int twidth = RenderUtils.width() * 1080 <= RenderUtils.height() * 1920 ? (int) (7620 * RenderUtils.height() / 4320f) : RenderUtils.width();
+            int imagex = 7620;
+            int imagey = 4320;
 
-            int y1 = RenderUtils.width() * 1080 <= RenderUtils.height() * 1920 ? 0 : (int) ((RenderUtils.height() - (4320 * RenderUtils.width() / 7620f)) / 2);
-            int theight = RenderUtils.width() * 1080 <= RenderUtils.height() * 1920 ? RenderUtils.height() : (int) (4320 * RenderUtils.width() / 7620f);
+            int x1 = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? (RenderUtils.width() - (imagex * RenderUtils.height() / imagey)) / 2 : 0;
+            int twidth = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? imagex * RenderUtils.height() / imagey : RenderUtils.width();
+
+            int y1 = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? 0 : (RenderUtils.height() - (imagey * RenderUtils.width() / imagex)) / 2;
+            int theight = RenderUtils.width() * imagey <= RenderUtils.height() * imagex ? RenderUtils.height() : imagey * RenderUtils.width() / imagex;
+
             alpha = RenderUtils.toanim(alpha, 255, 32, 0.1f);
             RenderUtils.drawImage(ImageLoader.tohru1, x1, y1, twidth, theight, new Color(255, 255, 255, (int) alpha));
 
             int goldx = (int) (RenderUtils.width() * 0.6);
             int goldy = (int) (RenderUtils.height() * 0.6);
-            int goldy1 = (int) (RenderUtils.height() - 75);
+            int goldy1 = (int) (RenderUtils.height() - 75f);
 
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
             RenderUtils.doGlScissor(goldx, goldy1, (int) Math.max(goldx + RenderUtils.width() * 0.3f, goldx + 100), (int) Math.max((goldy1 + RenderUtils.width() * 0.03f), goldy1 + 10));

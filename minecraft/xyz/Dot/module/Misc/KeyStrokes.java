@@ -3,11 +3,15 @@ package xyz.Dot.module.Misc;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
+import xyz.Dot.event.events.world.EventPacketSend;
+import xyz.Dot.event.events.world.EventPostUpdate;
+import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.Custom;
+import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.RenderUtils;
 
 public class KeyStrokes extends Module {

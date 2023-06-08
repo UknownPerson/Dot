@@ -44,7 +44,6 @@ public class SystemUtils {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                System.out.println(hashed);
                 return hashed;
             }else{
                 return "null";

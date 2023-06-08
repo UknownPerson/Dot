@@ -45,10 +45,10 @@ public class Custom extends GuiScreen {
     static int thisj = 0;
     int keydownX, keydownY;
     // static int keystrokesx = 20, keystrokesy = 200;
-    static ArrayList<Long> cpsl = new ArrayList<>();
-    static ArrayList<Long> cpsr = new ArrayList<>();
-    static boolean cpsldown;
-    static boolean cpsrdown;
+    public static ArrayList<Long> cpsl = new ArrayList<>();
+    public static ArrayList<Long> cpsr = new ArrayList<>();
+    public static boolean cpsldown;
+    public static boolean cpsrdown;
     public static boolean open = false;
 
     public static float[] fucktest = new float[12800];
@@ -97,22 +97,6 @@ public class Custom extends GuiScreen {
         s = "D";
         RenderUtils.drawRoundRect(x + 56, y + 28, x + 81, y + 53, 4, new Color((int) dc, (int) dc, (int) dc, 128));
         font.drawString(s, x + 56 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
-
-        if (!gameSettings.keyBindPickBlock.isKeyDown()) {
-            cpsldown = false;
-        }
-        if (gameSettings.keyBindPickBlock.isKeyDown() && !cpsldown) {
-            cpsl.add(System.nanoTime());
-            cpsldown = true;
-        }
-
-        if (!gameSettings.keyBindDrop.isKeyDown()) {
-            cpsrdown = false;
-        }
-        if (gameSettings.keyBindDrop.isKeyDown() && !cpsrdown) {
-            cpsr.add(System.nanoTime());
-            cpsrdown = true;
-        }
 
         y += 56;
         s = "LMB";

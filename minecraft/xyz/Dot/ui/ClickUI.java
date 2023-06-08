@@ -344,10 +344,11 @@ public class ClickUI extends GuiScreen {
                     //bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
                     //bloomFramebuffer.framebufferClear();
                     //bloomFramebuffer.bindFramebuffer(true);
-                    RenderUtils.drawRoundRect((int) (userxendanim + 130 - 10), (int) thisry - 2, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2, 4, s.getColor());
+                    Color c = new Color(255 - s.getColor().getRed(),255 - s.getColor().getGreen(),255 - s.getColor().getBlue());
+                    RenderUtils.drawRoundRect((int) (userxendanim + 130 - 10), (int) thisry - 2, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2, 4, c);
                     //BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
 
-                    RenderUtils.drawRoundRect((int) (userxendanim + 130 - 10), (int) thisry - 2, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2, 4, s.getColor());
+                    RenderUtils.drawRoundRect((int) (userxendanim + 130 - 9), (int) thisry - 1, (int) (userxendanim + 145 - 11), (int) thisry + 8 - 3, 3, s.getColor());
 
                     if (isHovered((int) (userxendanim + 18), (int) thisry - 2 - 4, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2 + 4, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                         keydown = true;
@@ -743,9 +744,14 @@ public class ClickUI extends GuiScreen {
             bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
             bloomFramebuffer.framebufferClear();
             bloomFramebuffer.bindFramebuffer(true);
-            RenderUtils.drawRoundRect((int) expandedX, (int) expandedY, (int) (expandedX + expandedWidth), (int) (expandedY + expandedHeight),2, Color.WHITE);bloomFramebuffer.unbindFramebuffer();
+            RenderUtils.drawRoundRect((int) expandedX, (int) expandedY, (int) (expandedX + expandedWidth), (int) (expandedY + expandedHeight + 10),2, Color.WHITE);
+            bloomFramebuffer.unbindFramebuffer();
             BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
-            RenderUtils.drawRoundRect((int) expandedX, (int) expandedY, (int) (expandedX + expandedWidth), (int) (expandedY + expandedHeight),2, Color.WHITE);
+            RenderUtils.drawRoundRect((int) expandedX, (int) expandedY, (int) (expandedX + expandedWidth), (int) (expandedY + expandedHeight + 10),2, Color.WHITE);
+
+            String s = "Red: " + picker.colorValue.getColor().getRed() + "  Green: " + picker.colorValue.getColor().getGreen() + "  Blue: " + picker.colorValue.getColor().getBlue();
+            FontLoaders.normalfont16.drawString(s, expandedX + 3,expandedY + expandedHeight + 1,new Color(0,0,0).getRGB());
+
             float colorPickerSize = expandedWidth - 9.0f - 8.0f;
             float colorPickerLeft = expandedX + 3.0f;
             float colorPickerTop = expandedY + 3.0f;
@@ -756,7 +762,6 @@ public class ClickUI extends GuiScreen {
             if ((float) mouseX <= colorPickerLeft || (float) mouseY <= colorPickerTop || (float) mouseX >= colorPickerRight || (float) mouseY >= colorPickerBottom) {
                 this.colorSelectorDragging = false;
             }
-
 
             drawRect(colorPickerLeft - 0.5f, colorPickerTop - 0.5f, colorPickerRight + 0.5f, colorPickerBottom + 0.5f, getColor(0));
 
