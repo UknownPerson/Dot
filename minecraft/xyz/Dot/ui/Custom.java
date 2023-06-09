@@ -85,11 +85,12 @@ public class Custom extends GuiScreen {
         s = "W";
         int finalY = y;
         int finalY1 = y;
+        int round = 2;
         if(blur){
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + 28, finalY, x + 53, finalY1 + 25, 4, new Color((int) wc, (int) wc, (int) wc, 128));
+                    RenderUtils.drawRoundRect(x + 28, finalY, x + 53, finalY1 + 25, round, new Color((int) wc, (int) wc, (int) wc, 128));
                 }
             });
         }
@@ -99,11 +100,11 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + 28, finalY2, x + 53, finalY5 + 25, 4, new Color((int) wc, (int) wc, (int) wc, 128));
+                    RenderUtils.drawRoundRect(x + 28, finalY2, x + 53, finalY5 + 25, round, new Color((int) wc, (int) wc, (int) wc, 128));
                 }
             });
         }
-        RenderUtils.drawRoundRect(x + 28, y, x + 53, y + 25, 4, new Color((int) wc, (int) wc, (int) wc, 128));
+        RenderUtils.drawRoundRect(x + 28, y, x + 53, y + 25, round, new Color((int) wc, (int) wc, (int) wc, 128));
         font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "S";
@@ -112,7 +113,7 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + 28, finalY3 + 28, x + 53, finalY3 + 53, 4, new Color((int) sc, (int) sc, (int) sc, 128));
+                    RenderUtils.drawRoundRect(x + 28, finalY3 + 28, x + 53, finalY3 + 53, round, new Color((int) sc, (int) sc, (int) sc, 128));
                 }
             });
 
@@ -120,11 +121,11 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + 28, finalY4 + 28, x + 53, finalY4 + 53, 4, new Color((int) sc, (int) sc, (int) sc, 128));
+                    RenderUtils.drawRoundRect(x + 28, finalY4 + 28, x + 53, finalY4 + 53, round, new Color((int) sc, (int) sc, (int) sc, 128));
                 }
             });
         }
-        RenderUtils.drawRoundRect(x + 28, y + 28, x + 53, y + 53, 4, new Color((int) sc, (int) sc, (int) sc, 128));
+        RenderUtils.drawRoundRect(x + 28, y + 28, x + 53, y + 53, round, new Color((int) sc, (int) sc, (int) sc, 128));
         font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "A";
@@ -133,18 +134,18 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY6 + 28, x + 25, finalY6 + 53, 4, new Color((int) ac, (int) ac, (int) ac, 128));
+                    RenderUtils.drawRoundRect(x, finalY6 + 28, x + 25, finalY6 + 53, round, new Color((int) ac, (int) ac, (int) ac, 128));
                 }
             });
             int finalY7 = y;
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY7 + 28, x + 25, finalY7 + 53, 4, new Color((int) ac, (int) ac, (int) ac, 128));
+                    RenderUtils.drawRoundRect(x, finalY7 + 28, x + 25, finalY7 + 53, round, new Color((int) ac, (int) ac, (int) ac, 128));
                 }
             });
         }
-        RenderUtils.drawRoundRect(x, y + 28, x + 25, y + 53, 4, new Color((int) ac, (int) ac, (int) ac, 128));
+        RenderUtils.drawRoundRect(x, y + 28, x + 25, y + 53, round, new Color((int) ac, (int) ac, (int) ac, 128));
         font.drawString(s, x + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "D";
@@ -153,18 +154,18 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + 56, finalY8 + 28, x + 81, finalY8 + 53, 4, new Color((int) dc, (int) dc, (int) dc, 128));
+                    RenderUtils.drawRoundRect(x + 56, finalY8 + 28, x + 81, finalY8 + 53, round, new Color((int) dc, (int) dc, (int) dc, 128));
                 }
             });
             int finalY9 = y;
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + 56, finalY9 + 28, x + 81, finalY9 + 53, 4, new Color((int) dc, (int) dc, (int) dc, 128));
+                    RenderUtils.drawRoundRect(x + 56, finalY9 + 28, x + 81, finalY9 + 53, round, new Color((int) dc, (int) dc, (int) dc, 128));
                 }
             });
         }
-        RenderUtils.drawRoundRect(x + 56, y + 28, x + 81, y + 53, 4, new Color((int) dc, (int) dc, (int) dc, 128));
+        RenderUtils.drawRoundRect(x + 56, y + 28, x + 81, y + 53, round, new Color((int) dc, (int) dc, (int) dc, 128));
         font.drawString(s, x + 56 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         y += 56;
@@ -175,7 +176,7 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY10, x + (81 - 3) / 2, finalY11 + 25, 4, new Color((int) lc, (int) lc, (int) lc, 128));
+                    RenderUtils.drawRoundRect(x, finalY10, x + (81 - 3) / 2, finalY11 + 25, round, new Color((int) lc, (int) lc, (int) lc, 128));
                 }
             });
             int finalY12 = y;
@@ -183,11 +184,11 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY12, x + (81 - 3) / 2, finalY13 + 25, 4, new Color((int) lc, (int) lc, (int) lc, 128));
+                    RenderUtils.drawRoundRect(x, finalY12, x + (81 - 3) / 2, finalY13 + 25, round, new Color((int) lc, (int) lc, (int) lc, 128));
                 }
             });
         }
-        RenderUtils.drawRoundRect(x, y, x + (81 - 3) / 2, y + 25, 4, new Color((int) lc, (int) lc, (int) lc, 128));
+        RenderUtils.drawRoundRect(x, y, x + (81 - 3) / 2, y + 25, round, new Color((int) lc, (int) lc, (int) lc, 128));
         font.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count = 0;
         for (long i : cpsl) {
@@ -209,7 +210,7 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + (81 + 3) / 2, finalY14, x + 81, finalY15 + 25, 4, new Color((int) rc, (int) rc, (int) rc, 128));
+                    RenderUtils.drawRoundRect(x + (81 + 3) / 2, finalY14, x + 81, finalY15 + 25, round, new Color((int) rc, (int) rc, (int) rc, 128));
                 }
             });
             int finalY16 = y;
@@ -217,11 +218,11 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x + (81 + 3) / 2, finalY16, x + 81, finalY17 + 25, 4, new Color((int) rc, (int) rc, (int) rc, 128));
+                    RenderUtils.drawRoundRect(x + (81 + 3) / 2, finalY16, x + 81, finalY17 + 25, round, new Color((int) rc, (int) rc, (int) rc, 128));
                 }
             });
         }
-        RenderUtils.drawRoundRect(x + (81 + 3) / 2, y, x + 81, y + 25, 4, new Color((int) rc, (int) rc, (int) rc, 128));
+        RenderUtils.drawRoundRect(x + (81 + 3) / 2, y, x + 81, y + 25, round, new Color((int) rc, (int) rc, (int) rc, 128));
         font.drawString(s, x + ((81 + 3) / 2) + ((81 - ((81 + 3) / 2)) - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count1 = 0;
         for (long i : cpsr) {
@@ -244,7 +245,7 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY18, x + 81, finalY19 + 15, 4, new Color((int) spacec, (int) spacec, (int) spacec, 128));
+                    RenderUtils.drawRoundRect(x, finalY18, x + 81, finalY19 + 15, round, new Color((int) spacec, (int) spacec, (int) spacec, 128));
 
                 }
             });
@@ -253,12 +254,12 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY20, x + 81, finalY21 + 15, 4, new Color((int) spacec, (int) spacec, (int) spacec, 128));
+                    RenderUtils.drawRoundRect(x, finalY20, x + 81, finalY21 + 15, round, new Color((int) spacec, (int) spacec, (int) spacec, 128));
 
                 }
             });
         }
-        RenderUtils.drawRoundRect(x, y, x + 81, y + 15, 4, new Color((int) spacec, (int) spacec, (int) spacec, 128));
+        RenderUtils.drawRoundRect(x, y, x + 81, y + 15, round, new Color((int) spacec, (int) spacec, (int) spacec, 128));
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2 - 1, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         y += 18;
@@ -269,7 +270,7 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY22, x + 81, finalY23 + 15, 4, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
+                    RenderUtils.drawRoundRect(x, finalY22, x + 81, finalY23 + 15, round, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
 
                 }
             });
@@ -278,12 +279,12 @@ public class Custom extends GuiScreen {
             GaussianBlur.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
-                    RenderUtils.drawRoundRect(x, finalY24, x + 81, finalY25 + 15, 4, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
+                    RenderUtils.drawRoundRect(x, finalY24, x + 81, finalY25 + 15, round, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
 
                 }
             });
         }
-        RenderUtils.drawRoundRect(x, y, x + 81, y + 15, 4, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
+        RenderUtils.drawRoundRect(x, y, x + 81, y + 15, round, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
         font.drawString(s, x + (81 - font.getStringWidth(s)) / 2, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
     }
