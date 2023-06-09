@@ -11,6 +11,7 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Mouse;
 import xyz.Dot.Client;
 import xyz.Dot.module.Client.CustomColor;
@@ -323,8 +324,10 @@ public class Custom extends GuiScreen {
             final ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
             final String playerName = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName());
             formattedPlayerNames[i] = playerName;
-
-            width = Math.max(width, fontRenderer.getStringWidth(playerName) + 4);
+            if (BetterScoreboard.num.isToggle()) {
+                formattedPlayerNames[i] = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + "    \r" + score.getScorePoints();
+            }
+            width = Math.max(width, fontRenderer.getStringWidth(formattedPlayerNames[i]) + 4);
         }
 
         final int height = 11 + list.size() * Minecraft.fontRendererObj.FONT_HEIGHT;
@@ -362,7 +365,12 @@ public class Custom extends GuiScreen {
         final int sb =y + 14;
 
         for (int i = 0; i < length; i++) {
-           fontRenderer.drawStringWithShadow(formattedPlayerNames[i], (float) ((double) x + 2), sb + height - (i + 1) * 9, 0xFFFFFFFF);
+
+            fontRenderer.drawStringWithShadow(formattedPlayerNames[i].split("\r")[0], (float) ((double) x + 2), sb + height - (i + 1) * 9, 0xFFFFFFFF);
+            if (BetterScoreboard.num.isToggle()) {
+                String num = EnumChatFormatting.RED + "" + formattedPlayerNames[i].split("\r")[1];
+                mc.fontRendererObj.drawString(num, scoreboardx1 - mc.fontRendererObj.getStringWidth(num),sb + height - (i + 1) * 9, -1);
+            }
         }
 
         fontRenderer.drawStringWithShadow(objective.getDisplayName(),
