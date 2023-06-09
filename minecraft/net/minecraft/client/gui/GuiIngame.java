@@ -43,15 +43,13 @@ import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.shader.BloomUtil;
-import xyz.Dot.utils.shader.GaussianBlur;
+import xyz.Dot.utils.shader.ShaderManager;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.*;
-import static org.lwjgl.opengl.EXTFramebufferObject.GL_RENDERBUFFER_EXT;
 import static org.lwjgl.opengl.GL11.*;
 
 public class GuiIngame extends Gui
@@ -346,11 +344,11 @@ public class GuiIngame extends Gui
         }
 
         ScoreObjective scoreobjective1 = scoreobjective != null ? scoreobjective : scoreboard.getObjectiveInDisplaySlot(1);
-
         if (scoreobjective1 != null)
         {
             this.renderScoreboard(scoreobjective1, scaledresolution);
         }
+
 
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -378,27 +376,28 @@ public class GuiIngame extends Gui
             glStencilFunc(GL_ALWAYS, 1, 1);
             glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
             glColorMask(false, false, false, false);
-            for(Runnable runnable : GaussianBlur.getTasks()){
+            for(Runnable runnable : ShaderManager.getTasks()){
                 runnable.run();
             }
             glColorMask(true, true, true, true);
             glStencilFunc(GL_EQUAL, 1, 1);
             glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-            GaussianBlur.renderBlur(8);
+            ShaderManager.renderBlur(8);
             glDisable(GL_STENCIL_TEST);
 
         }
         if(HUD.shadow.isToggle()){
-            bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
+            bloomFramebuffer = ShaderManager.createFrameBuffer(bloomFramebuffer);
             bloomFramebuffer.framebufferClear();
             bloomFramebuffer.bindFramebuffer(true);
-            for(Runnable runnable : GaussianBlur.getTasks()){
+            for(Runnable runnable : ShaderManager.getTasks()){
                 runnable.run();
             }
             bloomFramebuffer.unbindFramebuffer();
             BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
         }
-        GaussianBlur.getTasks().clear();
+
+        ShaderManager.getTasks().clear();
         EventBus.getInstance().call(new EventRender2D(partialTicks));
 
         if (ModuleManager.getModuleByName("Notifications").isToggle()) {

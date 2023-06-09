@@ -18,7 +18,7 @@ import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.shader.BloomUtil;
-import xyz.Dot.utils.shader.GaussianBlur;
+import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
 import java.io.IOException;
@@ -741,7 +741,7 @@ public class ClickUI extends GuiScreen {
             float expandedY = this.getExpandedY();
             float expandedWidth = this.getExpandedWidth();
             float expandedHeight = this.getExpandedHeight();
-            bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
+            bloomFramebuffer = ShaderManager.createFrameBuffer(bloomFramebuffer);
             bloomFramebuffer.framebufferClear();
             bloomFramebuffer.bindFramebuffer(true);
             RenderUtils.drawRoundRect((int) expandedX, (int) expandedY, (int) (expandedX + expandedWidth), (int) (expandedY + expandedHeight + 10),2, Color.WHITE);

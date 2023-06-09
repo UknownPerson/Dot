@@ -19,7 +19,7 @@ public class BloomUtil {
     private static Framebuffer bloomFramebuffer = new Framebuffer(1, 1, false);
 
     public static void start() {
-        bloomFramebuffer = GaussianBlur.createFrameBuffer(framebuffer);
+        bloomFramebuffer = ShaderManager.createFrameBuffer(framebuffer);
         bloomFramebuffer.framebufferClear();
         bloomFramebuffer.bindFramebuffer(true);
     }
@@ -30,7 +30,7 @@ public class BloomUtil {
     }
 
     public static void renderBlur(int sourceTexture, int radius, int offset) {
-        framebuffer = GaussianBlur.createFrameBuffer(framebuffer);
+        framebuffer = ShaderManager.createFrameBuffer(framebuffer);
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(516, 0.0f);
         GlStateManager.enableBlend();
@@ -38,7 +38,7 @@ public class BloomUtil {
 
         final FloatBuffer weightBuffer = BufferUtils.createFloatBuffer(256);
         for (int i = 0; i <= radius; i++) {
-            weightBuffer.put(GaussianBlur.calculateGaussianValue(i, radius));
+            weightBuffer.put(ShaderManager.calculateGaussianValue(i, radius));
         }
         weightBuffer.rewind();
 

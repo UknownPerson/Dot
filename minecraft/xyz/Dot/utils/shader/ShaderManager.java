@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glUniform1;
 
-public class GaussianBlur {
+public class ShaderManager {
 
     public static ShaderUtil blurShader = new ShaderUtil("dot/shaders/gaussian.frag");
 

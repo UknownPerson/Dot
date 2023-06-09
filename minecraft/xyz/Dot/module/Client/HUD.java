@@ -16,7 +16,7 @@ import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.TimerUtil;
-import xyz.Dot.utils.shader.GaussianBlur;
+import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -165,7 +165,7 @@ public class HUD extends Module {
 
             if(HUD.blur.isToggle()){
                 float finalY = y;
-                GaussianBlur.addBlurTask(new Runnable() {
+                ShaderManager.addBlurTask(new Runnable() {
                     @Override
                     public void run() {
                         RenderUtils.drawRect((int) x - 3, (int) finalY, (int) (endx + 3), (int) (finalY + yadd), new Color(0, 0, 0, 64).getRGB());

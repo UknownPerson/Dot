@@ -1,16 +1,16 @@
 package xyz.Dot.ui;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Mouse;
 import xyz.Dot.Client;
 import xyz.Dot.module.Client.CustomColor;
@@ -18,14 +18,16 @@ import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Misc.KeyStrokes;
 import xyz.Dot.module.Render.BetterScoreboard;
 import xyz.Dot.utils.RenderUtils;
-import xyz.Dot.utils.shader.GaussianBlur;
+import xyz.Dot.utils.shader.BloomUtil;
+import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class Custom extends GuiScreen {
 
@@ -87,7 +89,7 @@ public class Custom extends GuiScreen {
         int finalY1 = y;
         int round = 2;
         if(blur){
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + 28, finalY, x + 53, finalY1 + 25, round, new Color((int) wc, (int) wc, (int) wc, 128));
@@ -97,7 +99,7 @@ public class Custom extends GuiScreen {
         int finalY2 = y;
         int finalY5 = y;
         if(blur) {
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + 28, finalY2, x + 53, finalY5 + 25, round, new Color((int) wc, (int) wc, (int) wc, 128));
@@ -110,7 +112,7 @@ public class Custom extends GuiScreen {
         s = "S";
         int finalY3 = y;
         if(blur) {
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + 28, finalY3 + 28, x + 53, finalY3 + 53, round, new Color((int) sc, (int) sc, (int) sc, 128));
@@ -118,7 +120,7 @@ public class Custom extends GuiScreen {
             });
 
             int finalY4 = y;
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + 28, finalY4 + 28, x + 53, finalY4 + 53, round, new Color((int) sc, (int) sc, (int) sc, 128));
@@ -131,14 +133,14 @@ public class Custom extends GuiScreen {
         s = "A";
         int finalY6 = y;
         if(blur) {
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY6 + 28, x + 25, finalY6 + 53, round, new Color((int) ac, (int) ac, (int) ac, 128));
                 }
             });
             int finalY7 = y;
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY7 + 28, x + 25, finalY7 + 53, round, new Color((int) ac, (int) ac, (int) ac, 128));
@@ -151,14 +153,14 @@ public class Custom extends GuiScreen {
         s = "D";
         int finalY8 = y;
         if(blur) {
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + 56, finalY8 + 28, x + 81, finalY8 + 53, round, new Color((int) dc, (int) dc, (int) dc, 128));
                 }
             });
             int finalY9 = y;
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + 56, finalY9 + 28, x + 81, finalY9 + 53, round, new Color((int) dc, (int) dc, (int) dc, 128));
@@ -173,7 +175,7 @@ public class Custom extends GuiScreen {
         int finalY10 = y;
         int finalY11 = y;
         if(blur) {
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY10, x + (81 - 3) / 2, finalY11 + 25, round, new Color((int) lc, (int) lc, (int) lc, 128));
@@ -181,7 +183,7 @@ public class Custom extends GuiScreen {
             });
             int finalY12 = y;
             int finalY13 = y;
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY12, x + (81 - 3) / 2, finalY13 + 25, round, new Color((int) lc, (int) lc, (int) lc, 128));
@@ -208,7 +210,7 @@ public class Custom extends GuiScreen {
         int finalY14 = y;
         if(blur) {
             int finalY15 = y;
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + (81 + 3) / 2, finalY14, x + 81, finalY15 + 25, round, new Color((int) rc, (int) rc, (int) rc, 128));
@@ -216,7 +218,7 @@ public class Custom extends GuiScreen {
             });
             int finalY16 = y;
             int finalY17 = y;
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x + (81 + 3) / 2, finalY16, x + 81, finalY17 + 25, round, new Color((int) rc, (int) rc, (int) rc, 128));
@@ -243,7 +245,7 @@ public class Custom extends GuiScreen {
         int finalY18 = y;
         int finalY19 = y;
         if(blur) {
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY18, x + 81, finalY19 + 15, round, new Color((int) spacec, (int) spacec, (int) spacec, 128));
@@ -252,7 +254,7 @@ public class Custom extends GuiScreen {
             });
             int finalY20 = y;
             int finalY21 = y;
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY20, x + 81, finalY21 + 15, round, new Color((int) spacec, (int) spacec, (int) spacec, 128));
@@ -268,7 +270,7 @@ public class Custom extends GuiScreen {
         int finalY22 = y;
         int finalY23 = y;
         if(blur) {
-            GaussianBlur.addBlurTask(new Runnable() {
+            ShaderManager.addBlurTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY22, x + 81, finalY23 + 15, round, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
@@ -277,7 +279,7 @@ public class Custom extends GuiScreen {
             });
             int finalY24 = y;
             int finalY25 = y;
-            GaussianBlur.addBloomTask(new Runnable() {
+            ShaderManager.addBloomTask(new Runnable() {
                 @Override
                 public void run() {
                     RenderUtils.drawRoundRect(x, finalY24, x + 81, finalY25 + 15, round, new Color((int) shiftc, (int) shiftc, (int) shiftc, 128));
@@ -296,77 +298,76 @@ public class Custom extends GuiScreen {
         font.drawString("KeyStrokes", (int) KeyStrokes.x.getCurrentValue() + 5, (int) KeyStrokes.y.getCurrentValue() - 12 + 4, new Color(255, 255, 255).getRGB());
 
     }
+    private static Framebuffer bloomFramebuffer = new Framebuffer(1, 1, false);
 
     public static void drawScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
-        {
-            Scoreboard scoreboard = objective.getScoreboard();
-            Collection<Score> collection = scoreboard.getSortedScores(objective);
-            List<Score> list = Lists.newArrayList(Iterables.filter(collection, p_apply_1_ -> p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#")));
-            int x = (int) BetterScoreboard.x.getCurrentValue();
-            int y = (int) BetterScoreboard.y.getCurrentValue();
-            Collections.reverse(list);
-            if (list.size() > 15) {
-                collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
-            } else {
-                collection = list;
-            }
+        int x = (int) BetterScoreboard.x.getCurrentValue();
+        int y = (int) BetterScoreboard.y.getCurrentValue();
+        final Scoreboard scoreboard = objective.getScoreboard();
+        final List<Score> list = scoreboard.getSortedScores(objective).stream()
+                .filter(p_apply_1_ -> p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#"))
+                .limit(15)
+                .collect(Collectors.toList());
 
-            int i = mc.fontRendererObj.getStringWidth(objective.getDisplayName()) + 10;
+        final int length = list.size();
 
-            for (Score score : collection) {
-                ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
-                String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + "    " + EnumChatFormatting.RED + score.getScorePoints();
-                if (BetterScoreboard.num.isToggle()) {
-                    s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + "  ";
-                }
-                i = Math.max(i, mc.fontRendererObj.getStringWidth(s));
-            }
-            scoreboardx1 = x + i;
+        final FontRenderer fontRenderer = mc.fontRendererObj;
 
-            int j0 = 0;
-            for (Score score1 : collection) {
-                ++j0;
-            }
-            int finalI = i;
-            int finalJ = j0;
-            int finalY = y;
-            int finalY1 = y;
+        double width = fontRenderer.getStringWidth(objective.getDisplayName()) + 4;
 
-            //GuiIngame.checkSetupFBO(mc.getFramebuffer());
-            //glClear(GL_STENCIL_BUFFER_BIT);
-            //glEnable(GL_STENCIL_TEST);
+        final String[] formattedPlayerNames = new String[length];
 
-            //glStencilFunc(GL_ALWAYS, 1, 1);
-            //glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-            //glColorMask(false, false, false, false);
-            RenderUtils.drawRoundRect(x, finalY, x + finalI, finalY1 + (finalJ + 1) * mc.fontRendererObj.FONT_HEIGHT + 12, 4,new Color(0,0,0,64));
+        for (int i = 0; i < length; i++) {
+            final Score score = list.get(i);
 
-            //glColorMask(true, true, true, true);
-            //glStencilFunc(GL_EQUAL, 1, 1);
-            //glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-            //GaussianBlur.renderBlur(8);
-            //glDisable(GL_STENCIL_TEST);
+            final ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
+            final String playerName = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName());
+            formattedPlayerNames[i] = playerName;
 
-            y += 4;
-            int j = 0;
-            //RenderUtils.drawRect(x, y + mc.fontRendererObj.FONT_HEIGHT + 3, x + i, y + mc.fontRendererObj.FONT_HEIGHT + 4, 1342177280);
-            for (Score score1 : collection) {
-                ++j;
-                ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
-                String text = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
-                String num = EnumChatFormatting.RED + "" + score1.getScorePoints();
-                mc.fontRendererObj.drawString(text, x + 2, y + j * mc.fontRendererObj.FONT_HEIGHT + 4, 553648127);
-                if (!BetterScoreboard.num.isToggle()) {
-                    mc.fontRendererObj.drawString(num, scoreboardx1 - mc.fontRendererObj.getStringWidth(num), y + j * mc.fontRendererObj.FONT_HEIGHT + 4, 553648127);
-                }
-            }
-
-            y -= 4;
-
-            String title = objective.getDisplayName();
-            RenderUtils.drawHalfRoundRect(x, y, x + i, y + 12, 4, CustomColor.getColor());
-            mc.fontRendererObj.drawString(title, x + 5, y + 2, new Color(255, 255, 255).getRGB());
+            width = Math.max(width, fontRenderer.getStringWidth(playerName) + 4);
         }
+
+        final int height = 11 + list.size() * Minecraft.fontRendererObj.FONT_HEIGHT;
+        double finalWidth = width;
+        if(HUD.blur.isToggle()){
+            mc.getFramebuffer().bindFramebuffer(false);
+            GuiIngame.checkSetupFBO(mc.getFramebuffer());
+            glClear(GL_STENCIL_BUFFER_BIT);
+            glEnable(GL_STENCIL_TEST);
+
+            glStencilFunc(GL_ALWAYS, 1, 1);
+            glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+            glColorMask(false, false, false, false);
+            RenderUtils.drawRoundRect(x, y, (int) (x + width), y + height + 16,4, new Color(0, 0, 0, 64));
+
+            glColorMask(true, true, true, true);
+            glStencilFunc(GL_EQUAL, 1, 1);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+            ShaderManager.renderBlur(8);
+            glDisable(GL_STENCIL_TEST);
+        }
+        if(HUD.shadow.isToggle()){
+            bloomFramebuffer = ShaderManager.createFrameBuffer(bloomFramebuffer);
+            bloomFramebuffer.framebufferClear();
+            bloomFramebuffer.bindFramebuffer(true);
+            RenderUtils.drawRoundRect(x, y, (int) (x + width), y + height + 16,4, new Color(0, 0, 0, 64));
+
+            bloomFramebuffer.unbindFramebuffer();
+            BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
+        }
+        RenderUtils.drawRoundRect(x, y, (int) (x + width), y + height + 16,4, new Color(0, 0, 0, 64));
+        RenderUtils.drawHalfRoundRect(x, y, (int) (x + width), y + 12, 4, CustomColor.getColor());
+        font.drawString("Scoreboard", x + 5, y + 4, new Color(255, 255, 255).getRGB());
+        scoreboardx1 = (int) (x + width);
+        final int sb =y + 14;
+
+        for (int i = 0; i < length; i++) {
+           fontRenderer.drawStringWithShadow(formattedPlayerNames[i], (float) ((double) x + 2), sb + height - (i + 1) * 9, 0xFFFFFFFF);
+        }
+
+        fontRenderer.drawStringWithShadow(objective.getDisplayName(),
+                (float) ((double) x + width / 2.0F - fontRenderer.getStringWidth(objective.getDisplayName()) / 2.0F),
+                sb + 2, 0xFFFFFFFF);
     }
 
     public static void drawDot() {
@@ -377,7 +378,7 @@ public class Custom extends GuiScreen {
         int StartY = (int) HUD.doty.getCurrentValue();
         int finalStartY = StartY;
         int finalStartY1 = StartY;
-        GaussianBlur.addBlurTask(new Runnable() {
+        ShaderManager.addBlurTask(new Runnable() {
             @Override
             public void run() {
                 RenderUtils.drawRoundRect(StartX, finalStartY, StartX + 64, finalStartY1 + 56,4, new Color(0, 0, 0, 64));
@@ -422,7 +423,7 @@ public class Custom extends GuiScreen {
     public static void drawBPSAVG() {
         int StartXspeed = (int) HUD.bpsx.getCurrentValue();
         int StartYspeed = (int) HUD.bpsy.getCurrentValue();
-        GaussianBlur.addBlurTask(new Runnable() {
+        ShaderManager.addBlurTask(new Runnable() {
             @Override
             public void run() {
                 RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
