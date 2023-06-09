@@ -59,7 +59,7 @@ public class FontLoaders {
         return UnicodeFontRenderer;
     }
 
-    private static Font getNormalFont(int size) {
+    public static Font getNormalFont(int size) {
         Font font;
         try {
             InputStream is = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("dot/font.ttf")).getInputStream();

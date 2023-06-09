@@ -101,6 +101,7 @@ import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.Custom;
+import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
 import xyz.Dot.ui.LoginUI;
 import xyz.Dot.utils.RenderUtils;
@@ -225,7 +226,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     /**
      * The RenderEngine instance used by Minecraft
      */
-    private TextureManager renderEngine;
+    public TextureManager renderEngine;
     public final File mcDataDir;
     private final File fileAssets;
     private final String launchedVersion;
@@ -527,14 +528,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcSoundHandler = new SoundHandler(this.mcResourceManager, this.gameSettings);
         this.mcResourceManager.registerReloadListener(this.mcSoundHandler);
         this.mcMusicTicker = new MusicTicker(this);
-        this.fontRendererObj = new FontRenderer(this.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.renderEngine, false);
+        this.fontRendererObj = new FontRenderer(FontLoaders.getNormalFont(16),16,true);
 
         if (this.gameSettings.forceUnicodeFont != null) {
-            this.fontRendererObj.setUnicodeFlag(this.isUnicode());
+            this.fontRendererObj.setUnicodeFlag(false);
             this.fontRendererObj.setBidiFlag(this.mcLanguageManager.isCurrentLanguageBidirectional());
         }
 
-        this.standardGalacticFontRenderer = new FontRenderer(this.gameSettings, new ResourceLocation("textures/font/ascii_sga.png"), this.renderEngine, false);
+        this.standardGalacticFontRenderer = new FontRenderer(FontLoaders.getNormalFont(16),16,true);
         this.mcResourceManager.registerReloadListener(this.fontRendererObj);
         this.mcResourceManager.registerReloadListener(this.standardGalacticFontRenderer);
         this.mcResourceManager.registerReloadListener(new GrassColorReloadListener());
@@ -1764,7 +1765,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                             this.gameSettings.saveOptions();
                         }
 
-                        if (k == 59) {
+                        if (k == 59 && !ModuleManager.getModuleByName("FreeLook").isToggle()) {
                             this.gameSettings.thirdPersonView = !this.gameSettings.thirdPersonView;
                         }
 

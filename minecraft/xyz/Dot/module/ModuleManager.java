@@ -48,6 +48,7 @@ public class ModuleManager {
         this.addModule(new KeyStrokes());
         this.addModule(new Sprint());
         this.addModule(new Teams());
+        this.addModule(new FreeLook());
 
         //Render
         this.addModule(new BetterScoreboard());

@@ -1,9 +1,5 @@
 package xyz.Dot.ui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.util.HashMap;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,12 +9,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 
+import java.awt.*;
+import java.util.HashMap;
+
 public class UnicodeFontRenderer extends FontRenderer {
     private final UnicodeFont font;
     public HashMap widthMap = new HashMap();
     public HashMap heightMap = new HashMap();
 
     // TODO: 2021/5/20 中文字体加载速度过于拉胯 待修复 提供几个解决方法:1.使用Dll渲染中文，参考csgo的opengl注入外纪(老嘎嘎说的，可行?) 2.获取字体资源，用哪个字加载哪个字
+    // 其实我的世界用dll渲染纯属b
     public UnicodeFontRenderer(Font awtFont, float n, int p_addGlyphs_1_, int p_addGlyphs_2_, boolean b) {
         super(Minecraft.getMinecraft().gameSettings, new ResourceLocation("textures/font/ascii.png"), Minecraft.getMinecraft().getTextureManager(), false);
         (this.font = new UnicodeFont(awtFont)).addAsciiGlyphs();
@@ -729,7 +729,8 @@ public class UnicodeFontRenderer extends FontRenderer {
         return this.font.getHeight(string) / 2;
     }
 
-    public void drawCenteredString(String text, float x, float y, int color) {
+    public int drawCenteredString(String text, float x, float y, int color) {
         this.drawString(text, x - (float) (this.getStringWidth(text) / 2), y, color);
+        return color;
     }
 }
