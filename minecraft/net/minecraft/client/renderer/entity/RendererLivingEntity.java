@@ -345,7 +345,11 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
             {
                 GlStateManager.pushMatrix();
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
-                GlStateManager.depthMask(false);
+                if(entitylivingbaseIn.hurtTime != 0){
+                    GlStateManager.depthMask(true);
+                }else{
+                    GlStateManager.depthMask(false);
+                }
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(770, 771);
                 GlStateManager.alphaFunc(516, 0.003921569F);

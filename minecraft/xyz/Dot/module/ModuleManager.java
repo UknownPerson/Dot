@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ModuleManager {
     static ArrayList<Module> modules;
     public static String name = null;
-    public static String prefix = null;
+    public static String prefix = "";
     public static boolean SigmaMode = false;
     public static double ver = Client.instance.client_version;
 
@@ -27,6 +27,7 @@ public class ModuleManager {
         //Cheat
         this.addModule(new Chams());
         this.addModule(new HitBox());
+        this.addModule(new NoInvisible());
         this.addModule(new NoJumpDelay());
         this.addModule(new Reach());
         this.addModule(new ViewClip());

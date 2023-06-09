@@ -2174,6 +2174,9 @@ public abstract class Entity implements ICommandSender
      */
     public boolean isInvisibleToPlayer(EntityPlayer player)
     {
+        if(ModuleManager.getModuleByName("NoInvisible").isToggle()){
+            return false;
+        }
         return player.isSpectator() ? false : this.isInvisible();
     }
 

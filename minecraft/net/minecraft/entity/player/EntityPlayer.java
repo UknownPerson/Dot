@@ -1899,6 +1899,9 @@ public abstract class EntityPlayer extends EntityLivingBase {
      * For EntityLivingBase subclasses, returning false when invisible will render the entity semitransparent.
      */
     public boolean isInvisibleToPlayer(EntityPlayer player) {
+        if(ModuleManager.getModuleByName("NoInvisible").isToggle()){
+            return false;
+        }
         if (!this.isInvisible()) {
             return false;
         } else if (player.isSpectator()) {

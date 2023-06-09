@@ -236,6 +236,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.field_92019_w = this.field_92021_u + 24;
         }
 
+        /*
         this.mc.setConnectedToRealms(false);
 
         if (Minecraft.getMinecraft().gameSettings.getOptionOrdinalValue(GameSettings.Options.enumFloat) && !this.L) {
@@ -243,6 +244,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.M = realmsbridge.getNotificationScreen(this);
             this.L = true;
         }
+        */
 
         if (this.a()) {
             this.M.a(this.width, this.height);
@@ -534,7 +536,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         String prefix = ModuleManager.prefix;
         String text;
         if (name != null) {
-            if (prefix != null) {
+            if (!prefix.equals("")) {
                 text = "Welcome " + "[" + prefix + "]" + name + "!";
             } else {
                 text = "Welcome " + name + "!";

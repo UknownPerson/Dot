@@ -191,6 +191,7 @@ public class Custom extends GuiScreen {
         RenderUtils.drawRoundRect(x, y, x + (81 - 3) / 2, y + 25, round, new Color((int) lc, (int) lc, (int) lc, 128));
         font.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count = 0;
+        int f =0;
         for (long i : cpsl) {
             long thistime = System.nanoTime();
             if ((thistime - i) < 1000000000) {

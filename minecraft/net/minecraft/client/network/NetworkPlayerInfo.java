@@ -22,7 +22,7 @@ public class NetworkPlayerInfo
     private WorldSettings.GameType gameType;
 
     /** Player response time to server in milliseconds */
-    private int responseTime;
+    private int responseTime = 0;
     private boolean playerTexturesLoaded = false;
     private ResourceLocation locationSkin;
     private ResourceLocation locationCape;
