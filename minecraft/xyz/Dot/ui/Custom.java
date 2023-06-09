@@ -107,7 +107,7 @@ public class Custom extends GuiScreen {
             });
         }
         RenderUtils.drawRoundRect(x + 28, y, x + 53, y + 25, round, new Color((int) wc, (int) wc, (int) wc, 128));
-        font.drawString(s, x + 28 + (25 - font.getStringWidth(s)) / 2, y + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        font.drawCenteredString(s, x + 28 + 25 / 2f, y + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "S";
         int finalY3 = y;
@@ -148,7 +148,7 @@ public class Custom extends GuiScreen {
             });
         }
         RenderUtils.drawRoundRect(x, y + 28, x + 25, y + 53, round, new Color((int) ac, (int) ac, (int) ac, 128));
-        font.drawString(s, x + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        font.drawCenteredString(s, x + 25 / 2f, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "D";
         int finalY8 = y;
@@ -168,7 +168,7 @@ public class Custom extends GuiScreen {
             });
         }
         RenderUtils.drawRoundRect(x + 56, y + 28, x + 81, y + 53, round, new Color((int) dc, (int) dc, (int) dc, 128));
-        font.drawString(s, x + 56 + (25 - font.getStringWidth(s)) / 2, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        font.drawCenteredString(s, x + 56 + 25 / 2f, y + 28 + (25 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         y += 56;
         s = "LMB";
@@ -191,7 +191,7 @@ public class Custom extends GuiScreen {
             });
         }
         RenderUtils.drawRoundRect(x, y, x + (81 - 3) / 2, y + 25, round, new Color((int) lc, (int) lc, (int) lc, 128));
-        font.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        font.drawCenteredString(s, x + (81 - 3) / 2 / 2f, y + (20 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
         int count = 0;
         int f =0;
         for (long i : cpsl) {
@@ -204,7 +204,7 @@ public class Custom extends GuiScreen {
             cpsl.clear();
         }
         s = String.valueOf(count);
-        font1.drawString(s, x + ((81 - 3) / 2 - font.getStringWidth(s)) / 2 + 1, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        font1.drawCenteredString(s, x + (81 - 3) / 2 / 2f, y + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         s = "RMB";
         int finalY14 = y;
@@ -263,7 +263,7 @@ public class Custom extends GuiScreen {
             });
         }
         RenderUtils.drawRoundRect(x, y, x + 81, y + 15, round, new Color((int) spacec, (int) spacec, (int) spacec, 128));
-        font.drawString(s, x + (81 - font.getStringWidth(s)) / 2 - 1, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
+        font.drawCenteredString(s, x + 81 / 2f, y + (15 - font.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
         y += 18;
         s = "Sneak";
