@@ -293,7 +293,7 @@ public class Custom extends GuiScreen {
     }
 
     public static void ks() {
-        RenderUtils.drawHalfRoundRect((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue() - 12, (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue(), 4, CustomColor.getColor());
+        RenderUtils.drawHalfRoundRect((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue() - 12, (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue(), 4, HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
         RenderUtils.drawRect((int) KeyStrokes.x.getCurrentValue(), (int) KeyStrokes.y.getCurrentValue(), (int) KeyStrokes.x.getCurrentValue() + 81, (int) KeyStrokes.y.getCurrentValue() + 117, new Color(0, 0, 0, 64).getRGB());
         font.drawString("KeyStrokes", (int) KeyStrokes.x.getCurrentValue() + 5, (int) KeyStrokes.y.getCurrentValue() - 12 + 4, new Color(255, 255, 255).getRGB());
 
@@ -356,7 +356,7 @@ public class Custom extends GuiScreen {
             BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, 10, 2);
         }
         RenderUtils.drawRoundRect(x, y, (int) (x + width), y + height + 16,4, new Color(0, 0, 0, 64));
-        RenderUtils.drawHalfRoundRect(x, y, (int) (x + width), y + 12, 4, CustomColor.getColor());
+        RenderUtils.drawHalfRoundRect(x, y, (int) (x + width), y + 12, 4, HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
         font.drawString("Scoreboard", x + 5, y + 4, new Color(255, 255, 255).getRGB());
         scoreboardx1 = (int) (x + width);
         final int sb =y + 14;
@@ -387,7 +387,7 @@ public class Custom extends GuiScreen {
         });
         RenderUtils.drawRoundRect(StartX, finalStartY, StartX + 64, finalStartY1 + 56,4, new Color(0, 0, 0, 64));
 
-        RenderUtils.drawHalfRoundRect(StartX, StartY, StartX + 64, StartY + 12, 4, CustomColor.getColor());
+        RenderUtils.drawHalfRoundRect(StartX, StartY, StartX + 64, StartY + 12, 4,  HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
 
         RenderUtils.drawFilledCircle(StartX + 6, StartY + 6, 3, new Color(255, 0, 0, 32));
         RenderUtils.drawFilledCircle(StartX + 7, StartY + 5, 3, new Color(255, 0, 0, 32));
@@ -427,11 +427,13 @@ public class Custom extends GuiScreen {
             @Override
             public void run() {
                 RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
+                RenderUtils.drawHalfRoundRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, 4,  HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
+
             }
         });
         RenderUtils.drawRect(StartXspeed, StartYspeed + 12, StartXspeed + 96, StartYspeed + 62, new Color(0, 0, 0, 64).getRGB());
 
-        RenderUtils.drawHalfRoundRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, 4, CustomColor.getColor());
+        RenderUtils.drawHalfRoundRect(StartXspeed, StartYspeed, StartXspeed + 96, StartYspeed + 12, 4,  HUD.transparent.isToggle() ? new Color(0,0,0,164) : CustomColor.getColor());
         int numsm = HUD.nums - 1;
         float xnum = 0.5f;
         float[] avglist = new float[100];

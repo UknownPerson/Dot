@@ -32,10 +32,11 @@ public class HUD extends Module {
     public static Setting arraylistColor = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList Color",new Color(-1));
     public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", false);
     public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shaow", false);
+    public static Setting transparent = new Setting(ModuleManager.getModuleByName("HUD"), "Transparent", false);
 
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
-        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist,arraylistColor,blur, shadow);
+        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist,arraylistColor,blur, shadow,transparent);
     }
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;

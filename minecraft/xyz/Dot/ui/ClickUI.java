@@ -13,6 +13,7 @@ import xyz.Dot.Client;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.module.Client.CustomColor;
+import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
@@ -564,7 +565,7 @@ public class ClickUI extends GuiScreen {
         int fontstartx = (customwidth - font.getStringWidth(customtext)) / 2 + customstartx;
         int fontstarty = (customheight - font.getStringHeight(customtext)) / 2 + customstarty + 1;
 
-        RenderUtils.drawRoundRect(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, 4, CustomColor.getColor());
+        RenderUtils.drawRoundRect(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, 4, HUD.transparent.isToggle() ? new Color(0,0,0,164) :  CustomColor.getColor());
         font.drawString(customtext, fontstartx, fontstarty, new Color(255, 255, 255).getRGB());
         if (isHovered(customstartx, customstarty, customstartx + customwidth, customstarty + customheight, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
             check = 9;
