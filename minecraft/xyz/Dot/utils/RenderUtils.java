@@ -13,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import xyz.Dot.ui.ImageLoader;
 
-
 import java.awt.*;
 
 public class RenderUtils {
@@ -81,6 +80,45 @@ public class RenderUtils {
         tessellator.draw();
     }
 
+    public static void drawRectWH(float left, float top, float x2, float y2, int color)
+    {
+        x2 = left + x2;
+        y2 = top + y2;
+        if (left < x2)
+        {
+            float i = left;
+            left = x2;
+            x2 = i;
+        }
+
+        if (top < y2)
+        {
+            float j = top;
+            top = y2;
+            y2 = j;
+        }
+
+        float f3 = (float)(color >> 24 & 255) / 255.0F;
+        float f = (float)(color >> 16 & 255) / 255.0F;
+        float f1 = (float)(color >> 8 & 255) / 255.0F;
+        float f2 = (float)(color & 255) / 255.0F;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(f, f1, f2, f3);
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldrenderer.pos((double)left, (double)y2, 0.0D).endVertex();
+        worldrenderer.pos((double)x2, (double)y2, 0.0D).endVertex();
+        worldrenderer.pos((double)x2, (double)top, 0.0D).endVertex();
+        worldrenderer.pos((double)left, (double)top, 0.0D).endVertex();
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+    }
+
+
     public static void drawRect(int x, int y, int x1, int y1, int color) {
         Gui.drawRect(x, y, x1, y1, color);
     }
@@ -112,6 +150,26 @@ public class RenderUtils {
             drawFilledCircle1(x2t, y1t, roundsize, color);
             drawFilledCircle1(x1t, y2t, roundsize, color);
             drawFilledCircle1(x2t, y2t, roundsize, color);
+        }
+    }
+    public static void drawRoundRect(float x1, float y1, float x2, float y2, int roundsize, Color color) {
+
+
+        float x1t = x1 + roundsize;
+        float y1t = y1 + roundsize;
+        float x2t = x2 - roundsize;
+        float y2t = y2 - roundsize;
+        if (x1 != x2 && y1 != y2) {
+            drawRect(x1t, y1t, x2t, y2t, color.getRGB());
+            drawRect(x1t, y1, x2t, y1t, color.getRGB());
+            drawRect(x2t, y1t, x2, y2t, color.getRGB());
+            drawRect(x1t, y2t, x2t, y2, color.getRGB());
+            drawRect(x1, y1t, x1t, y2t, color.getRGB());
+            drawImage(ImageLoader.circle_leftup, x1, y1, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_leftdown, x1, y2-roundsize, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_rightup, x2-roundsize, y1, roundsize, roundsize, color);
+            drawImage(ImageLoader.circle_rightdown, x2-roundsize, y2-roundsize, roundsize, roundsize, color);
+
         }
     }
 
@@ -191,6 +249,19 @@ public class RenderUtils {
         GL11.glEnable((int) 2929);
     }
 
+    public static void drawImage(ResourceLocation image, float x, float y, float width, float height, Color color) {
+        ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
+        GL11.glDisable((int) 2929);
+        GL11.glEnable((int) 3042);
+        GL11.glDepthMask((boolean) false);
+        OpenGlHelper.glBlendFunc((int) 770, (int) 771, (int) 1, (int) 0);
+        GL11.glColor4f((float) ((float) color.getRed() / 255.0f), (float) ((float) color.getGreen() / 255.0f), (float) ((float) color.getBlue() / 255.0f), ((float) color.getAlpha() / 255.0f));
+        Minecraft.getMinecraft().getTextureManager().bindTexture(image);
+        Gui.drawModalRectWithCustomSizedTexture((int) x, (int) y, (float) 0.0f, (float) 0.0f, (int) width, (int) height, (float) width, (float) height);
+        GL11.glDepthMask((boolean) true);
+        GL11.glDisable((int) 3042);
+        GL11.glEnable((int) 2929);
+    }
     public static void drawImage(ResourceLocation image, int x, int y, int width, int height, Color color) {
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
         GL11.glDisable((int) 2929);

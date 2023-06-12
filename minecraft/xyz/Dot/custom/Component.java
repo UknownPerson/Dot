@@ -2,9 +2,12 @@ package xyz.Dot.custom;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import xyz.Dot.Client;
 import xyz.Dot.module.Category;
+import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
@@ -21,6 +24,7 @@ public abstract class Component extends Gui {
     public int height;
     public String name;
     private float dragX, dragY;
+    private boolean adjustX = false, adjustY = false;
     private boolean drag = false;
     public Component(int width, int height, String name) {
         this.height = height;
@@ -90,9 +94,34 @@ public abstract class Component extends Gui {
             if (!Mouse.isButtonDown(0)) {
                 this.drag = false;
             }
-            setPosX((int) (mouseX - this.dragX));
-            setPosY((int) (mouseY - this.dragY));
+            int x = (int) (mouseX - this.dragX);
+            int y = (int) (mouseY - this.dragY);
+
+            if(Math.abs(x - getPosX()) > 5){
+                adjustX = false;
+            }
+
+            if(Math.abs(y - getPosY()) > 5){
+                adjustY = false;
+            }
+
+            if(check(x,1)){
+                if(!adjustX){
+                    setPosX(x);
+                }
+
+            }
+            if(check(1,y)){
+                if(!adjustY){
+                    setPosY(y);
+                }
+            }
         }
+    }
+
+    private boolean check(int x,int y){
+        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+        return x > 0 && y > 0 && x + width < sr.getScaledWidth() && y + height < sr.getScaledHeight();
     }
 
     public void mouseClick(int mouseX, int mouseY, int button) {
@@ -111,6 +140,25 @@ public abstract class Component extends Gui {
     public void draw(float partialTicks) {
         if (! doDraw() || ! module.isToggle() || ! canDraw())
             return;
+        for(Component object : Client.instance.componentManager.components){
+            if(!object.module.isToggle() || object == this)
+                continue;
+            if(Math.abs(object.getPosX() - this.getPosX()) < 4){
+                if(drag){
+                    this.setPosX((int) object.getPosX());
+                    RenderUtils.drawRectWH(getPosX(),0,1,new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight(),CustomColor.getColor().getRGB());
+                    adjustX = true;
+                }
+            }
+            if(Math.abs(object.getPosY() - this.getPosY()) < 4){
+                if(drag){
+                    this.setPosY((int) object.getPosY());
+                    RenderUtils.drawRectWH(0,getPosY(),new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth(),1, CustomColor.getColor().getRGB());
+                    adjustY = true;
+                }
+            }
+        }
+
         drawHUD(getPosX(), getPosY(), partialTicks);
     }
 

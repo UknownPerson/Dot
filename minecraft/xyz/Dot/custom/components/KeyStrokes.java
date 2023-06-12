@@ -28,6 +28,7 @@ public class KeyStrokes extends Component {
     public static ArrayList<Long> cpsr = new ArrayList<>();
     public static boolean cpsldown;
     public static boolean cpsrdown;
+    public static int lastCPS =0 ;
 
     public KeyStrokes() {
         super(75, 12, "KeyStrokes");
@@ -132,6 +133,7 @@ public class KeyStrokes extends Component {
         if (count == 0) {
             cpsl.clear();
         }
+        lastCPS = count;
         s = String.valueOf(count);
         font1.drawCenteredString(s, sX + (81 - 3) / 2 / 2f, sY + 16 + (5 - font1.getStringHeight(s)) / 2 + 1, new Color(255, 255, 255).getRGB());
 
