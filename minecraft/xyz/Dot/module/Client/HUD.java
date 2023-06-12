@@ -1,6 +1,5 @@
 package xyz.Dot.module.Client;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
@@ -30,13 +29,13 @@ public class HUD extends Module {
     public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shadow", false);
     public static Setting transparent = new Setting(ModuleManager.getModuleByName("HUD"), "Transparent", false);
     static ArrayList<String> languages = new ArrayList<>(getLanguages());
-    public static Setting lang = new Setting(ModuleManager.getModuleByName("HUD"), "Language", "Hypixel", languages){
+    public static Setting lang = new Setting(ModuleManager.getModuleByName("HUD"), "Language", "English", languages){
         @Override
         public void setCurrentMode(String currentMode) {
             if(currentMode.equals("English")){
                 Translator.getInstance().clearMessages();
             }else {
-                Translator.getInstance().addMessages(Minecraft.class.getResourceAsStream("/language/" + currentMode.toLowerCase() + ".lang"));
+                Translator.getInstance().addMessages(HUD.class.getResourceAsStream("/language/" + currentMode.toLowerCase() + ".lang"));
             }
             super.setCurrentMode(currentMode);
         }
