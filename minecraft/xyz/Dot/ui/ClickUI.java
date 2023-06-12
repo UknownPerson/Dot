@@ -18,6 +18,7 @@ import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.BloomUtil;
 import xyz.Dot.utils.shader.ShaderManager;
 
@@ -136,15 +137,15 @@ public class ClickUI extends GuiScreen {
         }
 
 
-        String thisnametext = "ClickGui";
+        String thisnametext = Translator.getInstance().m("ClickGui");
         FontLoaders.normalfont20.drawString(thisnametext, rx + 5, ry + 4, new Color(255, 255, 255).getRGB());
 
         rx += font1.getStringWidth(thisnametext) + 32;
 
-        float fontrendery = y + (blueheight - font1.getStringHeight(ClickGui.curType.name())) / 2 + 1;
+        float fontrendery = y + (blueheight - font1.getStringHeight(Translator.getInstance().m(ClickGui.curType.name()))) / 2 + 1;
         for (Category c : Category.values()) {
             //RenderUtils.drawRect((int) rx, (int) ry, (int) (rx + 0.3f * width), (int) (ry + 0.0625f * height), new Color(255, 255, 255).getRGB());
-            font1.drawString(c.name(), rx, fontrendery, new Color(255, 255, 255).getRGB());
+            font1.drawString(Translator.getInstance().m(c.name()), rx, fontrendery, new Color(255, 255, 255).getRGB());
 
             if (c == ClickGui.curType) {
                 typeanimto[0] = rx - 4 - x;
@@ -255,7 +256,7 @@ public class ClickUI extends GuiScreen {
 
 
             float thisry = ry + 8 + dy1;
-            font.drawString(ClickGui.settingmodule.getName(), (int) (userxendanim + 13), (int) thisry, new Color(0, 0, 0).getRGB());
+            font.drawString(Translator.getInstance().m(ClickGui.settingmodule.getName()), (int) (userxendanim + 13), (int) thisry, new Color(0, 0, 0).getRGB());
 
             //RenderUtils.drawRoundRect((int) (userxendanim + 143 - 8 - 32), (int) thisry - 5, (int) (userxendanim + 143 - 8), (int) (thisry + 7 ), 3, new Color(200, 200, 200));
             //font1.drawString("Bind", (int) (userxendanim + 143 - 8 - 32), thisry, new Color(64, 64, 64).getRGB());
@@ -268,7 +269,7 @@ public class ClickUI extends GuiScreen {
 
                 if (s.isBoolean()) {
                     //RenderUtils.drawRect((int) (userxendanim + 18), (int) thisry - 2 - 4  , (int) (userxendanim + 145 -10), (int) thisry + 8 - 2 + 4,new Color(0,0,0).getRGB());
-                    font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
+                    font1.drawString(Translator.getInstance().m(s.getName()), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
                     RenderUtils.drawRoundRect((int) (userxendanim + 130 - 10), (int) thisry - 2, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2, 4, new Color(200, 200, 200));
                     if (isHovered((int) (userxendanim + 18), (int) thisry - 2 - 4, (int) (userxendanim + 145 - 10), (int) thisry + 8 - 2 + 4, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                         keydown = true;
@@ -302,7 +303,7 @@ public class ClickUI extends GuiScreen {
                 }
 
                 if (s.isValue()) {
-                    font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
+                    font1.drawString(Translator.getInstance().m(s.getName()), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
                     font1.drawString(String.valueOf(s.getCurrentValue()), (int) (userxendanim + 143 - 8 - font1.getStringWidth(String.valueOf(s.getCurrentValue()))), (int) thisry, new Color(64, 64, 64).getRGB());
                     thisry += 8;
                     RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), 2, new Color(200, 200, 200));
@@ -341,7 +342,7 @@ public class ClickUI extends GuiScreen {
                 }
                 if (s.isColor()) {
                     //RenderUtils.drawRect((int) (userxendanim + 18), (int) thisry - 2 - 4  , (int) (userxendanim + 145 -10), (int) thisry + 8 - 2 + 4,new Color(0,0,0).getRGB());
-                    font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
+                    font1.drawString(Translator.getInstance().m(s.getName()), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
                     //bloomFramebuffer = GaussianBlur.createFrameBuffer(bloomFramebuffer);
                     //bloomFramebuffer.framebufferClear();
                     //bloomFramebuffer.bindFramebuffer(true);
@@ -365,7 +366,7 @@ public class ClickUI extends GuiScreen {
                             Collections.swap(s.getModes(), i, 0);
                         }
                     }
-                    font1.drawString(s.getName(), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
+                    font1.drawString(Translator.getInstance().m(s.getName()), (int) (userxendanim + 18), (int) thisry, new Color(64, 64, 64).getRGB());
                     RenderUtils.drawRoundRect((int) (userxendanim + 143 - 8 - 32), (int) thisry - 5, (int) (userxendanim + 143 - 8), (int) (thisry + 7 + s.getSettingXY()), 3, new Color(200, 200, 200));
                     //font1.drawString(s.getCurrentMode(), (int) (((userxendanim + 143 - 8 - 32) + (userxendanim + 143 - 8) - font1.getStringWidth(s.getCurrentMode())) / 2), (int) thisry, new Color(64, 64, 64).getRGB());
                     if (isHovered((int) (userxendanim + 143 - 8 - 32), (int) thisry - 5, (int) (userxendanim + 143 - 8), (int) (thisry + 7), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
@@ -383,7 +384,7 @@ public class ClickUI extends GuiScreen {
 
                     for (int i = 0; i < s.getModes().size(); i++) {
                         RenderUtils.drawRect((int) (userxendanim + 143 - 8 - 32 + 3), (int) (thisry - 5 + 12 + i * 12), (int) (userxendanim + 143 - 8 - 3), (int) (thisry - 5 + 12 + 1 + i * 12), new Color(150, 150, 150).getRGB());
-                        font1.drawString(s.getModes().get(i), (int) (((userxendanim + 143 - 8 - 32) + (userxendanim + 143 - 8) - font1.getStringWidth(s.getModes().get(i))) / 2), (int) (thisry + i * 12), new Color(64, 64, 64).getRGB());
+                        font1.drawString(Translator.getInstance().m(s.getModes().get(i)), (int) (((userxendanim + 143 - 8 - 32) + (userxendanim + 143 - 8) - font1.getStringWidth(s.getModes().get(i))) / 2), (int) (thisry + i * 12), new Color(64, 64, 64).getRGB());
                         //RenderUtils.drawRect((int) (userxendanim + 143 - 8 - 32), (int) (thisry - 5 + i * 12), (int) (userxendanim + 143 - 8), (int) (thisry - 5 + 12 + i * 12), new Color(0, 0, 0,64).getRGB());
                         if (isHovered((int) (userxendanim + 143 - 8 - 32), (int) (thisry - 5 + i * 12), (int) (userxendanim + 143 - 8), (int) (thisry - 5 + 12 + i * 12), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown && s.isOpen()) {
                             keydown = true;
@@ -468,9 +469,9 @@ public class ClickUI extends GuiScreen {
 
                 RenderUtils.drawRoundRect((int) rx, (int) ry, (int) userxendanim, (int) (ry + 16), 4, canim);
 
-                float fontytemp = ry + (20 - font.getStringHeight(m.getName())) / 2 - 1;
+                float fontytemp = ry + (20 - font.getStringHeight(Translator.getInstance().m(m.getName()))) / 2 - 1;
                 float fontxtemp = rx + 5;
-                font.drawString(m.getName(), fontxtemp, fontytemp, fontcanim.getRGB());
+                font.drawString(Translator.getInstance().m(m.getName()), fontxtemp, fontytemp, fontcanim.getRGB());
 
                 if (isHovered((int) rx, (int) y + 12, (int) userxendanim, (int) (y + height), mouseX, mouseY)) {
 
@@ -548,7 +549,7 @@ public class ClickUI extends GuiScreen {
         int customstarty = windowY - 25;
         int customwidth = 40;
         int customheight = 15;
-        String customtext = "Custom";
+        String customtext = Translator.getInstance().m("Custom");
 
         customend = true;
         if (customend) {

@@ -14,6 +14,7 @@ import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
@@ -36,7 +37,7 @@ public class PotionEffects extends Component {
         RenderUtils.drawRoundRect(StartX, finalStartY, StartX + width, finalStartY1 + height,4, new Color(0, 0, 0, 64));
 
         RenderUtils.drawHalfRoundRect(StartX, StartY, StartX + width, StartY + 12, 4,  HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
-        FontLoaders.normalfont16.drawString("Potion Effects", (int) x + 5, (int) y + 4, new Color(255, 255, 255).getRGB());
+        FontLoaders.normalfont16.drawString(Translator.getInstance().m("Potion Effects"), (int) x + 5, (int) y + 4, new Color(255, 255, 255).getRGB());
         setWidth(120);
         setHeight(mc.thePlayer.getActivePotionEffects().size() * 33 + 14);
         this.drawExamplePotionEffects(mc.thePlayer.getActivePotionEffects(), (int) x, (int) y + 14);

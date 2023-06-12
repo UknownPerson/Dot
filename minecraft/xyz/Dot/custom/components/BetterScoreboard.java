@@ -14,6 +14,7 @@ import xyz.Dot.module.Client.HUD;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.BloomUtil;
 import xyz.Dot.utils.shader.ShaderManager;
 
@@ -100,7 +101,7 @@ public class BetterScoreboard extends Component {
         }
         RenderUtils.drawRoundRect(sX, sY, (int) (sX + width), sY + height + 16,4, new Color(0, 0, 0, 64));
         RenderUtils.drawHalfRoundRect(sX, sY, (int) (sX + width), sY + 12, 4, HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
-        FontLoaders.normalfont16.drawString("Scoreboard", sX + 5, sY + 4, new Color(255, 255, 255).getRGB());
+        FontLoaders.normalfont16.drawString(Translator.getInstance().m("Scoreboard"), sX + 5, sY + 4, new Color(255, 255, 255).getRGB());
         final int sb =sY + 14;
         this.setWidth((int) ( width));
         for (int i = 0; i < length; i++) {

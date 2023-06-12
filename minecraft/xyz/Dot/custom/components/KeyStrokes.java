@@ -9,6 +9,7 @@ import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
@@ -49,7 +50,7 @@ public class KeyStrokes extends Component {
         {
             RenderUtils.drawHalfRoundRect((int) x, (int) y, (int) x + 81, (int) y + 12, 4, HUD.transparent.isToggle() ? new Color(0,0,0,164) : CustomColor.getColor());
             RenderUtils.drawRect((int) x, (int) y, (int) x + 81, (int) y + 117, new Color(0, 0, 0, 64).getRGB());
-            font.drawString("KeyStrokes", (int) x + 5, (int) y + 4, new Color(255, 255, 255).getRGB());
+            font.drawString(Translator.getInstance().m("KeyStrokes"), (int) x + 5, (int) y + 4, new Color(255, 255, 255).getRGB());
         }
 
         int multiplier = 6;

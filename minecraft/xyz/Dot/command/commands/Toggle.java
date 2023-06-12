@@ -7,6 +7,7 @@ import xyz.Dot.Client;
 import xyz.Dot.command.Command;
 import xyz.Dot.module.Module;
 import xyz.Dot.ui.Notification;
+import xyz.Dot.utils.Translator;
 
 public class Toggle
 extends Command {
@@ -29,7 +30,7 @@ extends Command {
             found = true;
         }
         if (!found) {
-            Notification.sendClientMessage("Module name \"" + args[0] + "\" not found.", Notification.Type.WARNING);
+            Notification.sendClientMessage(Translator.getInstance().m("Module name {} not found.",args[0]), Notification.Type.WARNING);
         }
         return null;
     }

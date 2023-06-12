@@ -1,14 +1,12 @@
 package xyz.Dot.module.Cheat;
 
 import org.lwjgl.input.Keyboard;
-import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
-import xyz.Dot.ui.Notification;
 
 public class Reach extends Module {
     public static Setting range = new Setting(ModuleManager.getModuleByName("Reach"), "Range", 3.0d, 3.0d, 4.5d, 0.1d);
@@ -20,9 +18,6 @@ public class Reach extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        if(!ModuleManager.SigmaMode){
-            Notification.sendClientMessage("You are not a Sigma user.You can't enable it.", Notification.Type.WARNING);
-        }
     }
 
     @EventHandler

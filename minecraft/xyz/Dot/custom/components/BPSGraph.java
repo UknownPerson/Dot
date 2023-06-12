@@ -6,6 +6,7 @@ import xyz.Dot.module.Client.HUD;
 import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
@@ -91,7 +92,7 @@ public class BPSGraph extends Component {
         }
         avg = Math.round((avg / 96) * 100) / 100.0f;
 
-        String mtext = "BPS.AVG: " + avg;
+        String mtext = Translator.getInstance().m("BPS.AVG") + ": " + avg;
         FontLoaders.normalfont16.drawString(mtext, StartXspeed + 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());
         int num = 0;
 

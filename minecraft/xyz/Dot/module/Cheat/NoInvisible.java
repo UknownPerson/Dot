@@ -6,7 +6,6 @@ import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
-import xyz.Dot.ui.Notification;
 
 public class NoInvisible extends Module {
     public NoInvisible() {
@@ -16,9 +15,7 @@ public class NoInvisible extends Module {
     @Override
     public void onEnable() {
         super.onEnable();
-        if(!ModuleManager.SigmaMode){
-            Notification.sendClientMessage("You are not a Sigma user.You can't enable it.", Notification.Type.WARNING);
-        }
+
     }
 
     @EventHandler

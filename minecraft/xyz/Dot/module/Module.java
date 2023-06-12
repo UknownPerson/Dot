@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.Notification;
+import xyz.Dot.utils.Translator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Module {
     private String name;
@@ -106,14 +106,22 @@ public class Module {
         if (this.toggle == toggle) {
             return;
         }
+
+        if(this.getModuletype() == Category.Cheat){
+            if(!ModuleManager.SigmaMode){
+                Notification.sendClientMessage(Translator.getInstance().m("You are not a Sigma user.You can't enable it."), Notification.Type.WARNING);
+                return;
+            }
+        }
+
         if (toggle) {
             EventBus.getInstance().register(new Object[]{this});
             onEnable();
-            Notification.sendClientMessage(this.name + " was enabled.", Notification.Type.SUCCESS);
+            Notification.sendClientMessage(this.name + " " + Translator.getInstance().m(" was enabled."), Notification.Type.SUCCESS);
         } else {
             EventBus.getInstance().unregister(new Object[]{this});
             onDisable();
-            Notification.sendClientMessage(this.name + " was disabled.", Notification.Type.ERROR);
+            Notification.sendClientMessage(this.name + Translator.getInstance().m(" was disabled."), Notification.Type.ERROR);
         }
         this.toggle = toggle;
     }

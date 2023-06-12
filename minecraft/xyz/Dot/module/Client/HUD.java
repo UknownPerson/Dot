@@ -1,5 +1,6 @@
 package xyz.Dot.module.Client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
@@ -16,6 +17,7 @@ import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.TimerUtil;
+import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
@@ -25,12 +27,30 @@ public class HUD extends Module {
     public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
     public static Setting arraylistColor = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList Color",new Color(-1));
     public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", false);
-    public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shaow", false);
+    public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shadow", false);
     public static Setting transparent = new Setting(ModuleManager.getModuleByName("HUD"), "Transparent", false);
+    static ArrayList<String> languages = new ArrayList<>(getLanguages());
+    public static Setting lang = new Setting(ModuleManager.getModuleByName("HUD"), "Language", "Hypixel", languages){
+        @Override
+        public void setCurrentMode(String currentMode) {
+            if(currentMode.equals("English")){
+                Translator.getInstance().clearMessages();
+            }else {
+                Translator.getInstance().addMessages(Minecraft.class.getResourceAsStream("/language/" + currentMode.toLowerCase() + ".lang"));
+            }
+            super.setCurrentMode(currentMode);
+        }
+    };
 
+    public static ArrayList<String> getLanguages() {
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("English");
+        temp.add("Chinese");
+        return temp;
+    }
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
-        this.addValues(hudarraylist,arraylistColor,blur, shadow,transparent);
+        this.addValues(lang,hudarraylist,arraylistColor,blur, shadow,transparent);
     }
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;
@@ -113,7 +133,7 @@ public class HUD extends Module {
         for (Module m : ModuleManager.getModules()) {
             list.add(m);
         }
-        list.sort((o1, o2) -> font1.getStringWidth(o2.getName()) - font1.getStringWidth(o1.getName()));
+        list.sort((o1, o2) -> font1.getStringWidth(Translator.getInstance().m(o2.getName())) - font1.getStringWidth(Translator.getInstance().m(o1.getName())));
 
         if(!hudarraylist.isToggle()){
             return;
@@ -128,7 +148,7 @@ public class HUD extends Module {
 
             float yaddto;
             float endx = RenderUtils.width() - 10;
-            float x = endx - font1.getStringWidth(m.getName());
+            float x = endx - font1.getStringWidth(Translator.getInstance().m(m.getName()));
 
             if (m.isToggle()) {
                 yaddto = 15;
@@ -160,15 +180,15 @@ public class HUD extends Module {
 
             RenderUtils.drawRect((int) x - 3, (int) y, (int) (endx + 3), (int) (y + yadd), new Color(0, 0, 0, 64).getRGB());
             //RenderUtils.drawRect((int) (endx + 2), (int) y, (int) (endx + 2 + 1), (int) (y + yadd), rainbow.getRGB());
-            if (yadd > font1.getStringHeight(m.getName())) {
-                int alpha = Math.round(((yadd - font1.getStringHeight(m.getName())) / (yadtemp - 6.0f)) * 255);
+            if (yadd > font1.getStringHeight(Translator.getInstance().m(m.getName()))) {
+                int alpha = Math.round(((yadd - font1.getStringHeight(Translator.getInstance().m(m.getName()))) / (yadtemp - 6.0f)) * 255);
                 if (alpha < 5) {
                     alpha = 5;
                 } else if (alpha > 255) {
                     alpha = 255;
                 }
 
-                font1.drawString(m.getName(), x, (float) (y + yadd * (1 - 0.618)), new Color(arraylistColor.getColor().getRed(),arraylistColor.getColor().getGreen(),arraylistColor.getColor().getBlue(), alpha).getRGB());
+                font1.drawString(Translator.getInstance().m(m.getName()), x, (float) (y + yadd * (1 - 0.618)), new Color(arraylistColor.getColor().getRed(),arraylistColor.getColor().getGreen(),arraylistColor.getColor().getBlue(), alpha).getRGB());
                 //font1.drawString(m.getName(), x, y + (yadd - font1.getStringHeight(m.getName())) / 2 + 1.0f, new Color(rainbow.getRed(), rainbow.getGreen(), rainbow.getBlue(), alpha).getRGB());
             }
             y += yadd;

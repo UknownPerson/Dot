@@ -11,6 +11,7 @@ import xyz.Dot.Client;
 import xyz.Dot.command.Command;
 import xyz.Dot.module.Module;
 import xyz.Dot.ui.Notification;
+import xyz.Dot.utils.Translator;
 
 public class Bind
 extends Command {
@@ -28,9 +29,9 @@ extends Command {
                 Object[] arrobject = new Object[2];
                 arrobject[0] = m.getName();
                 arrobject[1] = k == 0 ? "none" : args[1].toUpperCase();
-                Notification.sendClientMessage(String.format("Successful bind %s to %s", arrobject), Notification.Type.SUCCESS);
+                Notification.sendClientMessage(String.format(Translator.getInstance().m("Successful bind {} to {}", arrobject)), Notification.Type.SUCCESS);
             } else {
-                Notification.sendClientMessage("Bind unsuccessful, please check spelling.", Notification.Type.WARNING);
+                Notification.sendClientMessage(Translator.getInstance().m("Bind unsuccessful, please check spelling."), Notification.Type.WARNING);
             }
         } else {
             Notification.sendClientMessage(".bind <module> <key>", Notification.Type.INFO);
