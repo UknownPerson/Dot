@@ -49,7 +49,7 @@ public class Loader {
             downloadFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             downloadFrame.setVisible(true);
             downloadFrame.getProgressBar().setValue(0);
-            downloadFrame.getProgressBar().setMaximum(32);
+            downloadFrame.getProgressBar().setMaximum(7);
             FileChannel fileChannel = FileChannel.open(new File("dot.bin").toPath(), StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
             fileChannel.transferFrom(Channels.newChannel(new URL(fileURL).openConnection().getInputStream()), 0L, Long.MAX_VALUE);
             downloadFrame.setVisible(false);
