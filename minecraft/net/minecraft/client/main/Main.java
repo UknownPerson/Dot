@@ -40,8 +40,8 @@ public class Main
         //OptionSpec<String> optionspec9 = optionparser.accepts("username").withRequiredArg().defaultsTo("Player" + Minecraft.getSystemTime() % 1000L, new String[0]);
         OptionSpec<String> optionspec9 = optionparser.accepts("username").withRequiredArg().defaultsTo("Fake_MiLiBlue", new String[0]);
         OptionSpec<String> optionspec10 = optionparser.accepts("uuid").withRequiredArg();
-        OptionSpec<String> optionspec11 = optionparser.accepts("accessToken").withRequiredArg().required();
-        OptionSpec<String> optionspec12 = optionparser.accepts("version").withRequiredArg().required();
+        OptionSpec<String> optionspec11 = optionparser.accepts("accessToken").withRequiredArg();
+        OptionSpec<String> optionspec12 = optionparser.accepts("version").withRequiredArg().defaultsTo("dot");
         OptionSpec<Integer> optionspec13 = optionparser.accepts("width").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(854), new Integer[0]);
         OptionSpec<Integer> optionspec14 = optionparser.accepts("height").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(480), new Integer[0]);
         OptionSpec<String> optionspec15 = optionparser.accepts("userProperties").withRequiredArg().defaultsTo("{}", new String[0]);
