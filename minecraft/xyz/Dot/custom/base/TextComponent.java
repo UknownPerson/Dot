@@ -1,6 +1,5 @@
 package xyz.Dot.custom.base;
 
-import xyz.Dot.custom.Component;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.utils.RenderUtils;

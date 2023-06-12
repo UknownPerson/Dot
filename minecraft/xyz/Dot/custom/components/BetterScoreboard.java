@@ -8,7 +8,7 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.EnumChatFormatting;
-import xyz.Dot.custom.Component;
+import xyz.Dot.custom.base.Component;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.setting.Setting;
@@ -106,15 +106,25 @@ public class BetterScoreboard extends Component {
         this.setWidth((int) ( width));
         for (int i = 0; i < length; i++) {
 
-            fontRenderer.drawStringWithShadow(formattedPlayerNames[i].split("\r")[0], (float) ((double) sX + 2), sb + height - (i + 1) * 9, 0xFFFFFFFF);
+            fontRenderer.drawStringWithShadow(processString(formattedPlayerNames[i].split("\r")[0]), (float) ((double) sX + 2), sb + height - (i + 1) * 9, 0xFFFFFFFF);
             if (num.isToggle()) {
                 String num = EnumChatFormatting.RED + "" + formattedPlayerNames[i].split("\r")[1];
                 Minecraft.getMinecraft().fontRendererObj.drawString(num, x + width - Minecraft.getMinecraft().fontRendererObj.getStringWidth(num),sb + height - (i + 1) * 9, -1);
             }
         }
 
-        fontRenderer.drawStringWithShadow(objective.getDisplayName(),
-                (float) ((double) sX + width / 2.0F - fontRenderer.getStringWidth(objective.getDisplayName()) / 2.0F),
+        fontRenderer.drawStringWithShadow(processString(objective.getDisplayName()),
+                (float) ((double) sX + width / 2.0F - fontRenderer.getStringWidth(processString(objective.getDisplayName())) / 2.0F),
                 sb + 2, 0xFFFFFFFF);
+    }
+
+    private String processString(String text) {
+        String str = "";
+        for (char c : text.toCharArray()) {
+            if ((c < 50000 || c > 60000) && c != 9917) str += c;
+        }
+        text = str.replace("\247r", "").replace('▬', '=').replace('❤', '♥').replace('⋆', '☆').replace('☠', '☆').replace('✰', '☆').replace("✫", "☆").replace("✙", "+");
+        text = text.replace('⬅', '←').replace('⬆', '↑').replace('⬇', '↓').replace('➡', '→').replace('⬈', '↗').replace('⬋', '↙').replace('⬉', '↖').replace('⬊', '↘');
+        return text;
     }
 }

@@ -1,6 +1,7 @@
 package xyz.Dot.custom;
 
 import net.minecraft.client.Minecraft;
+import xyz.Dot.custom.base.Component;
 import xyz.Dot.custom.base.TextComponent;
 import xyz.Dot.custom.components.*;
 import xyz.Dot.ui.Custom;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 public class ComponentManager {
     public final ArrayList<Component> components = new ArrayList<>();
     public boolean init = false;
+
+    public Component dragging;
 
     public ComponentManager(){
         init();

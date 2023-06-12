@@ -2,7 +2,7 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.gui.GuiScreen;
 import xyz.Dot.Client;
-import xyz.Dot.custom.Component;
+import xyz.Dot.custom.base.Component;
 
 import java.io.IOException;
 

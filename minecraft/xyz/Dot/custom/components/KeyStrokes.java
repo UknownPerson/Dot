@@ -2,7 +2,7 @@ package xyz.Dot.custom.components;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
-import xyz.Dot.custom.Component;
+import xyz.Dot.custom.base.Component;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.ui.CFontRenderer;

@@ -141,6 +141,10 @@ public class GuiIngame extends Gui
 
     public void renderGameOverlay(float partialTicks)
     {
+        if(Minecraft.getMinecraft().gameSettings.ofFastRender && (HUD.blur.isToggle() || HUD.shadow.isToggle())){
+            Minecraft.getMinecraft().gameSettings.ofFastRender = false;
+        }
+
         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
         int i = scaledresolution.getScaledWidth();
         int j = scaledresolution.getScaledHeight();
@@ -399,6 +403,7 @@ public class GuiIngame extends Gui
         }
 
         ShaderManager.getTasks().clear();
+        ShaderManager.getBloomTasks().clear();
         EventBus.getInstance().call(new EventRender2D(partialTicks));
 
         Client.instance.componentManager.drawComponents();

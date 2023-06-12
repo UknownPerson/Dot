@@ -1,4 +1,4 @@
-package xyz.Dot.custom;
+package xyz.Dot.custom.base;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -99,24 +99,31 @@ public abstract class Component extends Gui {
             int x = (int) (mouseX - this.dragX);
             int y = (int) (mouseY - this.dragY);
 
-            if(Math.abs(x - getPosX()) > 3){
-                adjustX = false;
-            }
-
-            if(Math.abs(y - getPosY()) > 3){
-                adjustY = false;
-            }
-
-            if(check(x,1)){
-                if(!adjustX){
-                    setPosX(x);
+            if(Client.instance.componentManager.dragging == null || Client.instance.componentManager.dragging == this) {
+                Client.instance.componentManager.dragging = this;
+                if (Math.abs(x - getPosX()) > 3) {
+                    adjustX = false;
                 }
 
-            }
-            if(check(1,y)){
-                if(!adjustY){
-                    setPosY(y);
+                if (Math.abs(y - getPosY()) > 3) {
+                    adjustY = false;
                 }
+
+                if (check(x, 1)) {
+                    if (!adjustX) {
+                        setPosX(x);
+                    }
+
+                }
+                if (check(1, y)) {
+                    if (!adjustY) {
+                        setPosY(y);
+                    }
+                }
+            }
+        }else {
+            if(Client.instance.componentManager.dragging == this){
+                Client.instance.componentManager.dragging =null;
             }
         }
     }

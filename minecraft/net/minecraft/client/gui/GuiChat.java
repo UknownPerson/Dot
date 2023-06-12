@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import xyz.Dot.Client;
-import xyz.Dot.custom.Component;
+import xyz.Dot.custom.base.Component;
 
 import java.io.IOException;
 import java.util.List;

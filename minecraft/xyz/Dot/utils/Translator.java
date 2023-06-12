@@ -1,6 +1,6 @@
 package xyz.Dot.utils;
 
-import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -89,29 +89,23 @@ public class Translator {
 		variables.clear();
 	}
 
-	private boolean add(InputStream inputStream, Map map) {
-		StringBuilder output = new StringBuilder();
-		InputStreamReader reader = null;
+	public static String readInputStream(InputStream inputStream) {
+		StringBuilder stringBuilder = new StringBuilder();
+
 		try {
-			reader = new InputStreamReader(inputStream);
-			char[] buffer = new char[256];
-			while (true) {
-				int length = reader.read(buffer);
-				if (length == -1)
-					break;
-				output.append(buffer, 0, length);
-			}
-			return add(output.toString(), map);
-		} catch (IOException ex) {
-			return false;
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-				}
-			}
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+			String line;
+			while ((line = bufferedReader.readLine()) != null)
+				stringBuilder.append(line).append('\n');
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return stringBuilder.toString();
+	}
+
+	private boolean add(InputStream inputStream, Map map) {
+		return add(readInputStream(inputStream), map);
 	}
 
 	private boolean add(String properties, Map map) {
