@@ -20,8 +20,8 @@ import net.optifine.render.GlBlendState;
 import net.optifine.util.FontUtils;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.GL11;
-import xyz.Dot.ui.superfont.IBFFontRenderer;
-import xyz.Dot.ui.superfont.StringCache;
+import xyz.Dot.ui.font.IBFFontRenderer;
+import xyz.Dot.ui.font.StringCache;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

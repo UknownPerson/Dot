@@ -1,4 +1,4 @@
-package xyz.Dot.ui.superfont;
+package xyz.Dot.ui.font;
 
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;

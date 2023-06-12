@@ -1,4 +1,4 @@
-package xyz.Dot.ui.superfont;
+package xyz.Dot.ui.font;
 
 public interface IBFFontRenderer
 {

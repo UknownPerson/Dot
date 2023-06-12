@@ -2,12 +2,20 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.MathHelper;
+import xyz.Dot.module.Client.CustomColor;
+import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.shader.ShaderManager;
+
+import java.awt.*;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class GuiTextField extends Gui
 {
@@ -519,6 +527,12 @@ public class GuiTextField extends Gui
         }
     }
 
+    float red = 0;
+    float green = 0;
+    float blue = 0;
+    float alpha = 0;
+
+
     /**
      * Draws the textbox
      */
@@ -528,8 +542,38 @@ public class GuiTextField extends Gui
         {
             if (this.getEnableBackgroundDrawing())
             {
-                drawRect(this.xPosition - 1, this.yPosition - 1, this.xPosition + this.width + 1, this.yPosition + this.height + 1, -6250336);
-                drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, -16777216);
+                if (this.isFocused) {
+                    red = RenderUtils.toanim(red, CustomColor.getColor().getRed(), 4, 0.1f);
+                    green = RenderUtils.toanim(green, CustomColor.getColor().getGreen(), 4, 0.1f);
+                    blue = RenderUtils.toanim(blue, CustomColor.getColor().getBlue(), 4, 0.1f);
+                    alpha = RenderUtils.toanim(alpha, 100, 4, 0.1f);
+                } else {
+                    red = RenderUtils.toanim(red, 0, 4, 0.1f);
+                    green = RenderUtils.toanim(green, 0, 4, 0.1f);
+                    blue = RenderUtils.toanim(blue, 0, 4, 0.1f);
+                    alpha = RenderUtils.toanim(alpha, 64, 4, 0.1f);
+                }
+                if(Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().theWorld != null){
+                    ShaderManager.addBlurTask(() -> RenderUtils.drawRoundRect(xPosition, yPosition, xPosition + width, yPosition + height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha)));
+                }else {
+                    Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);
+                    GuiIngame.checkSetupFBO(Minecraft.getMinecraft().getFramebuffer());
+                    glClear(GL_STENCIL_BUFFER_BIT);
+                    glEnable(GL_STENCIL_TEST);
+
+                    glStencilFunc(GL_ALWAYS, 1, 1);
+                    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+                    glColorMask(false, false, false, false);
+                    RenderUtils.drawRoundRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
+
+                    glColorMask(true, true, true, true);
+                    glStencilFunc(GL_EQUAL, 1, 1);
+                    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+                    ShaderManager.renderBlur(8);
+                    glDisable(GL_STENCIL_TEST);
+                }
+                RenderUtils.drawRoundRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
+
             }
 
             int i = this.isEnabled ? this.enabledColor : this.disabledColor;

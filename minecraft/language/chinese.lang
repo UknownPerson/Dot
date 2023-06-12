@@ -77,3 +77,4 @@ Successful bind {} to {} = 成功绑定{}到按键{}
 Module name {} not found. = 找不到模块{}
  was enabled. = 已经启用
  was disabled. = 已经禁用
+Refresh = 刷新

@@ -142,17 +142,34 @@ public abstract class Component extends Gui {
     public void draw(float partialTicks) {
         if (! doDraw() || ! module.isToggle() || ! canDraw())
             return;
+
+        ScaledResolution sr = new ScaledResolution(mc);
+        if(Math.abs(sr.getScaledWidth() / 2f - (this.getPosX() + (width / 2f))) < 3) {
+            if(drag){
+                adjustX = true;
+                this.setPosX((int) (sr.getScaledWidth() / 2f - width / 2f));
+                RenderUtils.drawRectWH(sr.getScaledWidth() / 2f, 0, 1, new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight(), CustomColor.getColor().getRGB());
+
+            }
+        }
+        if(Math.abs(sr.getScaledHeight() / 2f - (this.getPosY() + (height / 2f))) < 3) {
+            if(drag){
+                adjustY = true;
+                this.setPosY((int) (sr.getScaledHeight() / 2f - height / 2f));
+                RenderUtils.drawRectWH(0,sr.getScaledHeight() / 2f,new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth(),1, CustomColor.getColor().getRGB());
+            }
+        }
         for(Component object : Client.instance.componentManager.components){
             if(!object.module.isToggle() || object == this)
                 continue;
-            if(Math.abs(object.getPosX() - this.getPosX()) < 4){
+            if(Math.abs(object.getPosX() - this.getPosX()) < 3){
                 if(drag){
                     this.setPosX((int) object.getPosX());
                     RenderUtils.drawRectWH(getPosX(),0,1,new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight(),CustomColor.getColor().getRGB());
                     adjustX = true;
                 }
             }
-            if(Math.abs(object.getPosY() - this.getPosY()) < 4){
+            if(Math.abs(object.getPosY() - this.getPosY()) < 3){
                 if(drag){
                     this.setPosY((int) object.getPosY());
                     RenderUtils.drawRectWH(0,getPosY(),new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth(),1, CustomColor.getColor().getRGB());

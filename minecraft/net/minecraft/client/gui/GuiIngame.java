@@ -391,7 +391,7 @@ public class GuiIngame extends Gui
             bloomFramebuffer = ShaderManager.createFrameBuffer(bloomFramebuffer);
             bloomFramebuffer.framebufferClear();
             bloomFramebuffer.bindFramebuffer(true);
-            for(Runnable runnable : ShaderManager.getTasks()){
+            for(Runnable runnable : ShaderManager.getBloomTasks()){
                 runnable.run();
             }
             bloomFramebuffer.unbindFramebuffer();

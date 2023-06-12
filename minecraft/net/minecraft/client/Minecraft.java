@@ -134,7 +134,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * A 10MiB preallocation to ensure the heap is reasonably sized.
      */
     public static byte[] memoryReserve = new byte[10485760];
-    private final File fileResourcepacks;
+    public final File fileResourcepacks;
     private final PropertyMap twitchDetails;
     /**
      * The font renderer used for displaying and measuring text
@@ -279,8 +279,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private IReloadableResourceManager mcResourceManager;
     private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
     private final List<IResourcePack> defaultResourcePacks = Lists.<IResourcePack>newArrayList();
-    private final DefaultResourcePack mcDefaultResourcePack;
-    private ResourcePackRepository mcResourcePackRepository;
+    public final DefaultResourcePack mcDefaultResourcePack;
+    public ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
     private IStream stream;
     private Framebuffer framebufferMc;

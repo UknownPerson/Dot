@@ -1,6 +1,5 @@
 package net.minecraft.client.gui;
 
-import java.io.IOException;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessorComposite;
@@ -14,6 +13,9 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumDifficulty;
+import xyz.Dot.ui.pack.gui.GuiCustomResourcePacks;
+
+import java.io.IOException;
 
 public class GuiOptions extends GuiScreen implements GuiYesNoCallback
 {
@@ -203,7 +205,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
             if (button.id == 105)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(new GuiScreenResourcePacks(this));
+                this.mc.displayGuiScreen(new GuiCustomResourcePacks(this));
             }
 
             if (button.id == 106)

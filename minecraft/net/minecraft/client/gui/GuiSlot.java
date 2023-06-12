@@ -15,7 +15,7 @@ public abstract class GuiSlot
     protected int height;
 
     /** The top of the slot container. Affects the overlays and scrolling. */
-    protected int top;
+    public int top;
 
     /** The bottom of the slot container. Affects the overlays and scrolling. */
     protected int bottom;
