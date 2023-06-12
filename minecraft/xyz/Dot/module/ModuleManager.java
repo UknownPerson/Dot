@@ -46,13 +46,11 @@ public class ModuleManager {
         //Misc
         this.addModule(new AutoGG());
         this.addModule(new BetterSneak());
-        this.addModule(new KeyStrokes());
         this.addModule(new Sprint());
         this.addModule(new Teams());
         this.addModule(new FreeLook());
 
         //Render
-        this.addModule(new BetterScoreboard());
         this.addModule(new BetterTabList());
         this.addModule(new BlockOverlay());
         this.addModule(new EveryThingBlock());

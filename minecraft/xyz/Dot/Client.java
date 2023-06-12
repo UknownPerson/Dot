@@ -3,6 +3,7 @@ package xyz.Dot;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
 import xyz.Dot.command.CommandManager;
+import xyz.Dot.custom.ComponentManager;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.world.EventTick;
@@ -27,6 +28,8 @@ public enum Client {
     public CustomFileManager customfilemanager;
     public FontLoaders fontloaders;
 
+    public ComponentManager componentManager;
+
     public void run(){
         eventmanger = new EventBus();
         modulemanager = new ModuleManager();
@@ -34,6 +37,7 @@ public enum Client {
         commandmanager = new CommandManager();
         customfilemanager = new CustomFileManager();
         fontloaders = new FontLoaders();
+        componentManager = new ComponentManager();
         String title = client_name + " " + client_version + " " + getSigma() +getDevMode() + "- Minecraft 1.8.9";
         Display.setTitle(title);
         modulemanager.loadModule();

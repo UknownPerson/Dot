@@ -140,6 +140,10 @@ public class Setting {
         return currentValue;
     }
 
+    public Double getDouble() {
+        return currentValue;
+    }
+
     public void setCurrentValue(double currentValue) {
         this.currentValue = currentValue;
     }

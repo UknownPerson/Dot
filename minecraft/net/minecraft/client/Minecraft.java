@@ -95,12 +95,12 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 import xyz.Dot.Client;
+import xyz.Dot.custom.components.KeyStrokes;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.ModuleManager;
-import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
 import xyz.Dot.ui.LoginUI;
@@ -1863,12 +1863,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 }
             } else {
                 while (this.gameSettings.keyBindPickBlock.isPressed()) {
-                    Custom.cpsl.add(System.nanoTime());
+                    KeyStrokes.cpsl.add(System.nanoTime());
                     this.clickMouse();
                 }
 
                 while (this.gameSettings.keyBindDrop.isPressed()) {
-                    Custom.cpsr.add(System.nanoTime());
+                    KeyStrokes.cpsr.add(System.nanoTime());
                     this.rightClickMouse();
                 }
 

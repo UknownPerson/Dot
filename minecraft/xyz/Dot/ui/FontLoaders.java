@@ -13,11 +13,11 @@ import java.util.Map;
 
 public class FontLoaders {
     private static HashMap fonts = new HashMap();
-    public static CFontRenderer normalfont10 = new CFontRenderer(FontLoaders.getNormalFont(10),65535);
-    public static CFontRenderer normalfont12 = new CFontRenderer(FontLoaders.getNormalFont(12),65535);
+    public static CFontRenderer normalfont10 = new CFontRenderer(FontLoaders.getNormalFont(10));
+    public static CFontRenderer normalfont12 = new CFontRenderer(FontLoaders.getNormalFont(12));
     public static CFontRenderer normalfont16 = new CFontRenderer(FontLoaders.getNormalFont(16),65535);
-    public static CFontRenderer normalfont20 = new CFontRenderer(FontLoaders.getNormalFont(20),65535);
-    public static CFontRenderer normalfont36 = new CFontRenderer(FontLoaders.getNormalFont(36),65535);
+    public static CFontRenderer normalfont20 = new CFontRenderer(FontLoaders.getNormalFont(20));
+    public static CFontRenderer normalfont36 = new CFontRenderer(FontLoaders.getNormalFont(36));
 
     public static CFontRenderer comfortaafont16 = new CFontRenderer(FontLoaders.getComfortaaFont(16));
 

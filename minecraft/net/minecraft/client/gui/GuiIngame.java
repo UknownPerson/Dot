@@ -34,12 +34,13 @@ import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
 import org.lwjgl.opengl.EXTPackedDepthStencil;
+import xyz.Dot.Client;
+import xyz.Dot.custom.components.BetterScoreboard;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.ModuleManager;
-import xyz.Dot.ui.Custom;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.shader.BloomUtil;
@@ -400,6 +401,8 @@ public class GuiIngame extends Gui
         ShaderManager.getTasks().clear();
         EventBus.getInstance().call(new EventRender2D(partialTicks));
 
+        Client.instance.componentManager.drawComponents();
+
         if (ModuleManager.getModuleByName("Notifications").isToggle()) {
             Notification.drawNotifications();
         }
@@ -650,7 +653,7 @@ public class GuiIngame extends Gui
 
     private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
         if (ModuleManager.getModuleByName("BetterScoreboard").isToggle()) {
-            Custom.drawScoreboard(objective, scaledRes);
+            BetterScoreboard.objective = objective;
         } else {
 
             Scoreboard scoreboard = objective.getScoreboard();

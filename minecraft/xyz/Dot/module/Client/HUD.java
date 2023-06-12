@@ -22,12 +22,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class HUD extends Module {
-    public static Setting dotx = new Setting(ModuleManager.getModuleByName("HUD"), "Dot_X", 20.0d, 0.0d, 1.0d, 1.0d);
-    public static Setting doty = new Setting(ModuleManager.getModuleByName("HUD"), "Dot_Y", 25.0d, 0.0d, 1.0d, 1.0d);
-    public static Setting bpsx = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG_X", 20.0d, 0.0d, 1.0d, 1.0d);
-    public static Setting bpsy = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG_Y", 96.0d, 0.0d, 1.0d, 1.0d);
-    public static Setting dotbox = new Setting(ModuleManager.getModuleByName("HUD"), "Dot", true);
-    public static Setting bpsavg = new Setting(ModuleManager.getModuleByName("HUD"), "BPS.AVG", true);
     public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
     public static Setting arraylistColor = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList Color",new Color(-1));
     public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", false);
@@ -36,7 +30,7 @@ public class HUD extends Module {
 
     public HUD() {
         super("HUD", Keyboard.KEY_NONE, Category.Client);
-        this.addValues(dotx,doty,bpsx,bpsy,dotbox,bpsavg,hudarraylist,arraylistColor,blur, shadow,transparent);
+        this.addValues(hudarraylist,arraylistColor,blur, shadow,transparent);
     }
     double posx, posy, posz, lastpx = 0, lastpy = 0, lastpz = 0;
     public static float movespeed;
@@ -103,11 +97,7 @@ public class HUD extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-        dotx.setMaxValue(RenderUtils.width());
-        doty.setMaxValue(RenderUtils.height());
-        bpsx.setMaxValue(RenderUtils.width());
-        bpsy.setMaxValue(RenderUtils.height());
-    	
+
         if (mc.gameSettings.showDebugProfilerChart) {
             return;
         }
@@ -125,12 +115,6 @@ public class HUD extends Module {
         }
         list.sort((o1, o2) -> font1.getStringWidth(o2.getName()) - font1.getStringWidth(o1.getName()));
 
-        if(dotbox.isToggle()){
-            Custom.drawDot();
-        }
-        if(bpsavg.isToggle()){
-            Custom.drawBPSAVG();
-        }
         if(!hudarraylist.isToggle()){
             return;
         }

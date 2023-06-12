@@ -1,19 +1,18 @@
 package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.util.List;
 import net.minecraft.network.play.client.C14PacketTabComplete;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import xyz.Dot.Client;
+import xyz.Dot.custom.Component;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GuiChat extends GuiScreen
 {
@@ -181,6 +180,8 @@ public class GuiChat extends GuiScreen
             }
         }
 
+
+
         this.inputField.mouseClicked(mouseX, mouseY, mouseButton);
         super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -307,6 +308,11 @@ public class GuiChat extends GuiScreen
         if (ichatcomponent != null && ichatcomponent.getChatStyle().getChatHoverEvent() != null)
         {
             this.handleComponentHover(ichatcomponent, mouseX, mouseY);
+        }
+
+
+        for (Component object : Client.instance.componentManager.components) {
+            object.doDrag(mouseX, mouseY);
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);
