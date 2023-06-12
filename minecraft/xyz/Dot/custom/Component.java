@@ -18,6 +18,8 @@ import java.lang.reflect.Field;
 public abstract class Component extends Gui {
     public Module module;
 
+    protected Minecraft mc =Minecraft.getMinecraft();
+
     public Setting xValue;
     public Setting yValue;
     public int width;

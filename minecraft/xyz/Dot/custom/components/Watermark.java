@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class Watermark extends Component {
     public Watermark() {
-        super(64, 12, "Watermark");
+        super(64, 56, "Watermark");
     }
 
     @Override

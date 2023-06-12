@@ -2,10 +2,7 @@ package xyz.Dot.custom;
 
 import net.minecraft.client.Minecraft;
 import xyz.Dot.custom.base.TextComponent;
-import xyz.Dot.custom.components.BPSGraph;
-import xyz.Dot.custom.components.BetterScoreboard;
-import xyz.Dot.custom.components.KeyStrokes;
-import xyz.Dot.custom.components.Watermark;
+import xyz.Dot.custom.components.*;
 import xyz.Dot.ui.Custom;
 
 import java.util.ArrayList;
@@ -22,7 +19,9 @@ public class ComponentManager {
         components.add(new Watermark());
         components.add(new BPSGraph());
         components.add(new KeyStrokes());
+        components.add(new PotionEffects());
         components.add(new BetterScoreboard());
+        components.add(new Coordinate());
         components.add(new TextComponent("FPS", () -> Minecraft.getDebugFPS() + " FPS"));
         components.add(new TextComponent("CPS", () -> KeyStrokes.lastCPS + " CPS"));
         components.add(new TextComponent("ServerAddress",() -> Minecraft.getMinecraft().isIntegratedServerRunning() ? "Singleplayer" : Minecraft.getMinecraft().getCurrentServerData().serverIP));
