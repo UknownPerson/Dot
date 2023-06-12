@@ -1,6 +1,5 @@
 package xyz.Dot.custom.base;
 
-import net.minecraft.client.Minecraft;
 import xyz.Dot.custom.Component;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.setting.Setting;
@@ -36,14 +35,14 @@ public class TextComponent extends Component {
             ShaderManager.addBloomTask(() -> RenderUtils.drawRoundRect(x,y,x + width(),y + height(),4,new Color(0,0,0,100)));
         }
         RenderUtils.drawRoundRect(x,y,x + width(),y + height(),4,new Color(0,0,0,100));
-        Minecraft.fontRendererObj.drawCenteredString(method.get(),x + width() / 2f,y + (background.isToggle() ?OFFSET :0) ,-1);
+        mc.fontRendererObj.drawCenteredString(method.get(),x + width() / 2f,y + (background.isToggle() ?OFFSET :0) ,-1);
     }
 
     public int height() {
-        return ( Minecraft.fontRendererObj.FONT_HEIGHT + (background.isToggle() ? OFFSET * 2 : 0));
+        return ( mc.fontRendererObj.FONT_HEIGHT + (background.isToggle() ? OFFSET * 2 : 0));
     }
 
     public int width() {
-        return (Minecraft.fontRendererObj.getStringWidth(method.get()) + 40);
+        return (mc.fontRendererObj.getStringWidth(method.get()) + 40);
     }
 }

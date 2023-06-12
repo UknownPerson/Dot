@@ -139,7 +139,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     /**
      * The font renderer used for displaying and measuring text
      */
-    public static FontRenderer fontRendererObj;
+    public FontRenderer fontRendererObj;
     /**
      * The FrameTimer's instance
      */
@@ -174,12 +174,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Gui achievement
      */
     public GuiAchievement guiAchievement;
-    public static WorldClient theWorld;
+    public WorldClient theWorld;
     public RenderGlobal renderGlobal;
     private RenderManager renderManager;
     private RenderItem renderItem;
     private ItemRenderer itemRenderer;
-    public static EntityPlayerSP thePlayer;
+    public EntityPlayerSP thePlayer;
     private Entity renderViewEntity;
     public Entity pointedEntity;
     public EffectRenderer effectRenderer;

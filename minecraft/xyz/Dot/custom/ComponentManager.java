@@ -29,8 +29,8 @@ public class ComponentManager {
             if (Minecraft.getMinecraft().currentScreen instanceof Custom) {
                 return "ItemInfo";
             } else {
-                if (Minecraft.thePlayer.getHeldItem() != null) {
-                    return Minecraft.thePlayer.getHeldItem().getDisplayName() + " x" + Minecraft.thePlayer.getHeldItem().stackSize;
+                if (Minecraft.getMinecraft().thePlayer.getHeldItem() != null) {
+                    return Minecraft.getMinecraft().thePlayer.getHeldItem().getDisplayName() + " x" + Minecraft.getMinecraft().thePlayer.getHeldItem().stackSize;
                 }
             }
             return "";

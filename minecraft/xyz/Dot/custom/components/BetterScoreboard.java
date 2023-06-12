@@ -53,7 +53,7 @@ public class BetterScoreboard extends Component {
 
         final int length = list.size();
 
-        final FontRenderer fontRenderer = Minecraft.fontRendererObj;
+        final FontRenderer fontRenderer = mc.fontRendererObj;
 
         double width = fontRenderer.getStringWidth(objective.getDisplayName()) + 4;
 
@@ -71,7 +71,7 @@ public class BetterScoreboard extends Component {
             width = Math.max(width, fontRenderer.getStringWidth(formattedPlayerNames[i]) + 4);
         }
 
-        final int height = 11 + list.size() * Minecraft.fontRendererObj.FONT_HEIGHT;
+        final int height = 11 + list.size() * mc.fontRendererObj.FONT_HEIGHT;
         double finalWidth = width;
         if(HUD.blur.isToggle()){
             Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(false);

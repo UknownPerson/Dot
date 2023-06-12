@@ -99,11 +99,11 @@ public abstract class Component extends Gui {
             int x = (int) (mouseX - this.dragX);
             int y = (int) (mouseY - this.dragY);
 
-            if(Math.abs(x - getPosX()) > 5){
+            if(Math.abs(x - getPosX()) > 3){
                 adjustX = false;
             }
 
-            if(Math.abs(y - getPosY()) > 5){
+            if(Math.abs(y - getPosY()) > 3){
                 adjustY = false;
             }
 
