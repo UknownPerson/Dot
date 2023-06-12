@@ -2,7 +2,6 @@ package xyz.Dot;
 
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
-import xyz.Dot.api.PluginManager;
 import xyz.Dot.command.CommandManager;
 import xyz.Dot.custom.ComponentManager;
 import xyz.Dot.event.EventBus;
@@ -29,7 +28,6 @@ public enum Client {
     public CustomFileManager customfilemanager;
     public FontLoaders fontloaders;
 
-    public PluginManager pluginManager;
     public ComponentManager componentManager;
 
     public void run(){
@@ -45,8 +43,6 @@ public enum Client {
         Display.setTitle(title);
 
         modulemanager.loadModule();
-        pluginManager = new PluginManager();
-        pluginManager.init();
         commandmanager.run();
         customfilemanager.loadFiles();
 
