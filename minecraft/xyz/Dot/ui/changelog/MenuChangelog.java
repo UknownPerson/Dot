@@ -24,7 +24,12 @@ public class MenuChangelog {
         announcement.addUpdate(Changelog.Type.Update,"如果你想要随时接收更新，请加入我们的QQ群632512814！");
         Changelog v010423 = new Changelog("更新日志 0.4 - 2023.6.13");
         v010423.addUpdate(Changelog.Type.Add,"添加了自动更新，现在无需重新下载客户端");
+
+
         changelogs.add(v010423);
+
+
+        changelogs.add(announcement);
         Collections.reverse(changelogs);
     }
 
