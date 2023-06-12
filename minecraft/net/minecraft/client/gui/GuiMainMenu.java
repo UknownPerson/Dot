@@ -33,6 +33,7 @@ import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
+import xyz.Dot.ui.changelog.MenuChangelog;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -587,6 +588,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         if (this.a()) {
             this.M.drawScreen(mouseX, mouseY, partialTicks);
         }
+
+        MenuChangelog.instance.draw();
 
         if (this.modUpdateNotification != null) {
             this.modUpdateNotification.drawScreen(mouseX, mouseY, partialTicks);
