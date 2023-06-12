@@ -24,6 +24,7 @@ public class ComponentManager {
         components.add(new KeyStrokes());
         components.add(new PotionEffects());
         components.add(new BetterScoreboard());
+        components.add(new Armors());
         components.add(new Coordinate());
         components.add(new TextComponent("FPS", () -> Minecraft.getDebugFPS() + " FPS"));
         components.add(new TextComponent("CPS", () -> KeyStrokes.lastCPS + " CPS"));

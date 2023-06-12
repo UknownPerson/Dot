@@ -95,6 +95,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 import xyz.Dot.Client;
+import xyz.Dot.custom.components.BetterScoreboard;
 import xyz.Dot.custom.components.KeyStrokes;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.misc.EventKey;
@@ -2032,6 +2033,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * par2Str is displayed on the loading screen to the user unloads the current world first
      */
     public void loadWorld(WorldClient worldClientIn, String loadingMessage) {
+
+        BetterScoreboard.objective = null;
+
         if (worldClientIn == null) {
             NetHandlerPlayClient nethandlerplayclient = this.getNetHandler();
 

@@ -8,11 +8,16 @@ import org.lwjgl.input.Mouse;
 import xyz.Dot.Client;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.CustomColor;
+import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
+import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.Translator;
+import xyz.Dot.utils.shader.ShaderManager;
 
+import java.awt.*;
 import java.lang.reflect.Field;
 
 public abstract class Component extends Gui {
@@ -69,6 +74,14 @@ public abstract class Component extends Gui {
         }
     }
 
+    protected void drawBackground(int StartX,int StartY,String name){
+        int finalStartY = StartY;
+        int finalStartY1 = StartY;
+        ShaderManager.addBlurTask(() -> RenderUtils.drawRoundRect(StartX, finalStartY, StartX + width, finalStartY1 + height,4, new Color(0, 0, 0, 64)));
+        RenderUtils.drawRoundRect(StartX, finalStartY, StartX + width, finalStartY1 + height,4, new Color(0, 0, 0, 64));
+        RenderUtils.drawHalfRoundRect(StartX, StartY, StartX + width, StartY + 12, 4,  HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
+        FontLoaders.normalfont16.drawString(Translator.getInstance().m(name), (int) StartX + 5, (int) StartY + 4, new Color(255, 255, 255).getRGB());
+    }
 
     public float getPosY() {
         return yValue.getDouble().floatValue();
