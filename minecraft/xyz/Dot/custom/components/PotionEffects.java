@@ -19,6 +19,7 @@ import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.ShaderManager;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PotionEffects extends Component {
@@ -29,6 +30,7 @@ public class PotionEffects extends Component {
     }
 
     private final ResourceLocation inventoryBackground = new ResourceLocation("textures/gui/container/inventory.png");
+    private ArrayList<PotionEffect>  activePotionsList = new ArrayList<>();
 
     @Override
     public void drawHUD(float x, float y, float partialTicks) {
@@ -70,14 +72,39 @@ public class PotionEffects extends Component {
 /*            if (collection.size() > 5) {
                 collection = collection.stream().limit(5L).collect(Collectors.toList());
             }*/
-            for(PotionEffect p: EntityLivingBase.activePotionsMap1){
 
-                for (PotionEffect potioneffect : collection) {
 
-                    if(potioneffect != p){
-                        continue;
+            for(PotionEffect potioneffect : collection){
+                boolean has = false;
+               for(PotionEffect p : activePotionsList){
+                   if(p == potioneffect){
+                       has = true;
+                   }
+               }
+               if(!has){
+                   activePotionsList.add(potioneffect);
+               }
+            }
+
+            PotionEffect r = null;
+            for(PotionEffect p : activePotionsList){
+                boolean has = false;
+                for(PotionEffect potioneffect : collection){
+                    if(p == potioneffect){
+                        has = true;
                     }
+                }
 
+                if(!has){
+                    r = p;
+                }
+            }
+
+            if(r != null){
+                activePotionsList.remove(r);
+            }
+
+                for (PotionEffect potioneffect : activePotionsList) {
                     GlStateManager.scale(scale, scale, scale);
                     Potion effects = Potion.potionTypes[potioneffect.getPotionID()];
                     GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -109,9 +136,9 @@ public class PotionEffects extends Component {
                         }
                         default: {
                             if(potioneffect.getAmplifier() < 0){
-                                PType = PType + (potioneffect.getAmplifier() + 256);
+                                PType = PType + " " + (potioneffect.getAmplifier() + 257);
                             }else{
-                                PType = PType + potioneffect.getAmplifier();
+                                PType = PType + " " + (potioneffect.getAmplifier() + 1);
                             }
                         }
                     }
@@ -132,8 +159,6 @@ public class PotionEffects extends Component {
                     GlStateManager.scale(scale_back, scale_back, scale_back);
                     y += l;
                 }
-
-            }
 
             GlStateManager.popMatrix();
         }

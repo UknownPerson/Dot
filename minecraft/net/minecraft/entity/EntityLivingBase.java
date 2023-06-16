@@ -38,8 +38,7 @@ public abstract class EntityLivingBase extends Entity {
     private static final AttributeModifier sprintingSpeedBoostModifier = (new AttributeModifier(sprintingSpeedBoostModifierUUID, "Sprinting speed boost", 0.30000001192092896D, 2)).setSaved(false);
     private BaseAttributeMap attributeMap;
     private final CombatTracker _combatTracker = new CombatTracker(this);
-    private final Map<Integer, PotionEffect> activePotionsMap = Maps.<Integer, PotionEffect>newHashMap();
-    public static ArrayList<PotionEffect> activePotionsMap1 = new ArrayList<>();
+    private final Map<Integer, PotionEffect> activePotionsMap = Maps.newHashMap();
 
     /**
      * The equipment this mob was previously wearing, used for syncing.
@@ -659,9 +658,9 @@ public abstract class EntityLivingBase extends Entity {
             if (this.activePotionsMap.containsKey(Integer.valueOf(potioneffectIn.getPotionID()))) {
                 ((PotionEffect) this.activePotionsMap.get(Integer.valueOf(potioneffectIn.getPotionID()))).combine(potioneffectIn);
                 this.onChangedPotionEffect((PotionEffect) this.activePotionsMap.get(Integer.valueOf(potioneffectIn.getPotionID())), true);
+
             } else {
                 this.activePotionsMap.put(Integer.valueOf(potioneffectIn.getPotionID()), potioneffectIn);
-                activePotionsMap1.add(potioneffectIn);
                 this.onNewPotionEffect(potioneffectIn);
             }
         }
@@ -690,14 +689,14 @@ public abstract class EntityLivingBase extends Entity {
      * Remove the speified potion effect from this entity.
      */
     public void removePotionEffectClient(int potionId) {
-        this.activePotionsMap.remove(Integer.valueOf(potionId));
+        this.activePotionsMap.remove(potionId);
     }
 
     /**
      * Remove the specified potion effect from this entity.
      */
     public void removePotionEffect(int potionId) {
-        PotionEffect potioneffect = (PotionEffect) this.activePotionsMap.remove(Integer.valueOf(potionId));
+        PotionEffect potioneffect = (PotionEffect) this.activePotionsMap.remove(potionId);
 
         if (potioneffect != null) {
             this.onFinishedPotionEffect(potioneffect);

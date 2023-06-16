@@ -84,6 +84,10 @@ public class ShaderManager {
     }
 
     public static void addBlurTask(Runnable context){
+
+        if(Minecraft.getMinecraft().gameSettings.ofFastRender){
+            return;
+        }
         tasks.add(context);
 
     }
