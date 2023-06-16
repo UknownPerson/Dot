@@ -135,6 +135,9 @@ public class HUD extends Module {
         list.sort((o1, o2) -> font1.getStringWidth(Translator.getInstance().m(o2.getName())) - font1.getStringWidth(Translator.getInstance().m(o1.getName())));
 
         if(!hudarraylist.isToggle()){
+            for (Module m : ModuleManager.getModules()) {
+                m.setAnimY(0);
+            }
             return;
         }
 

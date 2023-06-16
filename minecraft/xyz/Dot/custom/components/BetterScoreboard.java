@@ -115,7 +115,7 @@ public class BetterScoreboard extends Component {
 
         fontRenderer.drawStringWithShadow(processString(objective.getDisplayName()),
                 (float) ((double) sX + width / 2.0F - fontRenderer.getStringWidth(processString(objective.getDisplayName())) / 2.0F),
-                sb + 2, 0xFFFFFFFF);
+                sb, 0xFFFFFFFF);
     }
 
     private String processString(String text) {

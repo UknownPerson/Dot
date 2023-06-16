@@ -46,9 +46,9 @@ public class PotionEffects extends Component {
         FontLoaders.normalfont16.drawString(Translator.getInstance().m("Potion Effects"), (int) x + 5, (int) y + 4, new Color(255, 255, 255).getRGB());
         setWidth(120);
         if(PEheight == 0){
-            PEheight = mc.thePlayer.getActivePotionEffects().size() * 33 + 14;
+            PEheight = mc.thePlayer.getActivePotionEffects().size() * 33 + 16;
         }else{
-            PEheight = RenderUtils.toanim(PEheight,mc.thePlayer.getActivePotionEffects().size() * 33 + 14,12,0.1f);
+            PEheight = RenderUtils.toanim(PEheight,mc.thePlayer.getActivePotionEffects().size() * 33 + 16,12,0.1f);
         }
         setHeight((int) PEheight);
         this.drawExamplePotionEffects(mc.thePlayer.getActivePotionEffects(), (int) x, (int) y + 14);
