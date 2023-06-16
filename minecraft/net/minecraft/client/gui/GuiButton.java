@@ -5,6 +5,7 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.util.ResourceLocation;
 import xyz.Dot.module.Client.CustomColor;
+import xyz.Dot.module.Client.HUD;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.shader.ShaderManager;
@@ -107,25 +108,29 @@ public class GuiButton extends Gui {
                 blue = RenderUtils.toanim(blue, 0, 4, 0.1f);
                 alpha = RenderUtils.toanim(alpha, 64, 4, 0.1f);
             }
-            if(mc.thePlayer != null && mc.theWorld != null){
-                ShaderManager.addBlurTask(() -> RenderUtils.drawRoundRect(xPosition, yPosition, xPosition + width, yPosition + height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha)));
-            }else {
-                mc.getFramebuffer().bindFramebuffer(false);
-                GuiIngame.checkSetupFBO(mc.getFramebuffer());
-                glClear(GL_STENCIL_BUFFER_BIT);
-                glEnable(GL_STENCIL_TEST);
 
-                glStencilFunc(GL_ALWAYS, 1, 1);
-                glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-                glColorMask(false, false, false, false);
-                RenderUtils.drawRoundRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
+            if(HUD.blur.isToggle() && !Minecraft.getMinecraft().gameSettings.ofFastRender){
+                if(mc.thePlayer != null && mc.theWorld != null){
+                    ShaderManager.addBlurTask(() -> RenderUtils.drawRoundRect(xPosition, yPosition, xPosition + width, yPosition + height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha)));
+                }else {
+                    mc.getFramebuffer().bindFramebuffer(false);
+                    GuiIngame.checkSetupFBO(mc.getFramebuffer());
+                    glClear(GL_STENCIL_BUFFER_BIT);
+                    glEnable(GL_STENCIL_TEST);
 
-                glColorMask(true, true, true, true);
-                glStencilFunc(GL_EQUAL, 1, 1);
-                glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-                ShaderManager.renderBlur(8);
-                glDisable(GL_STENCIL_TEST);
+                    glStencilFunc(GL_ALWAYS, 1, 1);
+                    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+                    glColorMask(false, false, false, false);
+                    RenderUtils.drawRoundRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
+
+                    glColorMask(true, true, true, true);
+                    glStencilFunc(GL_EQUAL, 1, 1);
+                    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+                    ShaderManager.renderBlur(8);
+                    glDisable(GL_STENCIL_TEST);
+                }
             }
+
             RenderUtils.drawRoundRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
 
             this.mouseDragged(mc, mouseX, mouseY);

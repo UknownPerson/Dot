@@ -102,7 +102,6 @@ public class ShaderUtil {
     }
 
     public static void drawQuads() {
-        if (Minecraft.getMinecraft().gameSettings.ofFastRender) return;
         ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         float width = (float) sr.getScaledWidth_double();
         float height = (float) sr.getScaledHeight_double();

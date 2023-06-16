@@ -39,6 +39,7 @@ public abstract class EntityLivingBase extends Entity {
     private BaseAttributeMap attributeMap;
     private final CombatTracker _combatTracker = new CombatTracker(this);
     private final Map<Integer, PotionEffect> activePotionsMap = Maps.<Integer, PotionEffect>newHashMap();
+    public static ArrayList<PotionEffect> activePotionsMap1 = new ArrayList<>();
 
     /**
      * The equipment this mob was previously wearing, used for syncing.
@@ -660,6 +661,7 @@ public abstract class EntityLivingBase extends Entity {
                 this.onChangedPotionEffect((PotionEffect) this.activePotionsMap.get(Integer.valueOf(potioneffectIn.getPotionID())), true);
             } else {
                 this.activePotionsMap.put(Integer.valueOf(potioneffectIn.getPotionID()), potioneffectIn);
+                activePotionsMap1.add(potioneffectIn);
                 this.onNewPotionEffect(potioneffectIn);
             }
         }

@@ -28,6 +28,16 @@ public class PotionEffect
     private boolean isPotionDurationMax;
     private boolean showParticles;
 
+    public float getAnimy() {
+        return animy;
+    }
+
+    public void setAnimy(float animy) {
+        this.animy = animy;
+    }
+
+    float animy = 0;
+
     public PotionEffect(int id, int effectDuration)
     {
         this(id, effectDuration, 0);

@@ -33,7 +33,6 @@ import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
-import xyz.Dot.ui.changelog.MenuChangelog;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -258,7 +257,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
      * Adds Singleplayer and Multiplayer buttons on Main Menu for players who have bought the game.
      */
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_) {
-        this.buttonList.add(this.realmsButton = new GuiButton(14, RenderUtils.width(), RenderUtils.height(), I18n.format("menu.online", new Object[0])));
 
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
@@ -588,8 +586,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         if (this.a()) {
             this.M.drawScreen(mouseX, mouseY, partialTicks);
         }
-
-        MenuChangelog.instance.draw();
 
         if (this.modUpdateNotification != null) {
             this.modUpdateNotification.drawScreen(mouseX, mouseY, partialTicks);

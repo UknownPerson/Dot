@@ -3,10 +3,7 @@ package xyz.Dot.utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
@@ -175,17 +172,40 @@ public class RenderUtils {
 
     public static void drawRoundRect(int x1, int y1, int x2, int y2, int roundsize, Color color) {
 
+        GlStateManager.pushMatrix();
+        RenderHelper.enableGUIStandardItemLighting();
+        GlStateManager.disableAlpha();
+        GlStateManager.clear(256);
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.disableBlend();
+        GlStateManager.enableLighting();
+        GlStateManager.enableDepth();
+        GlStateManager.disableLighting();
+        GlStateManager.disableDepth();
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableAlpha();
+        GlStateManager.disableBlend();
+        GlStateManager.enableBlend();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableTexture2D();
+        GlStateManager.enableLighting();
+        GlStateManager.enableDepth();
+        GlStateManager.enableAlpha();
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.popMatrix();
+
 
         int x1t = x1 + roundsize;
         int y1t = y1 + roundsize;
         int x2t = x2 - roundsize;
         int y2t = y2 - roundsize;
         if (x1 != x2 && y1 != y2) {
-            Gui.drawRect(x1t, y1t, x2t, y2t, color.getRGB());
-            Gui.drawRect(x1t, y1, x2t, y1t, color.getRGB());
-            Gui.drawRect(x2t, y1t, x2, y2t, color.getRGB());
-            Gui.drawRect(x1t, y2t, x2t, y2, color.getRGB());
-            Gui.drawRect(x1, y1t, x1t, y2t, color.getRGB());
+            drawRect(x1t, y1t, x2t, y2t, color.getRGB());
+            drawRect(x1t, y1, x2t, y1t, color.getRGB());
+            drawRect(x2t, y1t, x2, y2t, color.getRGB());
+            drawRect(x1t, y2t, x2t, y2, color.getRGB());
+            drawRect(x1, y1t, x1t, y2t, color.getRGB());
             drawImage(ImageLoader.circle_leftup, x1, y1, roundsize, roundsize, color);
             drawImage(ImageLoader.circle_leftdown, x1, y2-roundsize, roundsize, roundsize, color);
             drawImage(ImageLoader.circle_rightup, x2-roundsize, y1, roundsize, roundsize, color);

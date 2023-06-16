@@ -46,9 +46,11 @@ import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.shader.BloomUtil;
 import xyz.Dot.utils.shader.ShaderManager;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -663,7 +665,7 @@ public class GuiIngame extends Gui
 
             Scoreboard scoreboard = objective.getScoreboard();
             Collection<Score> collection = scoreboard.getSortedScores(objective);
-            List<Score> list = Lists.newArrayList(Iterables.filter(collection, p_apply_1_ -> p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#")));
+            List<Score> list = Lists.newArrayList(collection.stream().filter(p_apply_1_ -> p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#")).collect(Collectors.toList()));
 
             if (list.size() > 15) {
                 collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
@@ -695,14 +697,14 @@ public class GuiIngame extends Gui
                 int k = j1 - j * this.getFontRenderer().FONT_HEIGHT;
                 int l = scaledRes.getScaledWidth() - k1 + 2;
                 drawRect(l1 - 2, k, l, k + this.getFontRenderer().FONT_HEIGHT, 1342177280);
-                this.getFontRenderer().drawString(s1, l1, k, 553648127);
-                this.getFontRenderer().drawString(s2, l - this.getFontRenderer().getStringWidth(s2), k, 553648127);
+                this.getFontRenderer().drawString(s1, l1, k, new Color(255, 255, 255).getRGB());
+                this.getFontRenderer().drawString(s2, l - this.getFontRenderer().getStringWidth(s2), k, new Color(255, 255, 255).getRGB());
 
                 if (j == collection.size()) {
                     String s3 = objective.getDisplayName();
                     drawRect(l1 - 2, k - this.getFontRenderer().FONT_HEIGHT - 1, l, k - 1, 1610612736);
                     drawRect(l1 - 2, k - 1, l, k, 1342177280);
-                    this.getFontRenderer().drawString(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT, 553648127);
+                    this.getFontRenderer().drawString(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT,  new Color(255, 255, 255).getRGB());
                 }
             }
 
