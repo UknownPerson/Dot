@@ -25,6 +25,8 @@ import java.util.Collection;
 public class PotionEffects extends Component {
 
     float PEheight = 0;
+    int StartX;
+    int StartY;
     public PotionEffects() {
         super(64, 56, "Potion");
     }
@@ -34,8 +36,8 @@ public class PotionEffects extends Component {
 
     @Override
     public void drawHUD(float x, float y, float partialTicks) {
-        int StartX = (int) x;
-        int StartY = (int) y;
+        StartX = (int) x;
+        StartY = (int) y;
         int finalStartY = StartY;
         int finalStartY1 = StartY;
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -111,11 +113,11 @@ public class PotionEffects extends Component {
                     mc.getTextureManager().bindTexture(this.inventoryBackground);
                     String name = "";
                     if (potioneffect.getDuration() < 600 && potioneffect.getDuration() > 300) {
-                        name = name + "§6" + Potion.getDurationString(potioneffect);
+                        name = name + "\2476" + Potion.getDurationString(potioneffect);
                     } else if (potioneffect.getDuration() < 300) {
-                        name = name + "§c" + Potion.getDurationString(potioneffect);
+                        name = name + "\247c" + Potion.getDurationString(potioneffect);
                     } else if (potioneffect.getDuration() > 600) {
-                        name = name + "§7" + Potion.getDurationString(potioneffect);
+                        name = name + "\2477" + Potion.getDurationString(potioneffect);
                     }
                     String PType = I18n.format(potioneffect.getEffectName());
                     switch (potioneffect.getAmplifier()) {
@@ -143,19 +145,19 @@ public class PotionEffects extends Component {
                         }
                     }
                     if(potioneffect.getAnimy() == 0){
-                        potioneffect.setAnimy((float) scale_back * (float) y + 6.0f);
+                        potioneffect.setAnimy((float) scale_back * (float) y + 6.0f - StartY);
                     }else{
-                        potioneffect.setAnimy(RenderUtils.toanim(potioneffect.getAnimy(),(float) scale_back * (float) y + 6.0f,12,0.1f));
+                        potioneffect.setAnimy(RenderUtils.toanim(potioneffect.getAnimy(),(float) scale_back * (float) y + 6.0f - StartY,12,0.1f));
                     }
 
                     if (effects.hasStatusIcon()) {
                         int i1 = effects.getStatusIconIndex();
-                        this.draw((int) (scale_back * (double) x + 6.0), (int) (potioneffect.getAnimy() + 1.0), i1 % 8 * 18, 198 + i1 / 8 * 18);
+                        this.draw((int) (scale_back * (double) x + 6.0), (int) (potioneffect.getAnimy() + 1.0 + StartY), i1 % 8 * 18, 198 + i1 / 8 * 18);
                     }
 
-                    mc.fontRendererObj.drawStringWithShadow(PType, (float) scale_back * (float) x + 10.0f + 18.0f, potioneffect.getAnimy(), 0xFFFFFF);
+                    mc.fontRendererObj.drawStringWithShadow(PType, (float) scale_back * (float) x + 10.0f + 18.0f, potioneffect.getAnimy() + StartY, 0xFFFFFF);
                     int offset = mc.fontRendererObj.FONT_HEIGHT + 1;
-                    mc.fontRendererObj.drawStringWithShadow(name, (float) scale_back * (float) x + 10.0f + 18.0f, potioneffect.getAnimy() + (float) offset, 0x7F7F7F);
+                    mc.fontRendererObj.drawStringWithShadow(name, (float) scale_back * (float) x + 10.0f + 18.0f, potioneffect.getAnimy() + (float) offset + StartY, 0x7F7F7F);
                     GlStateManager.scale(scale_back, scale_back, scale_back);
                     y += l;
                 }
