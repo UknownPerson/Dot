@@ -309,7 +309,6 @@ public class ClickUI extends GuiScreen {
                     RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), 2, new Color(200, 200, 200));
                     double l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
                     //RenderUtils.drawFilledCircle((int) (userxendanim + 10 + 8 + 2 + l), (int) thisry + 2, 3, CustomColor.getColor());
-                    RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 10 + 8 + 4 + l), (int) (thisry + 4), 2, CustomColor.getColor());
                     if (isHovered((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 143 - 8), (int) (thisry + 4), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                         check = 10;
                         check10setting = s.getName();
@@ -338,6 +337,11 @@ public class ClickUI extends GuiScreen {
                                 l = Math.min(1, Math.max(0, (s.getCurrentValue() - s.getMinValue()) / (s.getMaxValue() - s.getMinValue()))) * ((int) (userxendanim + 143 - 8) - (int) (userxendanim + 10 + 12));
                             }
                         }
+
+                        RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry,Math.min(Math.max(mouseX,(int) (userxendanim + 10 + 8 + 4)),(int) (userxendanim + 143 - 8))  , (int) (thisry + 4), 2, CustomColor.getColor());
+
+                    }else{
+                        RenderUtils.drawRoundRect((int) (userxendanim + 10 + 8), (int) thisry, (int) (userxendanim + 10 + 8 + 4 + l), (int) (thisry + 4), 2, CustomColor.getColor());
                     }
                 }
                 if (s.isColor()) {

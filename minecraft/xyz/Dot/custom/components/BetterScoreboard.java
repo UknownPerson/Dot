@@ -123,8 +123,8 @@ public class BetterScoreboard extends Component {
         for (char c : text.toCharArray()) {
             if ((c < 50000 || c > 60000) && c != 9917) str += c;
         }
-        text = str.replace("\247r", "").replace('\u25ac', '\u003d').replace('\u2764', '\u2665').replace('\u22c6', '\u2606').replace('\u2620', '\u2606').replace('✰', '☆').replace("✫", "☆").replace("✙", "+");
-        text = text.replace('⬅', '←').replace('⬆', '↑').replace('⬇', '↓').replace('➡', '→').replace('⬈', '↗').replace('⬋', '↙').replace('⬉', '↖').replace('⬊', '↘');
+        text = str.replace("\247r", "").replace('\u25ac', '\u003d').replace('\u2764', '\u2665').replace('\u22c6', '\u2606').replace('\u2620', '\u2606').replace('\u2730', '\u2606').replace("\u272b", "\u2606").replace("\u2718", "\u002b");
+        text = text.replace('\u2b05', '\u2190').replace('\u2b06', '\u2191').replace('\u2b07', '\u2193').replace('\u27a1', '\u2192').replace('\u2b08', '\u2197').replace('\u2b0b', '\u2199').replace('\u2b09', '\u2196').replace('\u2b0a', '\u2198');
         return text;
     }
 }
