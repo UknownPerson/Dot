@@ -6,6 +6,7 @@ import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.utils.UserUtils;
 
 public class NoInvisible extends Module {
     public NoInvisible() {
@@ -20,7 +21,7 @@ public class NoInvisible extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-        if(!ModuleManager.SigmaMode){
+        if(!UserUtils.SigmaMode){
             this.setToggle(false);
         }
     }

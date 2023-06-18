@@ -5,6 +5,7 @@ import xyz.Dot.event.EventBus;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.Translator;
+import xyz.Dot.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,34 @@ public class Module {
     private boolean toggle;
     protected static Minecraft mc = Minecraft.getMinecraft();
     private float animy;
+    private float cguired = 0;
+    private float cguigreen = 0;
+
+    public float getCguired() {
+        return cguired;
+    }
+
+    public void setCguired(float cguired) {
+        this.cguired = cguired;
+    }
+
+    public float getCguigreen() {
+        return cguigreen;
+    }
+
+    public void setCguigreen(float cguigreen) {
+        this.cguigreen = cguigreen;
+    }
+
+    public float getCguiblue() {
+        return cguiblue;
+    }
+
+    public void setCguiblue(float cguiblue) {
+        this.cguiblue = cguiblue;
+    }
+
+    private float cguiblue = 0;
 
     public float getColoranim() {
         return coloranim;
@@ -67,7 +96,7 @@ public class Module {
         this.toggle = false;
     }
 
-    public Module(String name, int keyBind, Category moduletype,boolean toggle) {
+    public Module(String name, int keyBind, Category moduletype, boolean toggle) {
         this.name = name;
         this.keyBind = keyBind;
         this.moduletype = moduletype;
@@ -107,8 +136,8 @@ public class Module {
             return;
         }
 
-        if(this.getModuletype() == Category.Cheat){
-            if(!ModuleManager.SigmaMode){
+        if (this.getModuletype() == Category.Cheat) {
+            if (!UserUtils.SigmaMode) {
                 Notification.sendClientMessage(Translator.getInstance().m("You are not a Sigma user.You can't enable it."), Notification.Type.WARNING);
                 return;
             }

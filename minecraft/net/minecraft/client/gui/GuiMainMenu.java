@@ -34,6 +34,7 @@ import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
 import xyz.Dot.utils.RenderUtils;
+import xyz.Dot.utils.UserUtils;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -531,22 +532,22 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         }
 
         CFontRenderer font = FontLoaders.normalfont16;
-        String name = ModuleManager.name;
-        String prefix = ModuleManager.prefix;
+        String name = UserUtils.name;
+        String prefix = UserUtils.prefix;
         String text;
         if (name != null) {
-            if (!prefix.equals("")) {
+            if (prefix != null) {
                 text = "Welcome " + "[" + prefix + "]" + name + "!";
             } else {
                 text = "Welcome " + name + "!";
             }
 
             font.drawString(text, RenderUtils.width() - font.getStringWidth(text) - 25, 10, new Color(255, 255, 255).getRGB());
-            RenderUtils.drawImage(ImageLoader.tohru0round, RenderUtils.width() - 20, 5, 15, 15);
+            RenderUtils.drawImage(UserUtils.getUserProfilePhoto(), RenderUtils.width() - 20, 5, 15, 15);
         } else {
             text = "Welcome " + "!";
             font.drawString(text, RenderUtils.width() - font.getStringWidth(text) - 25, 10, new Color(255, 255, 255).getRGB());
-            RenderUtils.drawImage(ImageLoader.tohru0round, RenderUtils.width() - 20, 5, 15, 15);
+            RenderUtils.drawImage(UserUtils.getUserProfilePhoto(), RenderUtils.width() - 20, 5, 15, 15);
         }
 
 

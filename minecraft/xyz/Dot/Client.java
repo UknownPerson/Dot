@@ -12,6 +12,7 @@ import xyz.Dot.module.ModuleManager;
 import xyz.Dot.module.Render.FullBright;
 import xyz.Dot.setting.SettingManager;
 import xyz.Dot.ui.FontLoaders;
+import xyz.Dot.utils.UserUtils;
 
 public enum Client {
     instance;
@@ -78,7 +79,7 @@ public enum Client {
 
     public String getSigma(){
 
-        if(ModuleManager.SigmaMode){
+        if(UserUtils.SigmaMode){
             return "\u2211 ";
         }else{
             return "";

@@ -13,10 +13,6 @@ import java.util.ArrayList;
 
 public class ModuleManager {
     static ArrayList<Module> modules;
-    public static String name = null;
-    public static String prefix = "";
-    public static boolean SigmaMode = false;
-    public static double ver = Client.instance.client_version;
 
     public ModuleManager(){
         modules = new ArrayList();

@@ -17,6 +17,7 @@ public class ImageLoader {
     public static ResourceLocation tohru0round;
     public static ResourceLocation background;
     public static ResourceLocation language;
+    public static ResourceLocation drag;
 
     public static long starttime;
     public static float time;
@@ -81,5 +82,11 @@ public class ImageLoader {
         Minecraft.getMinecraft().getTextureManager().bindTexture(language);
         time = ((System.nanoTime() - starttime) / 1000000f);
         logger.info("[Dot] Load dot/language.png " + time + "ms");
+
+        starttime = System.nanoTime();
+        drag = new ResourceLocation("dot/drag.png");
+        Minecraft.getMinecraft().getTextureManager().bindTexture(drag);
+        time = ((System.nanoTime() - starttime) / 1000000f);
+        logger.info("[Dot] Load dot/drag.png " + time + "ms");
     }
 }

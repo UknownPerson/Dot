@@ -115,7 +115,7 @@ public class BetterScoreboard extends Component {
 
         fontRenderer.drawStringWithShadow(processString(objective.getDisplayName()),
                 (float) ((double) sX + width / 2.0F - fontRenderer.getStringWidth(processString(objective.getDisplayName())) / 2.0F),
-                sb + 2, 0xFFFFFFFF);
+                sb, 0xFFFFFFFF);
     }
 
     private String processString(String text) {
@@ -123,7 +123,7 @@ public class BetterScoreboard extends Component {
         for (char c : text.toCharArray()) {
             if ((c < 50000 || c > 60000) && c != 9917) str += c;
         }
-        text = str.replace("\247r", "").replace('▬', '=').replace('❤', '♥').replace('⋆', '☆').replace('☠', '☆').replace('✰', '☆').replace("✫", "☆").replace("✙", "+");
+        text = str.replace("\247r", "").replace('\u25ac', '\u003d').replace('\u2764', '\u2665').replace('\u22c6', '\u2606').replace('\u2620', '\u2606').replace('✰', '☆').replace("✫", "☆").replace("✙", "+");
         text = text.replace('⬅', '←').replace('⬆', '↑').replace('⬇', '↓').replace('➡', '→').replace('⬈', '↗').replace('⬋', '↙').replace('⬉', '↖').replace('⬊', '↘');
         return text;
     }

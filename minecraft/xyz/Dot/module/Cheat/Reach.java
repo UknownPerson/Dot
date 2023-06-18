@@ -7,6 +7,7 @@ import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
+import xyz.Dot.utils.UserUtils;
 
 public class Reach extends Module {
     public static Setting range = new Setting(ModuleManager.getModuleByName("Reach"), "Range", 3.0d, 3.0d, 4.5d, 0.1d);
@@ -22,7 +23,7 @@ public class Reach extends Module {
 
     @EventHandler
     public void renderHud(EventRender2D event) {
-        if(!ModuleManager.SigmaMode){
+        if(!UserUtils.SigmaMode){
             this.setToggle(false);
         }
     }

@@ -107,6 +107,7 @@ import xyz.Dot.ui.ImageLoader;
 import xyz.Dot.ui.LoginUI;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.SystemUtils;
+import xyz.Dot.utils.UserUtils;
 import xyz.Dot.utils.WebUtils;
 
 import javax.imageio.ImageIO;
@@ -589,7 +590,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
         } else {
-            if (ModuleManager.name == null) {
+            if (UserUtils.name == null) {
                 this.displayGuiScreen(new LoginUI());
             } else {
                 this.displayGuiScreen(new GuiMainMenu());
@@ -2765,7 +2766,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         try {
             String get = WebUtils.get("https://gitee.com/UknownPerson/dot-login-check/raw/master/check");
             String hwid = SystemUtils.getHWID();
-            ModuleManager.ver = Double.parseDouble(getSubString(get, "ver", "ver"));
+            UserUtils.ver = Double.parseDouble(getSubString(get, "ver", "ver"));
             logger.info("[Dot] " + get);
             logger.info("[Dot] HWID:" + hwid);
             if (!get.contains(hwid)) {
@@ -2773,13 +2774,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 return false;
             } else {
                 String s = getSubString(get, hwid, hwid);
-                ModuleManager.name = getSubString(s, "name", "name");
-                ModuleManager.prefix = getSubString(s, "prefix", "prefix");
-                ModuleManager.SigmaMode = getSubString(s, "mode", "mode").equals("sigma");
+                UserUtils.name = getSubString(s, "name", "name");
+                UserUtils.prefix = getSubString(s, "prefix", "prefix");
+                UserUtils.SigmaMode = getSubString(s, "mode", "mode").equals("sigma");
                 logger.info("[Dot] Login successful!");
-                logger.info("[Dot] Name: " + ModuleManager.name);
-                logger.info("[Dot] Prefix: " + ModuleManager.prefix);
-                logger.info("[Dot] SigmaMode: " + ModuleManager.SigmaMode);
+                logger.info("[Dot] Name: " + UserUtils.name);
+                logger.info("[Dot] Prefix: " + UserUtils.prefix);
+                logger.info("[Dot] SigmaMode: " + UserUtils.SigmaMode);
                 return true;
             }
         } catch (NumberFormatException e) {

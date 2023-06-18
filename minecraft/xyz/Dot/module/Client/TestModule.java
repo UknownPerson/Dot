@@ -11,10 +11,8 @@ import java.util.ArrayList;
 
 public class TestModule extends Module {
     public static Setting testvalue = new Setting(ModuleManager.getModuleByName("TestModule"), "TV", 1.0d, 1.0d, 18.0d, 0.5d);
-    static ArrayList<String> testmodes = new ArrayList<>(TestModes());
-    static ArrayList<String> testmodes1 = new ArrayList<>(TestModes1());
-    public static Setting testmode = new Setting(ModuleManager.getModuleByName("TestModule"), "ABC", "A", testmodes);
-    public static Setting testmode1 = new Setting(ModuleManager.getModuleByName("TestModule"), "AB", "A", testmodes1);
+    public static Setting testmode = new Setting(ModuleManager.getModuleByName("TestModule"), "ABC", "A", TestModes());
+    public static Setting testmode1 = new Setting(ModuleManager.getModuleByName("TestModule"), "AB", "A", TestModes1());
     public static Setting testbool = new Setting(ModuleManager.getModuleByName("TestModule"), "TB", true);
 
     public TestModule() {
