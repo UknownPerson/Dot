@@ -743,7 +743,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             f = (float) ((double) f + 1.0D);
             GlStateManager.translate(0.0F, 0.3F, 0.0F);
 
-            if (!this.mc.gameSettings.debugCamEnable) {
+            if (!this.mc.gameSettings.fovSetting) {
                 final BlockPos blockpos = new BlockPos(entity);
                 final IBlockState iblockstate = this.mc.theWorld.getBlockState(blockpos);
                 final Block block = iblockstate.getBlock();
@@ -761,7 +761,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         } else if (this.mc.gameSettings.showDebugInfo > 0) {
             double d3 = this.thirdPersonDistanceTemp + (this.thirdPersonDistance - this.thirdPersonDistanceTemp) * partialTicks;
 
-            if (this.mc.gameSettings.debugCamEnable) {
+            if (this.mc.gameSettings.fovSetting) {
                 GlStateManager.translate(0.0F, 0.0F, (float) (-d3));
             } else {
                 final float f1 = entity.rotationYaw;
@@ -812,7 +812,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         }
 
         if (Reflector.EntityViewRenderEvent_CameraSetup_Constructor.exists()) {
-            if (!this.mc.gameSettings.debugCamEnable) {
+            if (!this.mc.gameSettings.fovSetting) {
                 float f6 = entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks + 180.0F;
                 float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
                 float f8 = 0.0F;
@@ -832,7 +832,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 GlStateManager.rotate(f7, 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(f6, 0.0F, 1.0F, 0.0F);
             }
-        } else if (!this.mc.gameSettings.debugCamEnable) {
+        } else if (!this.mc.gameSettings.fovSetting) {
             FreeLook freeLook = (FreeLook) ModuleManager.getModuleByName("FreeLook");
 
             if (freeLook != null && freeLook.isToggle()) {
@@ -857,6 +857,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         d2 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double) partialTicks;
         this.cloudFog = this.mc.renderGlobal.hasCloudFog(d0, d1, d2, partialTicks);
     }
+
+
 
 
     /**
