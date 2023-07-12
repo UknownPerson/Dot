@@ -185,7 +185,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private Entity renderViewEntity;
     public Entity pointedEntity;
     public EffectRenderer effectRenderer;
-    private final Session session;
+    public static Session session;
     private boolean isGamePaused;
     /**
      * Skip render world
@@ -445,7 +445,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public void run() {
-        check();
         this.running = true;
 
         try {
@@ -516,6 +515,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.framebufferMc = new Framebuffer(this.displayWidth, this.displayHeight, true);
         this.framebufferMc.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
         this.registerMetadataSerializers();
+        check();
         this.mcResourcePackRepository = new ResourcePackRepository(this.fileResourcepacks, new File(this.mcDataDir, "server-resource-packs"), this.mcDefaultResourcePack, this.metadataSerializer_, this.gameSettings);
         this.mcResourceManager = new SimpleReloadableResourceManager(this.metadataSerializer_);
         this.mcLanguageManager = new LanguageManager(this.metadataSerializer_, this.gameSettings.forceUnicodeFont);
@@ -531,6 +531,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcResourceManager.registerReloadListener(this.mcSoundHandler);
         this.mcMusicTicker = new MusicTicker(this);
         this.fontRendererObj = new FontRenderer(FontLoaders.getNormalFont(16),16,true);
+        //this.fontRendererObj = new FontRenderer(this.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.renderEngine, false);
 
         if (this.gameSettings.forceUnicodeFont != null) {
             this.fontRendererObj.setUnicodeFlag(this.isUnicode());

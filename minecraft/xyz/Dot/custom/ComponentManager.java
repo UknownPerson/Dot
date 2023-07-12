@@ -42,6 +42,11 @@ public class ComponentManager {
     }
 
     public void drawComponents () {
+
+        if (Minecraft.getMinecraft().gameSettings.showDebugProfilerChart) {
+            return;
+        }
+
         for (Component component : components) {
             component.draw(Minecraft.getMinecraft().timer.renderPartialTicks);
         }

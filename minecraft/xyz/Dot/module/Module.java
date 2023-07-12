@@ -146,7 +146,7 @@ public class Module {
         if (toggle) {
             EventBus.getInstance().register(new Object[]{this});
             onEnable();
-            Notification.sendClientMessage(this.name + " " + Translator.getInstance().m(" was enabled."), Notification.Type.SUCCESS);
+            Notification.sendClientMessage(this.name + Translator.getInstance().m(" was enabled."), Notification.Type.SUCCESS);
         } else {
             EventBus.getInstance().unregister(new Object[]{this});
             onDisable();

@@ -33,7 +33,9 @@ public class ModuleManager {
         this.addModule(new CustomColor());
         this.addModule(new NoCommand());
         this.addModule(new HUD());
-        this.addModule(new MusicPlayer());
+        if(Client.instance.inDevelopment){
+            this.addModule(new MusicPlayer());
+        }
         this.addModule(new Notifications());
         if(Client.instance.inDevelopment){
             this.addModule(new TestModule());

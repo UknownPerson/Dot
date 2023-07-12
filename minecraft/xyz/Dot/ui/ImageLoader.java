@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xyz.Dot.utils.UserUtils;
 
 public class ImageLoader {
     private static final Logger logger = LogManager.getLogger();
@@ -53,17 +54,21 @@ public class ImageLoader {
         time = ((System.nanoTime() - starttime) / 1000000f);
         logger.info("[Dot] Load dot/circle_rightdown.png " + time + "ms");
 
-        starttime = System.nanoTime();
-        tohru0 = new ResourceLocation("dot/tohru0.png");
-        Minecraft.getMinecraft().getTextureManager().bindTexture(tohru0);
-        time = ((System.nanoTime() - starttime) / 1000000f);
-        logger.info("[Dot] Load dot/tohru0.png " + time + "ms");
+        if(false){ //暂时没用
+            starttime = System.nanoTime();
+            tohru0 = new ResourceLocation("dot/tohru0.png");
+            Minecraft.getMinecraft().getTextureManager().bindTexture(tohru0);
+            time = ((System.nanoTime() - starttime) / 1000000f);
+            logger.info("[Dot] Load dot/tohru0.png " + time + "ms");
+        }
 
-        starttime = System.nanoTime();
-        tohru1 = new ResourceLocation("dot/tohru1.png");
-        Minecraft.getMinecraft().getTextureManager().bindTexture(tohru1);
-        time = ((System.nanoTime() - starttime) / 1000000f);
-        logger.info("[Dot] Load dot/tohru1.png " + time + "ms");
+        if (UserUtils.name == null) {
+            starttime = System.nanoTime();
+            tohru1 = new ResourceLocation("dot/tohru1.png");
+            Minecraft.getMinecraft().getTextureManager().bindTexture(tohru1);
+            time = ((System.nanoTime() - starttime) / 1000000f);
+            logger.info("[Dot] Load dot/tohru1.png " + time + "ms");
+        }
 
         starttime = System.nanoTime();
         tohru0round = new ResourceLocation("dot/tohru0round.png");

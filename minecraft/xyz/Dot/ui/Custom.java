@@ -1,5 +1,6 @@
 package xyz.Dot.ui;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import xyz.Dot.Client;
 import xyz.Dot.custom.base.Component;
@@ -20,7 +21,9 @@ public class Custom extends GuiScreen {
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-
+        if (Minecraft.getMinecraft().gameSettings.showDebugProfilerChart) {
+            return;
+        }
         for (Component object : Client.instance.componentManager.components) {
             object.doDrag(mouseX, mouseY);
         }

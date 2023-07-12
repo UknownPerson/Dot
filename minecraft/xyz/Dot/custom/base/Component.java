@@ -160,6 +160,7 @@ public abstract class Component extends Gui {
     }
 
     public void draw(float partialTicks) {
+
         if (! doDraw() || ! module.isToggle() || ! canDraw())
             return;
 

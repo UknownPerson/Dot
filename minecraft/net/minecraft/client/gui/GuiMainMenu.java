@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.realms.RealmsBridge;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -29,10 +28,10 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 import xyz.Dot.Client;
 import xyz.Dot.module.Client.CustomColor;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.ImageLoader;
+import xyz.Dot.ui.ReSetSessionUI;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.UserUtils;
 
@@ -213,7 +212,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         }
 
         int i = 24;
-        int j = this.height / 4 + 48;
+        int j = this.height / 3;
 
 
         if (this.mc.isDemo()) {
@@ -223,9 +222,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         }
 
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 48, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 48, 98, 20, I18n.format("menu.quit", new Object[0])));
-        this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 48));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 48 + 24, 98, 20, I18n.format("menu.options")));
+        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 48 + 24, 98, 20, I18n.format("menu.quit")));
+        this.buttonList.add(new GuiButton(13, this.width / 2 - 100, j + 48, 200, 20, "ReSetSession"));
+        this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 48 + 24));
+
 
         synchronized (this.threadLock) {
             this.field_92023_s = this.fontRendererObj.getStringWidth(this.openGLWarning1);
@@ -261,12 +262,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
-        if (Reflector.GuiModList_Constructor.exists()) {
-            //this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 + 2, p_73969_1_ + p_73969_2_ * 2, 98, 20, I18n.format("menu.online", new Object[0]).replace("Minecraft", "").trim()));
-            this.buttonList.add(this.modButton = new GuiButton(6, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, 98, 20, I18n.format("fml.menu.mods", new Object[0])));
-        } else {
-            //this.buttonList.add(this.realmsButton = new GuiButton(14, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
-        }
     }
 
     /**
@@ -303,10 +298,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.mc.displayGuiScreen(new GuiMultiplayer(this));
         }
 
-        if (button.id == 14 && this.realmsButton.visible) {
-            this.f();
-        }
-
         if (button.id == 4) {
             this.mc.shutdown();
         }
@@ -328,11 +319,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
                 this.mc.displayGuiScreen(guiyesno);
             }
         }
-    }
 
-    private void f() {
-        RealmsBridge realmsbridge = new RealmsBridge();
-        realmsbridge.switchToRealms(this);
+        if(button.id == 13){
+            this.mc.displayGuiScreen(new ReSetSessionUI());
+        }
     }
 
     public void confirmClicked(boolean result, int id) {
@@ -511,7 +501,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
 
         RenderUtils.drawImage(ImageLoader.background, x1, y1, twidth, theight);
 
-        if (isHovered(this.width / 2 - 124, this.height / 4 + 48 + 48, this.width / 2 - 124 + 20, this.height / 4 + 48 + 48 + 20,mouseX,mouseY)) {
+        if (isHovered(GuiButtonLanguage.xP, GuiButtonLanguage.yP, GuiButtonLanguage.xP + 20, GuiButtonLanguage.yP + 20,mouseX,mouseY)) {
             red = RenderUtils.toanim(red, CustomColor.getColor().getRed(), 4, 0.1f);
             green = RenderUtils.toanim(green, CustomColor.getColor().getGreen(), 4, 0.1f);
             blue = RenderUtils.toanim(blue, CustomColor.getColor().getBlue(), 4, 0.1f);
@@ -523,8 +513,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             alpha = RenderUtils.toanim(alpha, 64, 4, 0.1f);
         }
 
-        RenderUtils.drawRoundRect(this.width / 2 - 124, this.height / 4 + 48 + 48, this.width / 2 - 124 + 20, this.height / 4 + 48 + 48 + 20, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
-        RenderUtils.drawImage(ImageLoader.language, this.width / 2 - 124, this.height / 4 + 48 + 48, 20, 20);
+        RenderUtils.drawRoundRect(GuiButtonLanguage.xP, GuiButtonLanguage.yP, GuiButtonLanguage.xP + 20, GuiButtonLanguage.yP + 20, 4, new Color((int) red, (int) green, (int) blue, (int) alpha));
+        RenderUtils.drawImage(ImageLoader.language, GuiButtonLanguage.xP, GuiButtonLanguage.yP, 20, 20);
 
         String s = "Minecraft 1.8.9";
         if (this.mc.isDemo()) {

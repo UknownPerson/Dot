@@ -107,6 +107,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
 
     public void registerReloadListener(IResourceManagerReloadListener reloadListener)
     {
+
         this.reloadListeners.add(reloadListener);
         reloadListener.onResourceManagerReload(this);
     }

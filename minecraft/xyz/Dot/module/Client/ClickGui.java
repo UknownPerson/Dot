@@ -1,6 +1,7 @@
 package xyz.Dot.module.Client;
 
 import org.lwjgl.input.Keyboard;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Category;
@@ -25,7 +26,9 @@ public class ClickGui extends Module {
 
     public ClickGui() {
         super("ClickGui", Keyboard.KEY_RSHIFT, Category.Client);
-        this.addValues(cmode);
+        if(Client.instance.inDevelopment){
+            this.addValues(cmode);
+        }
     }
 
     @Override
