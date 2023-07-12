@@ -545,7 +545,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         AchievementList.openInventory.setStatStringFormatter(str -> {
             try {
-                return String.format(str, new Object[]{GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindUseItem.getKeyCode())});
+                return String.format(str, GameSettings.getKeyDisplayString(Minecraft.this.gameSettings.keyBindUseItem.getKeyCode()));
             } catch (Exception exception) {
                 return "Error: " + exception.getLocalizedMessage();
             }

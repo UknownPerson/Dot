@@ -547,6 +547,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             if(ModuleManager.getModuleByName("Reach").isToggle()){
                 fuck = Reach.range.getCurrentValue();
             }
+
             if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > fuck)
             {
                 this.pointedEntity = null;
