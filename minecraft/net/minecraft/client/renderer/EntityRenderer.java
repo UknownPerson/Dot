@@ -835,7 +835,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         } else if (!this.mc.gameSettings.fovSetting) {
             FreeLook freeLook = (FreeLook) ModuleManager.getModuleByName("FreeLook");
 
-            if (freeLook != null && freeLook.isToggle()) {
+            if (freeLook != null && FreeLook.keyDown) {
                 GlStateManager.rotate(freeLook.lastPitch * (freeLook.invertPitch.isToggle() ? -1 : 1), 1.0F, 0.0F, 0.0F);
             } else {
                 GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 1.0F, 0.0F, 0.0F);
@@ -844,7 +844,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             if (entity instanceof EntityAnimal) {
                 final EntityAnimal entityanimal = (EntityAnimal) entity;
                 GlStateManager.rotate(entityanimal.prevRotationYawHead + (entityanimal.rotationYawHead - entityanimal.prevRotationYawHead) * partialTicks + 180.0F, 0.0F, 1.0F, 0.0F);
-            } else if (freeLook != null && freeLook.isToggle()) {
+            } else if (freeLook != null && FreeLook.keyDown) {
                 GlStateManager.rotate(freeLook.lastYaw + 180.0F, 0.0F, 1.0F, 0.0F);
             } else {
                 GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks + 180.0F, 0.0F, 1.0F, 0.0F);
@@ -1282,7 +1282,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
         FreeLook freeLook = (FreeLook) ModuleManager.getModuleByName("FreeLook");
 
-        if (this.mc.inGameHasFocus && flag && (freeLook != null && !freeLook.isToggle())) {
+        if (this.mc.inGameHasFocus && flag && (freeLook != null && !FreeLook.keyDown)) {
             this.mc.mouseHelper.mouseXYChange();
             float f = this.mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
             float f1 = f * f * f * 8.0F;

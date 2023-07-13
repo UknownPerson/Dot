@@ -296,6 +296,7 @@ public class RenderUtils {
         GL11.glEnable((int) 2929);
     }
 
+
     public static int width() {
         return new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth();
     }
