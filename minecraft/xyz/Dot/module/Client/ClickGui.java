@@ -14,7 +14,7 @@ import xyz.Dot.ui.cgui.CUI;
 import java.util.ArrayList;
 
 public class ClickGui extends Module {
-    public static Setting cmode = new Setting(ModuleManager.getModuleByName("ClickGui"), "Mode", "New", ClickGuiModes());
+    public static Setting cmode = new Setting(ModuleManager.getModuleByName("ClickGui"), "Mode", "Classic", ClickGuiModes());
 
     public static float width = 300.0f, height = 200.0f;
     public static float x = 0.0f, y = 0.0f;
