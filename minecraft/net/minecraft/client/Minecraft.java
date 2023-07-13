@@ -2564,7 +2564,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public Session getSession() {
-        return this.session;
+        return session;
     }
 
     public PropertyMap getTwitchDetails() {
