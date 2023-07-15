@@ -1006,6 +1006,7 @@ public class ClickUI extends GuiScreen {
         }
 
 
+
         public void updateValue (int value) {
             float[] hsb = this.getHSBFromColor(value);
             this.hue = hsb[ 0 ];

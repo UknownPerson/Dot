@@ -31,21 +31,26 @@ public class Watermark extends Component {
 
         RenderUtils.drawHalfRoundRect(StartX, StartY, StartX + 64, StartY + 12, 4,  HUD.transparent.isToggle() ? new Color(0,0,0,100) : CustomColor.getColor());
 
-        RenderUtils.drawFilledCircle(StartX + 6, StartY + 6, 3, new Color(255, 0, 0, 32));
-        RenderUtils.drawFilledCircle(StartX + 7, StartY + 5, 3, new Color(255, 0, 0, 32));
-        RenderUtils.drawFilledCircle(StartX + 7, StartY + 7, 3, new Color(255, 0, 0, 32));
+        if(1 != 1){
+            RenderUtils.drawFilledCircle(StartX + 6, StartY + 6, 3, new Color(255, 0, 0, 32));
+            RenderUtils.drawFilledCircle(StartX + 7, StartY + 5, 3, new Color(255, 0, 0, 32));
+            RenderUtils.drawFilledCircle(StartX + 7, StartY + 7, 3, new Color(255, 0, 0, 32));
 
-        RenderUtils.drawFilledCircle(StartX + 10, StartY + 6, 3, new Color(0, 0, 255, 32));
-        RenderUtils.drawFilledCircle(StartX + 9, StartY + 5, 3, new Color(0, 0, 255, 32));
-        RenderUtils.drawFilledCircle(StartX + 9, StartY + 7, 3, new Color(0, 0, 255, 32));
+            RenderUtils.drawFilledCircle(StartX + 10, StartY + 6, 3, new Color(0, 0, 255, 32));
+            RenderUtils.drawFilledCircle(StartX + 9, StartY + 5, 3, new Color(0, 0, 255, 32));
+            RenderUtils.drawFilledCircle(StartX + 9, StartY + 7, 3, new Color(0, 0, 255, 32));
 
-        RenderUtils.drawFilledCircle(StartX + 7, StartY + 6, 3, new Color(255, 0, 0, 128));
-        // RenderUtils.drawFilledCircle(StartX + 8, StartY + 6, 3, new Color(0, 255,
-        // 0,128));
-        RenderUtils.drawFilledCircle(StartX + 9, StartY + 6, 3, new Color(0, 0, 255, 128));
+            RenderUtils.drawFilledCircle(StartX + 7, StartY + 6, 3, new Color(255, 0, 0, 128));
+            // RenderUtils.drawFilledCircle(StartX + 8, StartY + 6, 3, new Color(0, 255,
+            // 0,128));
+            RenderUtils.drawFilledCircle(StartX + 9, StartY + 6, 3, new Color(0, 0, 255, 128));
+        }
+
+        RenderUtils.drawFilledCircle(StartX + 6, StartY + 6, 3, new Color(255, 255, 255));
 
         try {
-            FontLoaders.normalfont16.drawString(CName, StartX + 14, StartY + 4, new Color(255, 255, 255).getRGB());
+            FontLoaders.normalfont16.drawString(CName, StartX + 12, StartY + 4, new Color(255, 255, 255).getRGB());
+            //FontLoaders.normalfont16.drawString(CName, StartX + 5, StartY + 4, new Color(255, 255, 255).getRGB());
             StartY += 20;
             FontLoaders.normalfont16.drawString( Translator.getInstance().m("FPS") + ": " + mc.getDebugFPS(), StartX + 5, StartY, new Color(255, 255, 255).getRGB());
             StartY += 12;
