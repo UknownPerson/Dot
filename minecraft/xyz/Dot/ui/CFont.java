@@ -24,7 +24,7 @@ public class CFont {
             charMap.put((char) i, new FontData());
 
         this.fontHeight = -1;
-        this.bufTexture = getFontTexture(font, charSize >= 65535 ? 8192 : 512);
+        this.bufTexture = getFontTexture(font, charSize >= 65535 ? 8964 : 512);
         this.texture = new DynamicTexture(bufTexture);
     }
 

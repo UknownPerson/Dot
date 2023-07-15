@@ -1,11 +1,11 @@
 package net.minecraft.client.gui;
 
-import java.io.IOException;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.realms.RealmsBridge;
+
+import java.io.IOException;
 
 public class GuiIngameMenu extends GuiScreen
 {

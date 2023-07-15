@@ -6,12 +6,15 @@ import xyz.Dot.Client;
 import xyz.Dot.custom.base.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Custom extends GuiScreen {
 
 
     public static boolean open = false;
+    private static ArrayList<Component> components;
 
     public static float[] fucktest = new float[12800];
 
@@ -24,7 +27,7 @@ public class Custom extends GuiScreen {
         if (Minecraft.getMinecraft().gameSettings.showDebugProfilerChart) {
             return;
         }
-        for (Component object : Client.instance.componentManager.components) {
+        for (Component object : components) {
             object.doDrag(mouseX, mouseY);
         }
     }
@@ -32,13 +35,17 @@ public class Custom extends GuiScreen {
 
     @Override
     public void initGui() {
+        components = Client.instance.componentManager.components;
+        Collections.reverse(components);
         super.initGui();
     }
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        for (Component object : Client.instance.componentManager.components) {
+        ArrayList<Component> components = Client.instance.componentManager.components;
+        Collections.reverse(components);
+        for (Component object : components) {
             object.mouseClick(mouseX, mouseY,mouseButton);
         }
     }

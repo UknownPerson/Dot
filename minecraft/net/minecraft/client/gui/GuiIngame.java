@@ -41,6 +41,7 @@ import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.ModuleManager;
+import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.shader.BloomUtil;
@@ -317,18 +318,10 @@ public class GuiIngame extends Gui
             if (i2 > 8)
             {
                 GlStateManager.pushMatrix();
-                GlStateManager.translate((float)(i / 2), (float)(j / 2), 0.0F);
                 GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                GlStateManager.pushMatrix();
-                GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 int j2 = i2 << 24 & -16777216;
-                this.getFontRenderer().drawString(this.displayedTitle, (float)(-this.getFontRenderer().getStringWidth(this.displayedTitle) / 2), -10.0F, 16777215 | j2, true);
-                GlStateManager.popMatrix();
-                GlStateManager.pushMatrix();
-                GlStateManager.scale(2.0F, 2.0F, 2.0F);
-                this.getFontRenderer().drawString(this.displayedSubTitle, (float)(-this.getFontRenderer().getStringWidth(this.displayedSubTitle) / 2), 5.0F, 16777215 | j2, true);
-                GlStateManager.popMatrix();
+                FontLoaders.normalfont36.drawCenteredStringWithShadow(this.displayedTitle,scaledresolution.getScaledWidth() / 2f, 30, 16777215 | j2);
+                FontLoaders.normalfont20.drawCenteredStringWithShadow(this.displayedSubTitle,scaledresolution.getScaledWidth() / 2f, 50, 16777215 | j2);
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
             }
