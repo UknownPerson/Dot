@@ -1,11 +1,19 @@
 package xyz.Dot.ui;
 
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.Client;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,19 +21,50 @@ public class CFont {
 
     private int fontHeight;
 
-    public final DynamicTexture texture;
-    private final BufferedImage bufTexture;
-
+    public DynamicTexture texture;
+    public BufferedImage bufTexture;
     public final HashMap<Character, FontData> charMap = new HashMap<>();
+    public boolean loadOK = false;
+    private static final Logger logger = LogManager.getLogger();
 
     public CFont(Font font, int charSize) {
+        new Thread(()-> cfontthread(font,charSize)).start();
+    }
+
+    public void cfontthread(Font font, int charSize){
+        logger.info("[Dot] " + font +  "启动!");
+        long starttime;
+        float time;
+        starttime = System.nanoTime();
 
         for (int i = 0; i < charSize; i++)
             charMap.put((char) i, new FontData());
-
         this.fontHeight = -1;
-        this.bufTexture = getFontTexture(font, charSize >= 65535 ? 8964 : 512);
-        this.texture = new DynamicTexture(bufTexture);
+
+        int imgSize;
+        if (font.getFamily().equals("MiSans")) {
+            if (font.getSize() == 12) {
+                imgSize = 4500;
+            } else if (font.getSize() == 16) {
+                imgSize = 5500;
+            } else if (font.getSize() == 20) {
+                imgSize = 6500;
+            } else if (font.getSize() == 36) {
+                imgSize = 11000;
+            } else {
+                imgSize = 8196;
+            }
+
+        } else {
+            imgSize = 8196;
+        }
+
+        this.bufTexture = getFontTexture(font, charSize >= 65535 ? imgSize : 256);
+
+        loadOK = true;
+
+        time = ((System.nanoTime() - starttime) / 1000000f);
+        logger.info("[Dot] LoadOK font " + font + time + "ms");
     }
 
     public void drawChar(FontData data, float x, float y) {
@@ -39,6 +78,7 @@ public class CFont {
     public int getStringHeight(String str) {
         return (fontHeight - 8) / 2;
     }
+
     public int getStringHeight() {
         return (fontHeight - 8) / 2;
     }
@@ -50,7 +90,6 @@ public class CFont {
     }
 
     private BufferedImage getFontTexture(Font font, int imgSize) {
-
         final BufferedImage bufferedImage = new BufferedImage(imgSize, imgSize, BufferedImage.TYPE_INT_ARGB);
 
         final Graphics2D g = (Graphics2D) bufferedImage.getGraphics();
@@ -101,7 +140,6 @@ public class CFont {
 
             positionX += charData.width;
         }
-
         return bufferedImage;
     }
 

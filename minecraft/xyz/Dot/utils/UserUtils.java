@@ -10,6 +10,16 @@ public class UserUtils {
     public static boolean SigmaMode = false;
     public static double ver = Client.instance.client_version;
 
+    public static boolean isLoadOK() {
+        return loadOK;
+    }
+
+    public static void setLoadOK(boolean loadOK) {
+        UserUtils.loadOK = loadOK;
+    }
+
+    public static boolean loadOK = false;
+
     public static ResourceLocation getUserProfilePhoto(){
         if(name == null){
             return ImageLoader.tohru0round;

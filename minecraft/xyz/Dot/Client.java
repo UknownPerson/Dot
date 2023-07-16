@@ -1,6 +1,8 @@
 package xyz.Dot;
 
 import net.minecraft.client.Minecraft;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 import xyz.Dot.command.CommandManager;
 import xyz.Dot.custom.ComponentManager;
@@ -11,8 +13,12 @@ import xyz.Dot.file.CustomFileManager;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.module.Render.FullBright;
 import xyz.Dot.setting.SettingManager;
+import xyz.Dot.ui.CFont;
+import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.UserUtils;
+
+import java.util.ArrayList;
 
 public enum Client {
     instance;
@@ -30,15 +36,16 @@ public enum Client {
     public FontLoaders fontloaders;
 
     public ComponentManager componentManager;
+    private static final Logger logger = LogManager.getLogger();
 
     public void run(){
 
+        logger.info("[Dot] Dot, 启动!");
         eventmanger = new EventBus();
         modulemanager = new ModuleManager();
         settingmanager = new SettingManager();
         commandmanager = new CommandManager();
         customfilemanager = new CustomFileManager();
-        fontloaders = new FontLoaders();
         componentManager = new ComponentManager();
         String title = client_name + " " + client_version + " " + getSigma() +getDevMode() + "- Minecraft 1.8.9";
         Display.setTitle(title);
@@ -49,13 +56,9 @@ public enum Client {
 
     }
 
-    @EventHandler
-    public static void onTick(EventTick e) {
-
-    }
-
     public void stop() {
 
+        logger.info("[Dot] stop!");
         save();
         mc.gameSettings.saturation = FullBright.old;
 
@@ -63,6 +66,7 @@ public enum Client {
 
     public void save(){
 
+        logger.info("[Dot] Save!");
         customfilemanager.saveFiles();
 
     }

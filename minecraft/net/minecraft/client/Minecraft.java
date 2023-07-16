@@ -102,9 +102,7 @@ import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.ModuleManager;
-import xyz.Dot.ui.FontLoaders;
-import xyz.Dot.ui.ImageLoader;
-import xyz.Dot.ui.LoginUI;
+import xyz.Dot.ui.*;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.SystemUtils;
 import xyz.Dot.utils.UserUtils;
@@ -131,7 +129,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/mojang.png");
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
 
-    private static final List<DisplayMode> macDisplayModes = Lists.newArrayList(new DisplayMode[]{new DisplayMode(2560, 1600), new DisplayMode(2880, 1800)});
+    private static final List<DisplayMode> macDisplayModes = Lists.newArrayList(new DisplayMode(2560, 1600), new DisplayMode(2880, 1800));
     /**
      * A 10MiB preallocation to ensure the heap is reasonably sized.
      */
@@ -332,6 +330,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private String debugProfilerName = "root";
 
     public Minecraft(GameConfiguration gameConfig) {
+
+        new Thread(this::check).start();
+
         theMinecraft = this;
         this.mcDataDir = gameConfig.folderInfo.mcDataDir;
         this.fileAssets = gameConfig.folderInfo.assetsDir;
@@ -515,7 +516,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.framebufferMc = new Framebuffer(this.displayWidth, this.displayHeight, true);
         this.framebufferMc.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
         this.registerMetadataSerializers();
-        check();
         this.mcResourcePackRepository = new ResourcePackRepository(this.fileResourcepacks, new File(this.mcDataDir, "server-resource-packs"), this.mcDefaultResourcePack, this.metadataSerializer_, this.gameSettings);
         this.mcResourceManager = new SimpleReloadableResourceManager(this.metadataSerializer_);
         this.mcLanguageManager = new LanguageManager(this.metadataSerializer_, this.gameSettings.forceUnicodeFont);
@@ -530,17 +530,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcSoundHandler = new SoundHandler(this.mcResourceManager, this.gameSettings);
         this.mcResourceManager.registerReloadListener(this.mcSoundHandler);
         this.mcMusicTicker = new MusicTicker(this);
-        this.fontRendererObj = new FontRenderer(FontLoaders.getNormalFont(16),16,true);
         //this.fontRendererObj = new FontRenderer(this.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.renderEngine, false);
 
-        if (this.gameSettings.forceUnicodeFont != null) {
-            this.fontRendererObj.setUnicodeFlag(this.isUnicode());
-            this.fontRendererObj.setBidiFlag(this.mcLanguageManager.isCurrentLanguageBidirectional());
-        }
+        FontLoaders.cfonts.add(FontLoaders.normalfont10);
+        FontLoaders.cfonts.add(FontLoaders.normalfont12);
+        FontLoaders.cfonts.add(FontLoaders.normalfont16);
+        FontLoaders.cfonts.add(FontLoaders.normalfont20);
+        FontLoaders.cfonts.add(FontLoaders.normalfont36);
 
-        this.standardGalacticFontRenderer = new FontRenderer(FontLoaders.getNormalFont(16),16,true);
-        this.mcResourceManager.registerReloadListener(this.fontRendererObj);
-        this.mcResourceManager.registerReloadListener(this.standardGalacticFontRenderer);
         this.mcResourceManager.registerReloadListener(new GrassColorReloadListener());
         this.mcResourceManager.registerReloadListener(new FoliageColorReloadListener());
 
@@ -588,15 +585,40 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.checkGLError("Post startup");
         this.ingameGUI = new GuiIngame(this);
         ImageLoader.init();
+        Client.instance.run();
+
+        boolean canopen = false;
+        while (!canopen) {
+            logger.info("[Dot] 等待字体加载完成中...");
+            boolean temp = true;
+            for (CFont cf : FontLoaders.cfonts) {
+                cf.texture = new DynamicTexture(cf.bufTexture);
+                temp = temp && cf.loadOK;
+            }
+            canopen = temp;
+        }
+        this.fontRendererObj = new FontRenderer(FontLoaders.getNormalFont(16), 16, true);
+        if (this.gameSettings.forceUnicodeFont != null) {
+            this.fontRendererObj.setUnicodeFlag(this.isUnicode());
+            this.fontRendererObj.setBidiFlag(this.mcLanguageManager.isCurrentLanguageBidirectional());
+        }
+        this.standardGalacticFontRenderer = new FontRenderer(FontLoaders.getNormalFont(16), 16, true);
+        this.mcResourceManager.registerReloadListener(this.fontRendererObj);
+        this.mcResourceManager.registerReloadListener(this.standardGalacticFontRenderer);
+
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
         } else {
             if (UserUtils.name == null) {
+                UserUtils.setLoadOK(true);
                 this.displayGuiScreen(new LoginUI());
             } else {
                 this.displayGuiScreen(new GuiMainMenu());
             }
         }
+
+        float time = ((System.nanoTime() - startNanoTime) / 1000000f);
+        logger.info("[Dot] LoadOK Client " + time + "ms");
 
         this.renderEngine.deleteTexture(this.mojangLogo);
         this.mojangLogo = null;
@@ -612,8 +634,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.gameSettings.enableVsync = false;
             this.gameSettings.saveOptions();
         }
-
-        Client.instance.run();
 
         this.renderGlobal.makeEntityOutlineShader();
     }
@@ -2770,8 +2790,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             UserUtils.ver = Double.parseDouble(getSubString(get, "ver", "ver"));
             logger.info("[Dot] " + get);
             logger.info("[Dot] HWID:" + hwid);
-            if (!get.contains(hwid)) {
+            if (!get.contains(hwid) || UserUtils.isLoadOK()) {
                 logger.info("[Dot] Login failed!");
+                UserUtils.setLoadOK(true);
                 return false;
             } else {
                 String s = getSubString(get, hwid, hwid);
@@ -2782,9 +2803,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 logger.info("[Dot] Name: " + UserUtils.name);
                 logger.info("[Dot] Prefix: " + UserUtils.prefix);
                 logger.info("[Dot] SigmaMode: " + UserUtils.SigmaMode);
+                UserUtils.setLoadOK(true);
                 return true;
             }
         } catch (NumberFormatException e) {
+            UserUtils.setLoadOK(true);
             return false;
         }
 

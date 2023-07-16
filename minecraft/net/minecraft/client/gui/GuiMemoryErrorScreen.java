@@ -2,6 +2,8 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 import net.minecraft.client.resources.I18n;
+import xyz.Dot.ui.LoginUI;
+import xyz.Dot.utils.UserUtils;
 
 public class GuiMemoryErrorScreen extends GuiScreen
 {
@@ -23,7 +25,12 @@ public class GuiMemoryErrorScreen extends GuiScreen
     {
         if (button.id == 0)
         {
-            this.mc.displayGuiScreen(new GuiMainMenu());
+            if (UserUtils.name == null) {
+                UserUtils.setLoadOK(true);
+                this.mc.displayGuiScreen(new LoginUI());
+            } else {
+                this.mc.displayGuiScreen(new GuiMainMenu());
+            }
         }
         else if (button.id == 1)
         {

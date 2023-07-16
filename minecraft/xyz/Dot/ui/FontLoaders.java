@@ -5,26 +5,30 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import xyz.Dot.Client;
 
 import java.awt.*;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FontLoaders {
-    private static HashMap fonts = new HashMap();
+    private static final HashMap fonts = new HashMap();
     public static CFontRenderer normalfont10 = new CFontRenderer(FontLoaders.getNormalFont(10));
     public static CFontRenderer normalfont12 = new CFontRenderer(FontLoaders.getNormalFont(12),65535);
     public static CFontRenderer normalfont16 = new CFontRenderer(FontLoaders.getNormalFont(16),65535);
     public static CFontRenderer normalfont20 = new CFontRenderer(FontLoaders.getNormalFont(20),65535);
-    public static CFontRenderer normalfont36 = new CFontRenderer(FontLoaders.getNormalFont(36));
+    public static CFontRenderer normalfont36 = new CFontRenderer(FontLoaders.getNormalFont(36),65535);
 
-    public static CFontRenderer comfortaafont16 = new CFontRenderer(FontLoaders.getComfortaaFont(16));
+    //public static CFontRenderer comfortaafont16 = new CFontRenderer(FontLoaders.getComfortaaFont(16));
+    public static ArrayList<CFontRenderer> cfonts = new ArrayList<>();
 
-/*    public FontLoaders(){
-        normalfont16un = getUniFont("verdana", 18.0F, false);
+    public FontLoaders(){
     }
 
+    /*
     public static UnicodeFontRenderer normalfont16un;
 
     static {
@@ -37,7 +41,6 @@ public class FontLoaders {
 
     public static UnicodeFontRenderer getUniFont(String s, float size, boolean b2) {
         UnicodeFontRenderer UnicodeFontRenderer = null;
-
         try {
             if (fonts.containsKey(s) && ((HashMap) fonts.get(s)).containsKey(size)) {
                 return (UnicodeFontRenderer) ((HashMap) fonts.get(s)).get(size);

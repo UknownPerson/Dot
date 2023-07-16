@@ -2,6 +2,7 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import org.apache.logging.log4j.LogManager;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -11,7 +12,6 @@ public class CFontRenderer extends CFont {
     private final int[] colorCode = new int[32];
 
     public CFontRenderer(Font font, int cs) {
-
         super(font, cs);
 
         for (int index = 0; index < 32; ++index) {
