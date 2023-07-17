@@ -26,7 +26,6 @@ public class GuiMemoryErrorScreen extends GuiScreen
         if (button.id == 0)
         {
             if (UserUtils.name == null) {
-                UserUtils.setLoadOK(true);
                 this.mc.displayGuiScreen(new LoginUI());
             } else {
                 this.mc.displayGuiScreen(new GuiMainMenu());

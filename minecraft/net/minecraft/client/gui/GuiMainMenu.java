@@ -40,10 +40,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
@@ -526,10 +524,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         String prefix = UserUtils.prefix;
         String text;
         if (name != null) {
-            if (prefix != null) {
-                text = "Welcome " + "[" + prefix + "]" + name + "!";
-            } else {
+            if (UserUtils.prefix.equals("")) {
                 text = "Welcome " + name + "!";
+            } else {
+                text = "Welcome " + "[" + prefix + "]" + name + "!";
             }
 
             font.drawString(text, RenderUtils.width() - font.getStringWidth(text) - 25, 10, new Color(255, 255, 255).getRGB());

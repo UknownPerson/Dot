@@ -36,7 +36,7 @@ import org.lwjgl.opengl.GL11;
 public class GuiOverlayDebug extends Gui
 {
     private final Minecraft mc;
-    private final FontRenderer fontRenderer;
+    private FontRenderer fontRenderer;
     private String debugOF = null;
     private List<String> debugInfoLeft = null;
     private List<String> debugInfoRight = null;
@@ -87,6 +87,7 @@ public class GuiOverlayDebug extends Gui
 
             if (!Strings.isNullOrEmpty(s))
             {
+                this.fontRenderer =  mc.fontRendererObj;
                 int j = this.fontRenderer.FONT_HEIGHT;
                 int k = this.fontRenderer.getStringWidth(s);
                 int l = 2;

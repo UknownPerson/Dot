@@ -32,7 +32,7 @@ public class CFont {
     }
 
     public void cfontthread(Font font, int charSize){
-        logger.info("[Dot] " + font +  "启动!");
+        logger.info("[Dot] " + font +  "load!");
         long starttime;
         float time;
         starttime = System.nanoTime();

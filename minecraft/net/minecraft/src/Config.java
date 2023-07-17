@@ -563,13 +563,13 @@ public class Config
     {
         if (logDetail)
         {
-            LOGGER.info("[OptiFine] " + p_detail_0_);
+            //LOGGER.info("[OptiFine] " + p_detail_0_);
         }
     }
 
     public static void dbg(String p_dbg_0_)
     {
-        LOGGER.info("[OptiFine] " + p_dbg_0_);
+        //LOGGER.info("[OptiFine] " + p_dbg_0_);
     }
 
     public static void warn(String p_warn_0_)

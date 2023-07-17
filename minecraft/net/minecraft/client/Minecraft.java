@@ -101,7 +101,6 @@ import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.misc.EventKey;
 import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.event.events.world.EventTick;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.*;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.SystemUtils;
@@ -294,7 +293,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Display width
      */
     private int tempDisplayWidth;
-    private long field_175615_aJ = 0L;
     private final Thread mcThread = Thread.currentThread();
     private ModelManager modelManager;
 
@@ -588,29 +586,36 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         Client.instance.run();
 
         boolean canopen = false;
-        while (!canopen) {
-            logger.info("[Dot] 等待字体加载完成中...");
+        boolean font16loadOK = false;
+        while (!canopen || !font16loadOK) {
+            logger.info("[Dot] waiting font loading...");
             boolean temp = true;
             for (CFont cf : FontLoaders.cfonts) {
-                cf.texture = new DynamicTexture(cf.bufTexture);
+                if(cf.loadOK){
+                    cf.texture = new DynamicTexture(cf.bufTexture);
+                }
                 temp = temp && cf.loadOK;
+
+                if (cf == FontLoaders.normalfont16 && cf.loadOK && !font16loadOK) {
+                    this.fontRendererObj = new FontRenderer(FontLoaders.getNormalFont(16), 16, true);
+                    if (this.gameSettings.forceUnicodeFont != null) {
+                        this.fontRendererObj.setUnicodeFlag(this.isUnicode());
+                        this.fontRendererObj.setBidiFlag(this.mcLanguageManager.isCurrentLanguageBidirectional());
+                    }
+                    this.standardGalacticFontRenderer = new FontRenderer(FontLoaders.getNormalFont(16), 16, true);
+                    this.mcResourceManager.registerReloadListener(this.fontRendererObj);
+                    this.mcResourceManager.registerReloadListener(this.standardGalacticFontRenderer);
+
+                    font16loadOK = true;
+                }
             }
             canopen = temp;
         }
-        this.fontRendererObj = new FontRenderer(FontLoaders.getNormalFont(16), 16, true);
-        if (this.gameSettings.forceUnicodeFont != null) {
-            this.fontRendererObj.setUnicodeFlag(this.isUnicode());
-            this.fontRendererObj.setBidiFlag(this.mcLanguageManager.isCurrentLanguageBidirectional());
-        }
-        this.standardGalacticFontRenderer = new FontRenderer(FontLoaders.getNormalFont(16), 16, true);
-        this.mcResourceManager.registerReloadListener(this.fontRendererObj);
-        this.mcResourceManager.registerReloadListener(this.standardGalacticFontRenderer);
 
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
         } else {
             if (UserUtils.name == null) {
-                UserUtils.setLoadOK(true);
                 this.displayGuiScreen(new LoginUI());
             } else {
                 this.displayGuiScreen(new GuiMainMenu());
@@ -1438,8 +1443,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     /**
      * Called when user clicked he's mouse right button (place)
-     */
-    private void rightClickMouse() {
+     */ private void rightClickMouse() {
         if (!this.playerController.getIsHittingBlock()) {
             this.rightClickDelayTimer = 4;
             //fuck
@@ -2790,7 +2794,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             UserUtils.ver = Double.parseDouble(getSubString(get, "ver", "ver"));
             logger.info("[Dot] " + get);
             logger.info("[Dot] HWID:" + hwid);
-            if (!get.contains(hwid) || UserUtils.isLoadOK()) {
+            if (!get.contains(hwid)) {
                 logger.info("[Dot] Login failed!");
                 UserUtils.setLoadOK(true);
                 return false;

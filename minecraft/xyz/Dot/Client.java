@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public enum Client {
     instance;
     public String client_name = "Dot";
-    public double client_version = 0.5;
+    public double client_version = 0.55;
     public boolean inDevelopment = false;
 
     protected Minecraft mc = Minecraft.getMinecraft();
@@ -40,7 +40,7 @@ public enum Client {
 
     public void run(){
 
-        logger.info("[Dot] Dot, 启动!");
+        logger.info("[Dot] Dot load!");
         eventmanger = new EventBus();
         modulemanager = new ModuleManager();
         settingmanager = new SettingManager();

@@ -22,6 +22,7 @@ import net.optifine.RandomEntities;
 import net.optifine.shaders.ShadersTex;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xyz.Dot.ui.ImageNeedLoad;
 
 public class TextureManager implements ITickable, IResourceManagerReloadListener
 {
