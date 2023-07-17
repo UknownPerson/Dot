@@ -4,10 +4,7 @@
 package xyz.Dot.command;
 
 import xyz.Dot.Client;
-import xyz.Dot.command.commands.Bind;
-import xyz.Dot.command.commands.Dump;
-import xyz.Dot.command.commands.Help;
-import xyz.Dot.command.commands.Toggle;
+import xyz.Dot.command.commands.*;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.misc.EventChat;
@@ -37,6 +34,7 @@ public class CommandManager{
         this.commands.add(new Toggle());
         //this.commands.add(new Say());
         this.commands.add(new Help());
+        this.commands.add(new Esu());
         if(Client.instance.inDevelopment)
             this.commands.add(new Dump());
         EventBus.getInstance().register(this);

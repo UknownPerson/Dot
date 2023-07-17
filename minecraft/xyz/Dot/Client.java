@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 public enum Client {
     instance;
-    public String client_name = "Dot";
-    public double client_version = 0.5;
-    public boolean inDevelopment = false;
+    public final String client_name = "Dot";
+    public final double client_version = 0.5;
+    public final boolean inDevelopment = false;
 
     protected Minecraft mc = Minecraft.getMinecraft();
     public EventBus eventmanger;

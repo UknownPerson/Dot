@@ -1,7 +1,5 @@
 package xyz.Dot.setting;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import xyz.Dot.module.Module;
 
 import java.util.ArrayList;

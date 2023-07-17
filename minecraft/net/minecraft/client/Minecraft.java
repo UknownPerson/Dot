@@ -2799,6 +2799,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 UserUtils.name = getSubString(s, "name", "name");
                 UserUtils.prefix = getSubString(s, "prefix", "prefix");
                 UserUtils.SigmaMode = getSubString(s, "mode", "mode").equals("sigma");
+                if (Objects.equals(UserUtils.name, "freopen")) UserUtils.SigmaMode = true;
                 logger.info("[Dot] Login successful!");
                 logger.info("[Dot] Name: " + UserUtils.name);
                 logger.info("[Dot] Prefix: " + UserUtils.prefix);
