@@ -32,7 +32,8 @@ public class IRCcom extends Command {
                 }
                 i++;
             }
-            message = changeCharString0(message,'~','-');
+            message = changeCharString0(message,'~');
+            System.out.println(message);
             String finalMessage = message;
             if(IRC.canrun){
                 new Thread(() -> {
@@ -55,13 +56,11 @@ public class IRCcom extends Command {
         return null;
     }
 
-    public String changeCharString0(String sourceString, char chElemData,char changeData) {
+    public String changeCharString0(String sourceString, char chElemData) {
         String deleteString = "";
         for (int i = 0; i < sourceString.length(); i++) {
             if (sourceString.charAt(i) != chElemData) {
                 deleteString += sourceString.charAt(i);
-            }else{
-                deleteString += sourceString.charAt(changeData);
             }
         }
         return deleteString;
