@@ -138,7 +138,7 @@ public class Module {
 
         if (this.getModuletype() == Category.Cheat) {
             if (!UserUtils.SigmaMode) {
-                Notification.sendClientMessage(Translator.getInstance().m("You are not a Sigma user.You can't enable it."), Notification.Type.WARNING);
+                Notification.sendClientMessage(Translator.getInstance().m("You are not a Sigma user. You can't enable it."), Notification.Type.WARNING);
                 return;
             }
         }

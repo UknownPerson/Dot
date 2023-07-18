@@ -33,6 +33,7 @@ public class ModuleManager {
         this.addModule(new CustomColor());
         this.addModule(new NoCommand());
         this.addModule(new HUD());
+        this.addModule(new IRC());
         if(Client.instance.inDevelopment){
             this.addModule(new MusicPlayer());
         }

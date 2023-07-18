@@ -41,7 +41,6 @@ public class ChatUtils {
 
         public ChatMessageBuilder(boolean prependDefaultPrefix, boolean useDefaultMessageColor) {
             if (prependDefaultPrefix) {
-                Client.instance.getClass();
                 this.theMessage.appendSibling(new ChatMessageBuilder(false, false).appendText(String.valueOf((Object)((Object)EnumChatFormatting.AQUA) + Client.instance.client_name + " ")).setColor(EnumChatFormatting.RED).build().getChatComponent());
             }
             this.useDefaultMessageColor = useDefaultMessageColor;

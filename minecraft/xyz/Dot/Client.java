@@ -10,6 +10,7 @@ import xyz.Dot.event.EventBus;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.file.CustomFileManager;
+import xyz.Dot.module.Client.IRC;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.module.Render.FullBright;
 import xyz.Dot.setting.SettingManager;
@@ -18,6 +19,7 @@ import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.UserUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public enum Client {
@@ -61,6 +63,13 @@ public enum Client {
         logger.info("[Dot] stop!");
         save();
         mc.gameSettings.saturation = FullBright.old;
+
+        try {
+            IRC.sck.close();
+            IRC.in.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

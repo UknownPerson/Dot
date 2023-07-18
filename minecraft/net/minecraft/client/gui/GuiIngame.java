@@ -401,6 +401,8 @@ public class GuiIngame extends Gui
         ShaderManager.getBloomTasks().clear();
         EventBus.getInstance().call(new EventRender2D(partialTicks));
 
+        Minecraft.getMinecraft().gameSettings.ofFastRender = false;
+
         Client.instance.componentManager.drawComponents();
 
         if (ModuleManager.getModuleByName("Notifications").isToggle()) {

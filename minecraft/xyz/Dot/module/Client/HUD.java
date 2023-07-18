@@ -1,5 +1,7 @@
 package xyz.Dot.module.Client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;

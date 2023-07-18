@@ -18,7 +18,17 @@ public class Say
     @Override
     public String execute(String[] args) {
         if (args.length > 0) {
-            mc.thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(args[0]));
+            String message = null;
+            int i = 0;
+            for (String s : args) {
+                if (i == 0) {
+                    message = s;
+                } else {
+                    message = message + " " + s;
+                }
+                i++;
+            }
+            mc.thePlayer.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
         } else {
             Notification.sendClientMessage(".say <message>", Notification.Type.INFO);
         }
