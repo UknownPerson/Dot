@@ -9,6 +9,7 @@ import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
+import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.Helper;
 import xyz.Dot.utils.Translator;
@@ -17,6 +18,8 @@ import xyz.Dot.utils.WebUtils;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class IRC extends Module {
     public static Setting autorec = new Setting(ModuleManager.getModuleByName("IRC"), "AutoReconnect", true);
@@ -26,88 +29,113 @@ public class IRC extends Module {
     public static BufferedInputStream in;
     String host;
     int port;
+    public static ArrayList<Thread> ts = new ArrayList<>();
+    Thread t2fuck;
 
     public IRC() {
         super("IRC", Keyboard.KEY_NONE, Category.Client);
         this.addValues(autorec);
         String get = WebUtils.get("https://gitee.com/UknownPerson/dot-login-check/raw/master/irc");
-        if(get.equals("null")){
+        if (get.equals("null")) {
             canrun = false;
-        }else{
-            host = getSubString(get,"-host-","-host-");
-            port = Integer.parseInt(getSubString(get,"-port-","-port-"));
+        } else {
+            host = getSubString(get, "-host-", "-host-");
+            port = Integer.parseInt(getSubString(get, "-port-", "-port-"));
         }
     }
 
     @Override
     public void onEnable() {
         super.onEnable();
+
+        /*
+        for (Thread t : ts) {
+            t.stop();
+        }
+        ts.clear();
+         */
+
         if (UserUtils.name == null) {
             Notification.sendClientMessage(Translator.getInstance().m("You don't hava name. Ask Dot dev to get registered."), Notification.Type.WARNING);
         } else {
-            if(canrun){
+            if (canrun) {
 
-                new Thread(() -> {
+                Thread t1 = new Thread(() -> {
                     try {
                         sck = new Socket(host, port);
                         in = new BufferedInputStream(sck.getInputStream());
                         run = true;
 
-                        new Thread(() -> {
-                            while(run){
+                        {
+                            String login = "~user~" + UserUtils.getName() + "~user~";
+                            byte[] bstream = login.getBytes("GBK");
+                            OutputStream os = sck.getOutputStream();
+                            os.write(bstream);
+                        }
+
+                        Thread t = new Thread(() -> {
+                            while (run) {
+                                byte[] bstream1 = new byte[1024];
+                                int res;
+                                String s;
                                 try {
-                                    Thread.sleep(5000);
-                                    if(isServerClose(sck)){
-                                        if(autorec.isToggle()){
-                                            sck = new Socket(host, port);
-                                            String login = "~user~" + UserUtils.getName() + "~user~";
-                                            byte[] bstream = login.getBytes("GBK");
-                                            OutputStream os = sck.getOutputStream();
-                                            os.write(bstream);
-                                        }else{
-                                            this.setToggle(false);
-                                            run =false;
-                                        }
+                                    res = in.read(bstream1);
+                                    s = new String(bstream1, "GBK");
+                                    if (res < 0) {
+                                        run = false;
+                                        sck.close();
+                                        in.close();
+                                        onEnable();
+                                    } else {
+                                        s = s.substring(0, res);
+                                        System.out.println(res);
+                                        Helper.mc.thePlayer.addChatMessage(new ChatComponentText("\u00a7cIRC \u00a7f" + s));
                                     }
-                                } catch (InterruptedException | IOException e) {
+
+                                } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
                             }
-                        }).start();
+                        });
 
-                        String login = "~user~" + UserUtils.getName() + "~user~";
-                        byte[] bstream = login.getBytes("GBK");
-                        OutputStream os = sck.getOutputStream();
-                        os.write(bstream);
+                        t.start();
+                        ts.add(t);
 
-                        while (run) {
-                            byte[] bstream1 = new byte[1024];
-                            int res = in.read(bstream1);
-                            String s = new String(bstream1, "GBK");
-                            s = s.substring(0,res);
-                            Helper.mc.thePlayer.addChatMessage(new ChatComponentText("\u00a7cIRC \u00a7f" + s));
-                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                }).start();
+                });
+                t1.start();
+                ts.add(t1);
             }
         }
     }
+
     @Override
     public void onDisable() {
-        if(canrun){
-            new Thread(() -> {
+        if (canrun) {
+
+            Thread t2 = new Thread(() -> {
                 if (UserUtils.name != null) {
                     run = false;
                     try {
+                        Thread.sleep(10);
                         sck.close();
                         in.close();
-                    } catch (IOException e) {
+                        for (Thread t : ts) {
+                            if (t != t2fuck) {
+                                t.stop();
+                            }
+                        }
+                        ts.clear();
+                    } catch (IOException | InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
-            }).start();
+            });
+            t2fuck = t2;
+            //ts.add(t2);
+            t2.start();
         }
     }
 
@@ -137,14 +165,5 @@ public class IRC extends Module {
         }
         result = text.substring(zLen, yLen);
         return result;
-    }
-
-    public Boolean isServerClose(Socket socket){
-        try{
-            socket.sendUrgentData(0xFF);//发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信
-            return false;
-        }catch(Exception se){
-            return true;
-        }
     }
 }

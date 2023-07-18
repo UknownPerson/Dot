@@ -12,10 +12,12 @@ public class Help
     @Override
     public String execute(String[] args) {
         String bind = ".bind <module> <key>";
+        String irc = ".irc <message>";
         String say = ".say <message>";
         String toggle = ".t <module>";
         Notification.sendClientMessage(toggle, Notification.Type.INFO);
-        //Notification.sendClientMessage(say, Notification.Type.INFO);
+        Notification.sendClientMessage(irc, Notification.Type.INFO);
+        Notification.sendClientMessage(say, Notification.Type.INFO);
         Notification.sendClientMessage(bind, Notification.Type.INFO);
         return null;
     }
