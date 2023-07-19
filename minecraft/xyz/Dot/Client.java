@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public enum Client {
     instance;
     public String client_name = "Dot";
-    public double client_version = 0.59;
+    public double client_version = 0.6;
     public boolean inDevelopment = true;
 
     protected Minecraft mc = Minecraft.getMinecraft();
