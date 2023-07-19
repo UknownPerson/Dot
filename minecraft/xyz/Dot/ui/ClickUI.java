@@ -64,7 +64,6 @@ public class ClickUI extends GuiScreen {
         //toclose = true;
         picker = null;
         ModuleManager.getModuleByName("ClickGui").setToggle(false);
-
     }
 
     @Override
@@ -149,7 +148,7 @@ public class ClickUI extends GuiScreen {
 
             if (c == ClickGui.curType) {
                 typeanimto[0] = rx - 4 - x;
-                typeanimto[1] = rx + font1.getStringWidth(c.name()) + 4 - x;
+                typeanimto[1] = rx + font1.getStringWidth(Translator.getInstance().m(c.name())) + 4 - x;
             }
 
             float typeanimtomid = (typeanimto[0] + typeanimto[1]) / 2;
@@ -166,7 +165,7 @@ public class ClickUI extends GuiScreen {
             //last
             if (c == ClickGui.lastcurType) {
                 typeanimto[3] = rx - 4 - x;
-                typeanimto[4] = rx + font1.getStringWidth(c.name()) + 4 - x;
+                typeanimto[4] = rx + font1.getStringWidth(Translator.getInstance().m(c.name())) + 4 - x;
             }
 
             float lasttypeanimtomid = (typeanimto[3] + typeanimto[4]) / 2;
@@ -181,7 +180,7 @@ public class ClickUI extends GuiScreen {
             }
 
 
-            if (isHovered(rx - 4, ry, rx + font1.getStringWidth(c.name()) + 4, ry + blueheight, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
+            if (isHovered(rx - 4, ry, rx + font1.getStringWidth(Translator.getInstance().m(c.name())) + 4, ry + blueheight, mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown) {
                 picker = null;
                 ClickGui.lastcurType = c;
                 if (c != ClickGui.curType) {
@@ -204,7 +203,7 @@ public class ClickUI extends GuiScreen {
                 keydownY = (int) (mouseY - y);
             }
 
-            rx += font1.getStringWidth(c.name()) + 8;
+            rx += font1.getStringWidth(Translator.getInstance().m(c.name())) + 8;
         }
 
         float[] speed = new float[8];
@@ -388,7 +387,7 @@ public class ClickUI extends GuiScreen {
 
                     for (int i = 0; i < s.getModes().size(); i++) {
                         RenderUtils.drawRect((int) (userxendanim + 143 - 8 - 32 + 3), (int) (thisry - 5 + 12 + i * 12), (int) (userxendanim + 143 - 8 - 3), (int) (thisry - 5 + 12 + 1 + i * 12), new Color(150, 150, 150).getRGB());
-                        font1.drawString(Translator.getInstance().m(s.getModes().get(i)), (int) (((userxendanim + 143 - 8 - 32) + (userxendanim + 143 - 8) - font1.getStringWidth(s.getModes().get(i))) / 2), (int) (thisry + i * 12), new Color(64, 64, 64).getRGB());
+                        font1.drawString(Translator.getInstance().m(s.getModes().get(i)), (int) (((userxendanim + 143 - 8 - 32) + (userxendanim + 143 - 8) - font1.getStringWidth(Translator.getInstance().m(s.getModes().get(i)))) / 2), (int) (thisry + i * 12), new Color(64, 64, 64).getRGB());
                         //RenderUtils.drawRect((int) (userxendanim + 143 - 8 - 32), (int) (thisry - 5 + i * 12), (int) (userxendanim + 143 - 8), (int) (thisry - 5 + 12 + i * 12), new Color(0, 0, 0,64).getRGB());
                         if (isHovered((int) (userxendanim + 143 - 8 - 32), (int) (thisry - 5 + i * 12), (int) (userxendanim + 143 - 8), (int) (thisry - 5 + 12 + i * 12), mouseX, mouseY) && Mouse.isButtonDown(0) && !keydown && s.isOpen()) {
                             keydown = true;
