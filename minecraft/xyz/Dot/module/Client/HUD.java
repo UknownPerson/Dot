@@ -1,7 +1,5 @@
 package xyz.Dot.module.Client;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
@@ -11,7 +9,6 @@ import xyz.Dot.event.events.world.EventPacketRecieve;
 import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.Custom;
@@ -25,13 +22,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class HUD extends Module {
-    public static Setting hudarraylist = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList", true);
-    public static Setting arraylistColor = new Setting(ModuleManager.getModuleByName("HUD"), "ArrayList Color",new Color(-1));
-    public static Setting blur = new Setting(ModuleManager.getModuleByName("HUD"), "Blur HUD", false);
-    public static Setting shadow = new Setting(ModuleManager.getModuleByName("HUD"), "HUD Shadow", false);
-    public static Setting transparent = new Setting(ModuleManager.getModuleByName("HUD"), "Transparent", false);
+    public static Setting hudarraylist = new Setting(Client.instance.getModuleManager().getModuleByName("HUD"), "ArrayList", true);
+    public static Setting arraylistColor = new Setting(Client.instance.getModuleManager().getModuleByName("HUD"), "ArrayList Color",new Color(-1));
+    public static Setting blur = new Setting(Client.instance.getModuleManager().getModuleByName("HUD"), "Blur HUD", false);
+    public static Setting shadow = new Setting(Client.instance.getModuleManager().getModuleByName("HUD"), "HUD Shadow", false);
+    public static Setting transparent = new Setting(Client.instance.getModuleManager().getModuleByName("HUD"), "Transparent", false);
     static ArrayList<String> languages = new ArrayList<>(getLanguages());
-    public static Setting lang = new Setting(ModuleManager.getModuleByName("HUD"), "Language", "English", languages){
+    public static Setting lang = new Setting(Client.instance.getModuleManager().getModuleByName("HUD"), "Language", "English", languages){
         @Override
         public void setCurrentMode(String currentMode) {
             if(currentMode.equals("English")){
@@ -131,13 +128,13 @@ public class HUD extends Module {
         CFontRenderer font1 = FontLoaders.normalfont16;
 
         ArrayList<Module> list = new ArrayList<Module>();
-        for (Module m : ModuleManager.getModules()) {
+        for (Module m : Client.instance.getModuleManager().getModules()) {
             list.add(m);
         }
         list.sort((o1, o2) -> font1.getStringWidth(Translator.getInstance().m(o2.getName())) - font1.getStringWidth(Translator.getInstance().m(o1.getName())));
 
         if(!hudarraylist.isToggle()){
-            for (Module m : ModuleManager.getModules()) {
+            for (Module m : Client.instance.getModuleManager().getModules()) {
                 m.setAnimY(0);
             }
             return;
@@ -207,7 +204,7 @@ public class HUD extends Module {
     }
 
     public void onDisable() {
-        for (Module m : ModuleManager.getModules()) {
+        for (Module m : Client.instance.getModuleManager().getModules()) {
             m.setAnimY(0);
         }
     }

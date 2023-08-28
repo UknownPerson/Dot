@@ -35,7 +35,7 @@ public class Custom extends GuiScreen {
 
     @Override
     public void initGui() {
-        components = Client.instance.componentManager.components;
+        components = Client.instance.getComponentManager().components;
         Collections.reverse(components);
         super.initGui();
     }
@@ -43,7 +43,7 @@ public class Custom extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        ArrayList<Component> components = Client.instance.componentManager.components;
+        ArrayList<Component> components = Client.instance.getComponentManager().components;
         Collections.reverse(components);
         for (Component object : components) {
             object.mouseClick(mouseX, mouseY,mouseButton);

@@ -7,43 +7,38 @@ import org.lwjgl.opengl.Display;
 import xyz.Dot.command.CommandManager;
 import xyz.Dot.custom.ComponentManager;
 import xyz.Dot.event.EventBus;
-import xyz.Dot.event.EventHandler;
-import xyz.Dot.event.events.world.EventTick;
 import xyz.Dot.file.CustomFileManager;
 import xyz.Dot.module.Client.IRC;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.module.Render.FullBright;
 import xyz.Dot.setting.SettingManager;
-import xyz.Dot.ui.CFont;
-import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.UserUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public enum Client {
     instance;
-    public String client_name = "Dot";
-    public double client_version = 0.6;
-    public boolean inDevelopment = true;
+    public final String client_name = "Dot";
+    public final double client_version = 0.6;
+    public final boolean inDevelopment = true;
 
-    protected Minecraft mc = Minecraft.getMinecraft();
-    public EventBus eventmanger;
-    public ModuleManager modulemanager;
-    public SettingManager settingmanager;
+    private final Minecraft mc = Minecraft.getMinecraft();
 
-    public CommandManager commandmanager;
-    public CustomFileManager customfilemanager;
-    public FontLoaders fontloaders;
+    private EventBus eventBus;
+    private ModuleManager modulemanager;
+    private SettingManager settingmanager;
+    private CommandManager commandmanager;
+    private CustomFileManager customfilemanager;
+    private FontLoaders fontloaders;
+    private ComponentManager componentManager;
 
-    public ComponentManager componentManager;
-    private static final Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger("Dot");
 
     public void run(){
 
-        logger.info("[Dot] Dot load!");
-        eventmanger = new EventBus();
+        logger.info("Dot load!");
+        eventBus = new EventBus();
         modulemanager = new ModuleManager();
         settingmanager = new SettingManager();
         commandmanager = new CommandManager();
@@ -52,7 +47,7 @@ public enum Client {
         String title = client_name + " " + client_version + " " + getSigma() +getDevMode() + "- Minecraft 1.8.9";
         Display.setTitle(title);
 
-        modulemanager.loadModule();
+        Client.instance.getModuleManager().loadModule();
         commandmanager.run();
         customfilemanager.loadFiles();
 
@@ -60,7 +55,7 @@ public enum Client {
 
     public void stop() {
 
-        logger.info("[Dot] stop!");
+        logger.info("client shutdown.");
         save();
         mc.gameSettings.saturation = FullBright.old;
 
@@ -74,31 +69,29 @@ public enum Client {
     }
 
     public void save(){
-
-        logger.info("[Dot] Save!");
         customfilemanager.saveFiles();
-
     }
 
     public String getDevMode(){
-
         if(inDevelopment){
             return "Dev ";
         }else{
             return "";
         }
-
     }
 
     public String getSigma(){
-
         if(UserUtils.SigmaMode){
             return "\u2211 ";
         }else{
             return "";
         }
-
     }
+
+    public ComponentManager getComponentManager() {
+        return componentManager;
+    }
+
     public ModuleManager getModuleManager() {
         return this.modulemanager;
     }

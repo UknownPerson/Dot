@@ -2,10 +2,9 @@ package xyz.Dot.ui;
 
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Mouse;
-import xyz.Dot.module.Client.ClickGui;
+import xyz.Dot.Client;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.MusicPlayer;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -26,7 +25,7 @@ public class MusicPlayerUI extends GuiScreen {
 
     @Override
     public void onGuiClosed() {
-        ModuleManager.getModuleByName("MusicPlayer").setToggle(false);
+        Client.instance.getModuleManager().getModuleByName("MusicPlayer").setToggle(false);
     }
 
     @Override

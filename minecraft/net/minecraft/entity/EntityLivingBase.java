@@ -29,7 +29,7 @@ import net.minecraft.scoreboard.Team;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import xyz.Dot.module.ModuleManager;
+import xyz.Dot.Client;
 
 import java.util.*;
 
@@ -1709,7 +1709,7 @@ public abstract class EntityLivingBase extends Entity {
                 this.handleJumpLava();
             } else if (this.onGround && this.jumpTicks == 0) {
                 this.jump();
-                if (!ModuleManager.getModuleByName("NoJumpDelay").isToggle()) {
+                if (!Client.instance.getModuleManager().getModuleByName("NoJumpDelay").isToggle()) {
                     this.jumpTicks = 10;
                 }
             }

@@ -17,7 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldSettings;
-import xyz.Dot.module.ModuleManager;
+import xyz.Dot.Client;
 import xyz.Dot.module.Render.BetterTabList;
 
 import java.util.Comparator;
@@ -108,7 +108,7 @@ public class GuiPlayerTabOverlay extends Gui {
         } else {
             l = 0;
         }
-        boolean bool = !ModuleManager.getModuleByName("BetterTabList").isToggle();
+        boolean bool = !Client.instance.getModuleManager().getModuleByName("BetterTabList").isToggle();
         int i1 = Math.min(j4 * ((flag ? 9 : 0) + i + l + 13), width - 50) / j4;
         int j1 = width / 2 - (i1 * j4 + (j4 - 1) * 5) / 2;
         if (mc.gameSettings.keyBindCommand.isKeyDown()) {

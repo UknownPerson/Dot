@@ -12,6 +12,7 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ResourceLocation;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventPostRenderPlayer;
 import xyz.Dot.event.events.rendering.EventPreRenderPlayer;
@@ -53,7 +54,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         EventPreRenderPlayer event = new EventPreRenderPlayer();
         EventBus.getInstance().call(event);
 
-        if ((!entity.isUser() || ModuleManager.getModuleByName("NameTag").isToggle()) || this.renderManager.livingPlayer == entity) {
+        if ((!entity.isUser() || Client.instance.getModuleManager().getModuleByName("NameTag").isToggle()) || this.renderManager.livingPlayer == entity) {
             double d0 = y;
 
             if (entity.isSneaking() && !(entity instanceof EntityPlayerSP)) {

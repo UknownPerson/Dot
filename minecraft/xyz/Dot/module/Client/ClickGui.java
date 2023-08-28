@@ -2,11 +2,8 @@ package xyz.Dot.module.Client;
 
 import org.lwjgl.input.Keyboard;
 import xyz.Dot.Client;
-import xyz.Dot.event.EventHandler;
-import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.ClickUI;
 import xyz.Dot.ui.cgui.CUI;
@@ -14,7 +11,7 @@ import xyz.Dot.ui.cgui.CUI;
 import java.util.ArrayList;
 
 public class ClickGui extends Module {
-    public static Setting cmode = new Setting(ModuleManager.getModuleByName("ClickGui"), "Mode", "Classic", ClickGuiModes());
+    public static Setting cmode = new Setting(Client.instance.getModuleManager().getModuleByName("ClickGui"), "Mode", "Classic", ClickGuiModes());
 
     public static float width = 300.0f, height = 200.0f;
     public static float x = 0.0f, y = 0.0f;

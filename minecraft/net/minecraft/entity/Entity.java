@@ -27,8 +27,8 @@ import net.minecraft.util.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import xyz.Dot.Client;
 import xyz.Dot.module.Cheat.HitBox;
-import xyz.Dot.module.ModuleManager;
 
 import java.util.List;
 import java.util.Random;
@@ -2023,7 +2023,7 @@ public abstract class Entity implements ICommandSender
 
     public float getCollisionBorderSize() {
         float f = 0.1f;
-        if(ModuleManager.getModuleByName("HitBox").isToggle()){
+        if(Client.instance.getModuleManager().getModuleByName("HitBox").isToggle()){
             f = (float) HitBox.size.getCurrentValue();
         }
         return f;
@@ -2174,7 +2174,7 @@ public abstract class Entity implements ICommandSender
      */
     public boolean isInvisibleToPlayer(EntityPlayer player)
     {
-        if(ModuleManager.getModuleByName("NoInvisible").isToggle()){
+        if(Client.instance.getModuleManager().getModuleByName("NoInvisible").isToggle()){
             return false;
         }
         return player.isSpectator() ? false : this.isInvisible();

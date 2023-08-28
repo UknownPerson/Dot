@@ -42,7 +42,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import xyz.Dot.module.ModuleManager;
+import xyz.Dot.Client;
 
 import java.util.Collection;
 import java.util.List;
@@ -1899,7 +1899,7 @@ public abstract class EntityPlayer extends EntityLivingBase {
      * For EntityLivingBase subclasses, returning false when invisible will render the entity semitransparent.
      */
     public boolean isInvisibleToPlayer(EntityPlayer player) {
-        if(ModuleManager.getModuleByName("NoInvisible").isToggle()){
+        if(Client.instance.getModuleManager().getModuleByName("NoInvisible").isToggle()){
             return false;
         }
         if (!this.isInvisible()) {
@@ -1950,7 +1950,7 @@ public abstract class EntityPlayer extends EntityLivingBase {
         }
 
         if (this.isSneaking()) {
-            if (ModuleManager.getModuleByName("BetterSneak").isToggle()) {
+            if (Client.instance.getModuleManager().getModuleByName("BetterSneak").isToggle()) {
                 fto = 0.24f;
             } else {
                 fto = 0.08f;
@@ -1959,7 +1959,7 @@ public abstract class EntityPlayer extends EntityLivingBase {
             fto = 0f;
         }
 
-        if (ModuleManager.getModuleByName("BetterSneak").isToggle()) {
+        if (Client.instance.getModuleManager().getModuleByName("BetterSneak").isToggle()) {
             f -= sneakanim;
         } else {
             f -= fto;

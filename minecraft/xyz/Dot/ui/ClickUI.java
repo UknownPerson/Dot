@@ -15,7 +15,6 @@ import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.Translator;
@@ -63,13 +62,13 @@ public class ClickUI extends GuiScreen {
     public void onGuiClosed() {
         //toclose = true;
         picker = null;
-        ModuleManager.getModuleByName("ClickGui").setToggle(false);
+        Client.instance.getModuleManager().getModuleByName("ClickGui").setToggle(false);
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
-        if (!Client.instance.modulemanager.getModuleByName("ClickGui").isToggle()) {
+        if (!Client.instance.getModuleManager().getModuleByName("ClickGui").isToggle()) {
             this.mc.displayGuiScreen(null);
         }
 
@@ -451,7 +450,7 @@ public class ClickUI extends GuiScreen {
 
         RenderUtils.doGlScissor((int) rx, (int) y + 12 + 4, (int) userxendanim, (int) (y + height));
 
-        for (Module m : ModuleManager.getModules()) {
+        for (Module m : Client.instance.getModuleManager().getModules()) {
             float coloranimto;
             if (m.isToggle()) {
                 coloranimto = 255;

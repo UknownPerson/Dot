@@ -10,18 +10,18 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender3D;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.utils.RenderUtils;
 
 
 public class BlockOverlay extends Module {
-    public static Setting alpha = new Setting(ModuleManager.getModuleByName("BlockOverlay"), "Alpha", 32d, 0d, 255d, 1d);
+    public static Setting alpha = new Setting(Client.instance.getModuleManager().getModuleByName("BlockOverlay"), "Alpha", 32d, 0d, 255d, 1d);
 
     float x = 0, y = 0;
 

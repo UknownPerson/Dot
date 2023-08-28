@@ -117,6 +117,7 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
+import xyz.Dot.Client;
 import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.FontLoaders;
 
@@ -2644,9 +2645,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 {
                     axisalignedbb = BlockModelUtils.getOffsetBoundingBox(axisalignedbb, block$enumoffsettype, blockpos);
                 }
-                if (ModuleManager.getModuleByName("BlockOverlay").isToggle()) {
-                    
-                }else{
+                if (!Client.instance.getModuleManager().getModuleByName("BlockOverlay").isToggle()) {
                     drawSelectionBoundingBox(axisalignedbb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-d0, -d1, -d2));
                 }
             }

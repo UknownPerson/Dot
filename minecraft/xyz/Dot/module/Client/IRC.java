@@ -1,28 +1,27 @@
 package xyz.Dot.module.Client;
 
 import net.minecraft.util.ChatComponentText;
-import org.apache.commons.codec.binary.Base64;
 import org.lwjgl.input.Keyboard;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
-import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.Helper;
 import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.UserUtils;
 import xyz.Dot.utils.WebUtils;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class IRC extends Module {
-    public static Setting autorec = new Setting(ModuleManager.getModuleByName("IRC"), "AutoReconnect", true);
+    public static Setting autorec = new Setting(Client.instance.getModuleManager().getModuleByName("IRC"), "AutoReconnect", true);
     public static Socket sck;
     public boolean run = false;
     public static boolean canrun = true;

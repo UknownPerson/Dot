@@ -12,10 +12,10 @@ import xyz.Dot.module.Render.*;
 import java.util.ArrayList;
 
 public class ModuleManager {
-    static ArrayList<Module> modules;
+    private final ArrayList<Module> modules;
 
     public ModuleManager(){
-        modules = new ArrayList();
+        modules = new ArrayList<>();
         EventBus.getInstance().register(this);
     }
 
@@ -76,11 +76,11 @@ public class ModuleManager {
         }
     }
 
-    public static ArrayList<Module> getModules() {
+    public ArrayList<Module> getModules() {
         return modules;
     }
 
-    public static ArrayList<Module> getToggleModules() {
+    public ArrayList<Module> getToggleModules() {
         ArrayList<Module> togglelist = new ArrayList<Module>();
         for(Module m : getModules()){
             if(m.isToggle()){
@@ -91,7 +91,7 @@ public class ModuleManager {
     }
 
 
-    public static Module getModuleByName(String name) {
+    public Module getModuleByName(String name) {
         for (Module m : modules) {
             if (!m.getName().equalsIgnoreCase(name)) continue;
             return m;

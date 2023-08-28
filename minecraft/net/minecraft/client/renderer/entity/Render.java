@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 import net.optifine.entity.model.IEntityRenderer;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.Client;
 import xyz.Dot.module.Misc.Teams;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
 
@@ -389,7 +389,7 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
             }
 
             int j;
-            boolean nt = ModuleManager.getModuleByName("NameTag").isToggle() && Minecraft.getMinecraft().theWorld.playerEntities.contains(entityIn) && str.contains(entityIn.getName());
+            boolean nt = Client.instance.getModuleManager().getModuleByName("NameTag").isToggle() && Minecraft.getMinecraft().theWorld.playerEntities.contains(entityIn) && str.contains(entityIn.getName());
             CFontRenderer font = FontLoaders.normalfont16;
             if(nt) {
                 String head;

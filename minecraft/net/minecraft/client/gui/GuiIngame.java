@@ -40,7 +40,6 @@ import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender2D;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.ui.Notification;
 import xyz.Dot.utils.RenderUtils;
@@ -202,7 +201,7 @@ public class GuiIngame extends Gui
         GlStateManager.enableAlpha();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         this.mc.mcProfiler.startSection("bossHealth");
-        if (!ModuleManager.getModuleByName("NoBossBar").isToggle()) {
+        if (!Client.instance.getModuleManager().getModuleByName("NoBossBar").isToggle()) {
             this.renderBossHealth();
         }
         this.mc.mcProfiler.endSection();
@@ -361,7 +360,7 @@ public class GuiIngame extends Gui
         GlStateManager.popMatrix();
         scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(0);
 
-        if ((this.mc.gameSettings.keyBindCommand.isKeyDown() || ModuleManager.getModuleByName("BetterTabList").isToggle()) && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.getPlayerInfoMap().size() > 1 || scoreobjective1 != null)) {
+        if ((this.mc.gameSettings.keyBindCommand.isKeyDown() || Client.instance.getModuleManager().getModuleByName("BetterTabList").isToggle()) && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.getPlayerInfoMap().size() > 1 || scoreobjective1 != null)) {
             this.overlayPlayerList.updatePlayerList(true);
             this.overlayPlayerList.renderPlayerlist(i, scoreboard, scoreobjective1);
         } else {
@@ -403,9 +402,9 @@ public class GuiIngame extends Gui
 
         Minecraft.getMinecraft().gameSettings.ofFastRender = false;
 
-        Client.instance.componentManager.drawComponents();
+        Client.instance.getComponentManager().drawComponents();
 
-        if (ModuleManager.getModuleByName("Notifications").isToggle()) {
+        if (Client.instance.getModuleManager().getModuleByName("Notifications").isToggle()) {
             Notification.drawNotifications();
         }
 
@@ -435,7 +434,7 @@ public class GuiIngame extends Gui
 
     protected void renderTooltip(ScaledResolution sr, float partialTicks)
     {
-        if (ModuleManager.getModuleByName("CustomColor").isToggle()) {
+        if (Client.instance.getModuleManager().getModuleByName("CustomColor").isToggle()) {
             CustomColor.realred = RenderUtils.toanim(CustomColor.realred,CustomColor.color.getColor().getRed(),16,1f);
             CustomColor.realgreen = RenderUtils.toanim(CustomColor.realgreen,CustomColor.color.getColor().getGreen(),16,1f);
             CustomColor.realblue = RenderUtils.toanim(CustomColor.realblue,CustomColor.color.getColor().getBlue(),16,1f);
@@ -463,7 +462,7 @@ public class GuiIngame extends Gui
                 lastto =  - 91 - 1 + entityplayer.inventory.currentItem * 20;
             }
             tempx = RenderUtils.toanim2(tempx,lastto, - 91 - 1 + entityplayer.inventory.currentItem * 20,8,0.1f,1f);
-            if(ModuleManager.getModuleByName("HUD++").isToggle()){
+            if(Client.instance.getModuleManager().getModuleByName("HUD++").isToggle()){
                 this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
                 this.drawTexturedModalRect(tempx + i, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
             }else{
@@ -654,7 +653,7 @@ public class GuiIngame extends Gui
     }
 
     private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
-        if (ModuleManager.getModuleByName("BetterScoreboard").isToggle()) {
+        if (Client.instance.getModuleManager().getModuleByName("BetterScoreboard").isToggle()) {
             BetterScoreboard.objective = objective;
         } else {
 

@@ -8,10 +8,8 @@ import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.ClickGui;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.ui.CFontRenderer;
 import xyz.Dot.ui.FontLoaders;
-import xyz.Dot.ui.ImageLoader;
 import xyz.Dot.utils.RenderUtils;
 
 import java.awt.*;
@@ -36,7 +34,7 @@ public class CUI extends GuiScreen {
         if (in && openy != -114514) {
             y = openy;
         }
-        ModuleManager.getModuleByName("ClickGui").setToggle(false);
+        Client.instance.getModuleManager().getModuleByName("ClickGui").setToggle(false);
     }
 
     @Override
@@ -121,7 +119,7 @@ public class CUI extends GuiScreen {
         RenderUtils.doGlScissor((int) (x + 0.2f * width), y, x + width, (int) (y + height));
 
         for (Category c : Category.values()) {
-            for (Module m : ModuleManager.getModules()) {
+            for (Module m : Client.instance.getModuleManager().getModules()) {
                 if (m.getModuletype() == c) {
 
                     int cguiredto;

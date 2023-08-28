@@ -311,7 +311,7 @@ public class GuiChat extends GuiScreen
         }
 
 
-        for (Component object : Client.instance.componentManager.components) {
+        for (Component object : Client.instance.getComponentManager().components) {
             object.doDrag(mouseX, mouseY);
         }
 

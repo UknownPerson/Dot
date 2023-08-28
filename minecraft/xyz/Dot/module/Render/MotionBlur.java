@@ -3,16 +3,16 @@ package xyz.Dot.module.Render;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventHandler;
 import xyz.Dot.event.events.world.EventFrame;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 
 public class MotionBlur extends Module {
 
-    public static Setting amount = new Setting(ModuleManager.getModuleByName("MotionBlur"), "Amount", .5d, .05, 1d, .01d);
+    public static Setting amount = new Setting(Client.instance.getModuleManager().getModuleByName("MotionBlur"), "Amount", .5d, .05, 1d, .01d);
     public MotionBlur() {
         super("MotionBlur", Keyboard.KEY_NONE, Category.Render);
         addValues(amount);

@@ -10,7 +10,6 @@ import xyz.Dot.module.Category;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.module.Module;
-import xyz.Dot.module.ModuleManager;
 import xyz.Dot.setting.Setting;
 import xyz.Dot.ui.FontLoaders;
 import xyz.Dot.utils.RenderUtils;
@@ -38,7 +37,7 @@ public abstract class Component extends Gui {
         this.width = width;
         this.name = name;
         module = new Module(name, Keyboard.KEY_NONE, Category.Render);
-        ModuleManager.getModules().add(module);
+        Client.instance.getModuleManager().getModules().add(module);
         for (final Field field : this.getClass().getDeclaredFields()) {
             try {
                 field.setAccessible(true);
@@ -112,8 +111,8 @@ public abstract class Component extends Gui {
             int x = (int) (mouseX - this.dragX);
             int y = (int) (mouseY - this.dragY);
 
-            if(Client.instance.componentManager.dragging == null || Client.instance.componentManager.dragging == this) {
-                Client.instance.componentManager.dragging = this;
+            if(Client.instance.getComponentManager().dragging == null || Client.instance.getComponentManager().dragging == this) {
+                Client.instance.getComponentManager().dragging = this;
                 if (Math.abs(x - getPosX()) > 3) {
                     adjustX = false;
                 }
@@ -135,8 +134,8 @@ public abstract class Component extends Gui {
                 }
             }
         }else {
-            if(Client.instance.componentManager.dragging == this){
-                Client.instance.componentManager.dragging =null;
+            if(Client.instance.getComponentManager().dragging == this){
+                Client.instance.getComponentManager().dragging =null;
             }
         }
     }
@@ -180,7 +179,7 @@ public abstract class Component extends Gui {
                 RenderUtils.drawRectWH(0,sr.getScaledHeight() / 2f,new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth(),1, CustomColor.getColor().getRGB());
             }
         }
-        for(Component object : Client.instance.componentManager.components){
+        for(Component object : Client.instance.getComponentManager().components){
             if(!object.module.isToggle() || object == this)
                 continue;
             if(Math.abs(object.getPosX() - this.getPosX()) < 3){

@@ -72,12 +72,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import xyz.Dot.Client;
 import xyz.Dot.event.EventBus;
 import xyz.Dot.event.events.rendering.EventRender3D;
 import xyz.Dot.module.Cheat.Reach;
 import xyz.Dot.module.Cheat.ViewClip;
 import xyz.Dot.module.Misc.FreeLook;
-import xyz.Dot.module.ModuleManager;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
@@ -544,7 +544,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
             //fuck
             Double fuck = 3.0d;
-            if(ModuleManager.getModuleByName("Reach").isToggle()){
+            if(Client.instance.getModuleManager().getModuleByName("Reach").isToggle()){
                 fuck = Reach.range.getCurrentValue();
             }
 
@@ -637,7 +637,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                     this.mc.renderGlobal.displayListEntitiesDirty = true;
                 }
 
-                if (ModuleManager.getModuleByName("SmoothZoom").isToggle()) {
+                if (Client.instance.getModuleManager().getModuleByName("SmoothZoom").isToggle()) {
                     if (Config.zoomMode) {
                         fto = 4.0F;
                     } else {
@@ -681,7 +681,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
     private void hurtCameraEffect(float partialTicks)
     {
 
-        if(ModuleManager.getModuleByName("NoHurtCamera").isToggle()){
+        if(Client.instance.getModuleManager().getModuleByName("NoHurtCamera").isToggle()){
             return;
         }
 
@@ -771,7 +771,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                     f2 += 180;
                 }
 
-                ViewClip noCameraClip = (ViewClip) ModuleManager.getModuleByName("ViewClip");
+                ViewClip noCameraClip = (ViewClip) Client.instance.getModuleManager().getModuleByName("ViewClip");
 
                 if (noCameraClip == null || !noCameraClip.isToggle()) {
                     final double d4 = (double) (-MathHelper.sin(f1 / 180.0F * (float) Math.PI) * MathHelper.cos(f2 / 180.0F * (float) Math.PI)) * d3;
@@ -833,7 +833,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 GlStateManager.rotate(f6, 0.0F, 1.0F, 0.0F);
             }
         } else if (!this.mc.gameSettings.fovSetting) {
-            FreeLook freeLook = (FreeLook) ModuleManager.getModuleByName("FreeLook");
+            FreeLook freeLook = (FreeLook) Client.instance.getModuleManager().getModuleByName("FreeLook");
 
             if (freeLook != null && FreeLook.keyDown) {
                 GlStateManager.rotate(freeLook.lastPitch * (freeLook.invertPitch.isToggle() ? -1 : 1), 1.0F, 0.0F, 0.0F);
@@ -1280,7 +1280,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         }
 
 
-        FreeLook freeLook = (FreeLook) ModuleManager.getModuleByName("FreeLook");
+        FreeLook freeLook = (FreeLook) Client.instance.getModuleManager().getModuleByName("FreeLook");
 
         if (this.mc.inGameHasFocus && flag && (freeLook != null && !FreeLook.keyDown)) {
             this.mc.mouseHelper.mouseXYChange();
@@ -1885,7 +1885,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         GlStateManager.disableBlend();
         GlStateManager.disableFog();
 
-        ModuleManager.getToggleModules().forEach(it -> it.setPartialTicks(partialTicks));
+        Client.instance.getModuleManager().getToggleModules().forEach(it -> it.setPartialTicks(partialTicks));
 
         if (entity.posY + (double)entity.getEyeHeight() >= 128.0D + (double)(this.mc.gameSettings.ofCloudsHeight * 128.0F))
         {

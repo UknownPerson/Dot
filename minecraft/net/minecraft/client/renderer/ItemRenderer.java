@@ -31,7 +31,7 @@ import net.optifine.DynamicLights;
 import net.optifine.reflect.Reflector;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
-import xyz.Dot.module.ModuleManager;
+import xyz.Dot.Client;
 import xyz.Dot.module.Render.OldBlockRender;
 
 public class ItemRenderer {
@@ -362,7 +362,7 @@ public class ItemRenderer {
 
                     switch (enumaction) {
                         case NONE:
-                            if (ModuleManager.getModuleByName("OldBlockRender").isToggle()) {
+                            if (Client.instance.getModuleManager().getModuleByName("OldBlockRender").isToggle()) {
                                 this.transformFirstPersonItem(f, f1);
                             }else{
                                 this.transformFirstPersonItem(f, 0.0F);
@@ -370,7 +370,7 @@ public class ItemRenderer {
                             break;
                         case EAT:
                         case DRINK:
-                            if (ModuleManager.getModuleByName("OldBlockRender").isToggle()) {
+                            if (Client.instance.getModuleManager().getModuleByName("OldBlockRender").isToggle()) {
                                 this.performDrinking(abstractclientplayer, partialTicks);
                                 this.transformFirstPersonItem(f, f1);
                             }else{
@@ -380,7 +380,7 @@ public class ItemRenderer {
                             break;
 
                         case BLOCK:
-                            if (ModuleManager.getModuleByName("OldBlockRender").isToggle()) {
+                            if (Client.instance.getModuleManager().getModuleByName("OldBlockRender").isToggle()) {
                                 transformFirstPersonItem(-0.1f, f1);
                                 GlStateManager.translate(-0.5F, 0.2f, 0.0F);
                                 GlStateManager.rotate(30.0F, 0.0F, 1.0F, 0.0F);
@@ -393,7 +393,7 @@ public class ItemRenderer {
                             break;
 
                         case BOW:
-                            if (ModuleManager.getModuleByName("OldBlockRender").isToggle()) {
+                            if (Client.instance.getModuleManager().getModuleByName("OldBlockRender").isToggle()) {
                                 this.transformFirstPersonItem(f, f1);
                                 this.doBowTransformations(partialTicks, abstractclientplayer);
                             }else{
@@ -408,9 +408,9 @@ public class ItemRenderer {
                     }
 
                 } else {
-                    if (ModuleManager.getModuleByName("EveryThingBlock").isToggle() && mc.gameSettings.keyBindDrop.isKeyDown()) {
+                    if (Client.instance.getModuleManager().getModuleByName("EveryThingBlock").isToggle() && mc.gameSettings.keyBindDrop.isKeyDown()) {
 
-                        if (ModuleManager.getModuleByName("OldBlockRender").isToggle()) {
+                        if (Client.instance.getModuleManager().getModuleByName("OldBlockRender").isToggle()) {
                             this.transformFirstPersonItem(f, f1);
                             this.doBlockTransformations();
                         } else {

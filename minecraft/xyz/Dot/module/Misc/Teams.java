@@ -3,6 +3,7 @@ package xyz.Dot.module.Misc;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import org.lwjgl.input.Keyboard;
+import xyz.Dot.Client;
 import xyz.Dot.module.Category;
 import xyz.Dot.module.Module;
 import xyz.Dot.module.ModuleManager;
@@ -14,7 +15,7 @@ public class Teams extends Module {
 
 
     public static boolean isOnSameTeam(Entity entity) {
-        if (!ModuleManager.getModuleByName("Teams").isToggle()) return false;
+        if (!Client.instance.getModuleManager().getModuleByName("Teams").isToggle()) return false;
         if (Minecraft.getMinecraft().thePlayer.getDisplayName().getUnformattedText().startsWith("\247")) {
             if (Minecraft.getMinecraft().thePlayer.getDisplayName().getUnformattedText().length() <= 2
                     || entity.getDisplayName().getUnformattedText().length() <= 2) {
