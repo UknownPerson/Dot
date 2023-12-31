@@ -124,6 +124,10 @@ public class RenderUtils {
         Gui.drawRect((int) x, (int) y, (int) x1, (int) y1, color);
     }
 
+    public static void drawRect(double x, double y, double x1, double y1, int color) {
+        Gui.drawRect((int)x, (int)y, (int)x1, (int)y1, color);
+    }
+
     public static void glColor(int hex) {
         float alpha = (hex >> 24 & 0xFF) / 255.0F;
         float red = (hex >> 16 & 0xFF) / 255.0F;

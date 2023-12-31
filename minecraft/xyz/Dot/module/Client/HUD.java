@@ -120,7 +120,7 @@ public class HUD extends Module {
             return;
         }
 
-        if (Client.instance.inDevelopment && false) {
+        if (Client.instance.inDevelopment && true) {
             FontLoaders.normalfont16.drawString(t + "Tick/S", 100, 50, new Color(255, 255, 255).getRGB());
             FontLoaders.normalfont16.drawString(RenderUtils.ms + "ms", 100, 60, new Color(255, 255, 255).getRGB());
         }

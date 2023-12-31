@@ -618,6 +618,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             if (UserUtils.name == null) {
                 this.displayGuiScreen(new LoginUI());
             } else {
+                //this.displayGuiScreen(new LoginUI());
                 this.displayGuiScreen(new GuiMainMenu());
             }
         }

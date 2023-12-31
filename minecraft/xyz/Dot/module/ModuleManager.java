@@ -12,7 +12,7 @@ import xyz.Dot.module.Render.*;
 import java.util.ArrayList;
 
 public class ModuleManager {
-    private final ArrayList<Module> modules;
+    private static ArrayList<Module> modules = null;
 
     public ModuleManager(){
         modules = new ArrayList<>();
@@ -91,7 +91,7 @@ public class ModuleManager {
     }
 
 
-    public Module getModuleByName(String name) {
+    public static Module getModuleByName(String name) {
         for (Module m : modules) {
             if (!m.getName().equalsIgnoreCase(name)) continue;
             return m;

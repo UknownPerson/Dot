@@ -21,7 +21,7 @@ public class ViewClip extends Module {
    @EventHandler
    public void renderHud(EventRender2D event) {
       if(!UserUtils.SigmaMode){
-         this.setToggle(false);
+          this.setToggle(false);
       }
    }
 }

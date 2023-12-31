@@ -29,22 +29,22 @@ import java.util.Collections;
 import static org.lwjgl.opengl.GL11.*;
 
 public class ClickUI extends GuiScreen {
-    CFontRenderer font = FontLoaders.normalfont16; // 字体
-    CFontRenderer font1 = FontLoaders.normalfont12; // 字体
-    static Picker picker; // 调色板
-    int windowX, windowY; // 窗口大小
-    int width, height; // ClickGui大小
-    float x, y = RenderUtils.height(); // ClickGui位置
-    int xend, yend; // ClickGui位置终
-    boolean keydown = false, keydown1 = false; // 是否按下左键、右键
-    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6保留 curtype) (7 moduletoggle) (8 module setting) (9 custom) (10 setting)
-    int keydownX, keydownY; // 按下左键时的X Y
-    float beterspeedinfps; // 动画帧率修补量
-    boolean anithisryaninend = false; //进入动画Y轴是否结束
-    float alpha = 5; //背景初始亮度
-    public static boolean toclose = false; //关闭动画所需参数 还有bug暂时没做好先留个接口
-    float[] typeanimto = new float[8]; // 类别动画目标位置
-    Module togglemodule; // 开关module暂存
+    CFontRenderer font = FontLoaders.normalfont16; // 瀛椾綋
+    CFontRenderer font1 = FontLoaders.normalfont12; // 瀛椾綋
+    static Picker picker; // 璋冭壊鏉�
+    int windowX, windowY; // 绐楀彛澶у皬
+    int width, height; // ClickGui澶у皬
+    float x, y = RenderUtils.height(); // ClickGui浣嶇疆
+    int xend, yend; // ClickGui浣嶇疆缁�
+    boolean keydown = false, keydown1 = false; // 鏄惁鎸変笅宸﹂敭銆佸彸閿�
+    int check = 0; // (0 null) (1 X,Y) (2combat 3movemnt 4player 5render 6淇濈暀 curtype) (7 moduletoggle) (8 module setting) (9 custom) (10 setting)
+    int keydownX, keydownY; // 鎸変笅宸﹂敭鏃剁殑X Y
+    float beterspeedinfps; // 鍔ㄧ敾甯х巼淇ˉ閲�
+    boolean anithisryaninend = false; //杩涘叆鍔ㄧ敾Y杞存槸鍚︾粨鏉�
+    float alpha = 5; //鑳屾櫙鍒濆浜害
+    public static boolean toclose = false; //鍏抽棴鍔ㄧ敾鎵�闇�鍙傛暟 杩樻湁bug鏆傛椂娌″仛濂藉厛鐣欎釜鎺ュ彛
+    float[] typeanimto = new float[8]; // 绫诲埆鍔ㄧ敾鐩爣浣嶇疆
+    Module togglemodule; // 寮�鍏砿odule鏆傚瓨
     float rxendanim = 0;
     float customx = RenderUtils.width();
     boolean customend = false;
@@ -725,7 +725,7 @@ public class ClickUI extends GuiScreen {
             float width = 11;
             float height = 5;
 
-            //绘制调色板SKID
+            //缁樺埗璋冭壊鏉縎KID
             int black = getColor(0);
              int guiAlpha = 255;
             int color = colorValue.getColor().getRGB();

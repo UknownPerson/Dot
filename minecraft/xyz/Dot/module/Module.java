@@ -139,16 +139,18 @@ public class Module {
         if (this.getModuletype() == Category.Cheat) {
             if (!UserUtils.SigmaMode) {
                 Notification.sendClientMessage(Translator.getInstance().m("You are not a Sigma user. You can't enable it."), Notification.Type.WARNING);
+                onDisable();
+                this.toggle = false;
                 return;
             }
         }
 
         if (toggle) {
-            EventBus.getInstance().register(new Object[]{this});
+            EventBus.getInstance().register(this);
             onEnable();
             Notification.sendClientMessage(this.name + Translator.getInstance().m(" was enabled."), Notification.Type.SUCCESS);
         } else {
-            EventBus.getInstance().unregister(new Object[]{this});
+            EventBus.getInstance().unregister(this);
             onDisable();
             Notification.sendClientMessage(this.name + Translator.getInstance().m(" was disabled."), Notification.Type.ERROR);
         }

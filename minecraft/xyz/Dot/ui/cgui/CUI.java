@@ -18,7 +18,7 @@ public class CUI extends GuiScreen {
     static float x = 0, y = 0;
     static float width = 300, height = 200;
     int keydownX, keydownY;
-    int check = 0; // 1主界面 2drag 3render 4misc 5cheat 6client 7 module
+    int check = 0; // 1涓荤晫闈� 2drag 3render 4misc 5cheat 6client 7 module
     boolean in = true;
     float openy = -114514;
     float categoryanimy = 0;
@@ -34,7 +34,7 @@ public class CUI extends GuiScreen {
         if (in && openy != -114514) {
             y = openy;
         }
-        Client.instance.getModuleManager().getModuleByName("ClickGui").setToggle(false);
+        Client.instance.getModuleManager().getModuleByName("ClickGui").setToggle(false);;
     }
 
     @Override

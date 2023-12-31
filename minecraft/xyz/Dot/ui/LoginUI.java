@@ -1,13 +1,18 @@
 package xyz.Dot.ui;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import xyz.Dot.Client;
 import xyz.Dot.module.Client.CustomColor;
+import xyz.Dot.module.ModuleManager;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.SystemUtils;
+import xyz.Dot.utils.UserUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -15,6 +20,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class LoginUI extends GuiScreen {
@@ -23,15 +29,32 @@ public class LoginUI extends GuiScreen {
     boolean dotsizetobigok = false;
     float alpha = 0;
     String hwid = "null";
+    private List<GuiTextField> textFieldList = Lists.<GuiTextField>newArrayList();
 
     @Override
     public void initGui() {
         super.initGui();
+        textFieldList.clear();
+        this.textFieldList.add(new GuiTextField(0, fontRendererObj, RenderUtils.width() / 2 - 100, RenderUtils.height() / 5, 200, 20));
     }
 
     @Override
     public void onGuiClosed() {
     }
+
+    @Override
+    protected void keyTyped(char keyChar, int keyCode) throws IOException {
+        super.keyTyped(keyChar, keyCode);
+
+        for (GuiTextField tf : textFieldList) {
+            if (tf.isFocused()) {
+                tf.textboxKeyTyped(keyChar, keyCode);
+            }
+        }
+    }
+
+
+
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -90,6 +113,25 @@ public class LoginUI extends GuiScreen {
 
             RenderUtils.drawRoundRect((int) Math.max(goldx + RenderUtils.width() * 0.3f, goldx + 100) + 5, goldy1, (int) Math.max(goldx + RenderUtils.width() * 0.3f, goldx + 100) + 35, (int) Math.max((goldy1 + RenderUtils.width() * 0.03f), goldy1 + 10), 4, new Color(CustomColor.getColor().getRed(),CustomColor.getColor().getGreen(),CustomColor.getColor().getBlue(),(int)alpha));
             font.drawString("Copy",(int) Math.max(goldx + RenderUtils.width() * 0.3f, goldx + 100) + 11, texty,new Color(255,255,255).getRGB());
+
+            RenderUtils.drawRoundRect((int) RenderUtils.width() / 2 + 105, RenderUtils.height() / 5, (int) RenderUtils.width() / 2 + 105 + 50, (int) (RenderUtils.height() / 5)+ 20, 4, new Color(CustomColor.getColor().getRed(),CustomColor.getColor().getGreen(),CustomColor.getColor().getBlue(),(int)alpha));
+            font.drawString("FreeLogin",(int) RenderUtils.width() / 2 + 111, RenderUtils.height() / 5 + 7,new Color(255,255,255).getRGB());
+
+            if (isHovered((int) RenderUtils.width() / 2 + 105, RenderUtils.height() / 5, (int) RenderUtils.width() / 2 + 105 + 50, (int) (RenderUtils.height() / 5)+ 20, mouseX, mouseY) && Mouse.isButtonDown(0)) {
+                UserUtils.name = textFieldList.get(0).getText() + " - free";
+                UserUtils.prefix = "Free";
+                UserUtils.SigmaMode = false;
+                if (ModuleManager.getModuleByName("IRC").isToggle()) {
+                    ModuleManager.getModuleByName("IRC").setToggle(false);
+                    ModuleManager.getModuleByName("IRC").setToggle(false);
+                }
+                mc.displayGuiScreen(new GuiMainMenu());
+            }
+
+            for (GuiTextField tf : textFieldList) {
+                tf.drawTextBox();
+            }
+
             if (isHovered((int) Math.max(goldx + RenderUtils.width() * 0.3f, goldx + 100) + 5, goldy1, (int) Math.max(goldx + RenderUtils.width() * 0.3f, goldx + 100) + 35, (int) Math.max((goldy1 + RenderUtils.width() * 0.03f), goldy1 + 10), mouseX, mouseY) && Mouse.isButtonDown(0)) {
                 setSysClipboardText(hwid);
             }
@@ -112,16 +154,16 @@ public class LoginUI extends GuiScreen {
     }
 
     public static String getClipboardString() {
-        //获取系统粘贴板
-        //Toolkit类：Abstract Window Toolkit的所有实际实现的抽象超类。 Toolkit类的子类用于将各种组件绑定到特定的本机Toolkit实现。
+        //鑾峰彇绯荤粺绮樿创鏉�
+        //Toolkit绫伙細Abstract Window Toolkit鐨勬墍鏈夊疄闄呭疄鐜扮殑鎶借薄瓒呯被銆� Toolkit绫荤殑瀛愮被鐢ㄤ簬灏嗗悇绉嶇粍浠剁粦瀹氬埌鐗瑰畾鐨勬湰鏈篢oolkit瀹炵幇銆�
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        //获取封装好的data数据
+        //鑾峰彇灏佽濂界殑data鏁版嵁
         Transferable ts = clipboard.getContents(null);
         if (ts != null) {
-            // 判断剪贴板中的内容是否支持文本
+            // 鍒ゆ柇鍓创鏉夸腑鐨勫唴瀹规槸鍚︽敮鎸佹枃鏈�
             if (ts.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 try {
-                    // 获取剪贴板中的文本内容
+                    // 鑾峰彇鍓创鏉夸腑鐨勬枃鏈唴瀹�
                     String data = (String) ts.getTransferData(DataFlavor.stringFlavor);
                     return data;
                 } catch (Exception e) {
@@ -139,5 +181,8 @@ public class LoginUI extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
+        for (GuiTextField tf : textFieldList) {
+            tf.mouseClicked(mouseX, mouseY, mouseButton);
+        }
     }
 }

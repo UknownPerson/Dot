@@ -14,6 +14,7 @@ import xyz.Dot.custom.base.Component;
 import xyz.Dot.module.Client.CustomColor;
 import xyz.Dot.module.Client.HUD;
 import xyz.Dot.ui.FontLoaders;
+import xyz.Dot.ui.obj.objs.test;
 import xyz.Dot.utils.RenderUtils;
 import xyz.Dot.utils.Translator;
 import xyz.Dot.utils.shader.ShaderManager;
@@ -36,6 +37,10 @@ public class PotionEffects extends Component {
 
     @Override
     public void drawHUD(float x, float y, float partialTicks) {
+        test.xf = x;
+        test.yf = y;
+
+
         StartX = (int) x;
         StartY = (int) y;
         int finalStartY = StartY;
