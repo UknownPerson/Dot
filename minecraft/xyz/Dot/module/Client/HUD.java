@@ -57,6 +57,8 @@ public class HUD extends Module {
     float range = 0;
     //float[] bps;
     public static float[] bps = new float[128];
+    public static float nowspeed = 1;
+    public static float avgspeed = 1;
     public static int nums = 0;
     boolean fakemspeed = false;
     private TimerUtil timerUtil = new TimerUtil();
@@ -96,6 +98,7 @@ public class HUD extends Module {
             fakemspeed = false;
         }
         bps[nums] = movespeed;
+        nowspeed = movespeed;
 
         int n = nums;
         if (n < 1) {

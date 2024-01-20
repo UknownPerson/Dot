@@ -16,6 +16,7 @@ public class BPSGraph extends Component {
         super(96, 12, "BPSGraph");
     }
 
+
     @Override
     public void drawHUD(float x, float y, float partialTicks) {
 
@@ -91,6 +92,7 @@ public class BPSGraph extends Component {
             avg += ax;
         }
         avg = Math.round((avg / 96) * 100) / 100.0f;
+        HUD.avgspeed = avg;
 
         String mtext = Translator.getInstance().m("BPS.AVG") + ": " + avg;
         FontLoaders.normalfont16.drawString(mtext, StartXspeed + 5, StartYspeed + 4, new Color(255, 255, 255).getRGB());

@@ -727,7 +727,7 @@ public class ClickUI extends GuiScreen {
 
             //缁樺埗璋冭壊鏉縎KID
             int black = getColor(0);
-             int guiAlpha = 255;
+            int guiAlpha = 255;
             int color = colorValue.getColor().getRGB();
             int colorAlpha = color >> 24 & 0xFF;
             int minAlpha = Math.min(guiAlpha, colorAlpha);
